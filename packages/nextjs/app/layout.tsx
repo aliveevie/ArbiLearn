@@ -3,6 +3,7 @@ import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithPro
 import { ThemeProvider } from "~~/components/ThemeProvider";
 import "~~/styles/globals.css";
 import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
+import { Header } from "~~/mycomponents/newheader";
 
 export const metadata = getMetadata({
   title: "Scaffold-ETH 2 App",
