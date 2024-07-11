@@ -6,8 +6,8 @@ import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
 import { Header } from "~~/mycomponents/newheader";
 
 export const metadata = getMetadata({
-  title: "Scaffold-ETH 2 App",
-  description: "Built with 🏗 Scaffold-ETH 2",
+  title: "ArbiLearn",
+  description: "Learn Arbitrum and Earn ARB",
 });
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
