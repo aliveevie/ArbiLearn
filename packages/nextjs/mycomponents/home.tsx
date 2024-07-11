@@ -1,15 +1,36 @@
-import React from 'react';
+// Web3Section.tsx
+import { FC } from "react";
+import styles from '../styles/home.module.css';
 
-export const Welcome: React.FC = () => {
+const Web3Section: FC = () => {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-blue-500 to-purple-600 text-white p-6">
-      <div className="max-w-4xl text-center">
-        <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold mb-6">Welcome to ArbiLearn</h1>
-        <p className="text-lg sm:text-xl md:text-2xl mb-4">Learn Arbitrum, Earn Arbitrum, complete onchain actions,</p>
-        <p className="text-lg sm:text-xl md:text-2xl mb-4">get jobs, get bounties, get general knowledge about Web3 and Ethereum</p>
+    <section className={styles.web3Section}>
+      <div className="container">
+        <h1 className={styles.arbilearn}>
+          <span className={styles.arbi}>Arbi</span>
+          <span className={styles.learn}>Learn</span>
+        </h1>
+        <p className={styles.learnearn}>
+          <span className={styles.learnbig}>Learn</span> and <span className={styles.earnbig}>Earn ARB</span>
+          <br /> The best place for Everybody
+        </p>
+        <div className={styles.ctabuttons}>
+          <a href="#" className={`${styles.btn} ${styles.use}`}>Earn</a>
+          <a href="#" className={`${styles.btn} ${styles.build}`}>Learn</a>
+        </div>
       </div>
+    </section>
+  );
+};
+
+
+
+const HomePage: FC = () => {
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Web3Section />
     </div>
   );
 };
 
-export default Welcome;
+export default HomePage;

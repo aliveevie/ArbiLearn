@@ -1,0 +1,79 @@
+.web3Section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(270deg, #ff7e5f, #feb47b, #ff7e5f, #86a8e7, #7f7fd5);
+    background-size: 1000% 1000%;
+    animation: gradientAnimation 15s ease infinite;
+    color: #fff;
+    text-align: center;
+    padding: 100px 0;
+    min-height: 100vh; /* Ensures section takes full viewport height */
+  }
+  @keyframes gradientAnimation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+  .arbilearn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14rem;
+    margin-bottom: 10px;
+  }
+
+  .arbi {
+    color: #ff4500;
+    animation: colorChange 2s infinite;
+    font-family: 'Arial', sans-serif;
+  }
+  .learn {
+    color: #1e90ff;
+    animation: colorChange 3s infinite alternate;
+  }
+  .learnearn {
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-bottom: 40px;
+  }
+  .learnbig {
+    font-size: 3rem;
+    color: #32cd32;
+    animation: colorChange 4s infinite;
+  }
+  .earnbig {
+    font-size: 3rem;
+    color: #ff69b4;
+    animation: colorChange 5s infinite alternate;
+  }
+  @keyframes colorChange {
+    0% { color: #ff4500; }
+    25% { color: #32cd32; }
+    50% { color: #1e90ff; }
+    75% { color: #ff69b4; }
+    100% { color: #ff4500; }
+  }
+  .ctabuttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+  }
+  .btn {
+    background: #ff5000;
+    color: #fff;
+    padding: 15px 30px;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: background 0.3s;
+  }
+  .btn:hover {
+    background: #e04500;
+  }
+  .btn.use {
+    background: #ff5000;
+  }
+  .btn.build {
+    background: #007bff;
+  }
