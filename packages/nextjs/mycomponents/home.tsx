@@ -14,6 +14,9 @@ const Web3Section: FC = () => {
           <span className={styles.learnbig}>Learn</span> and <span className={styles.earnbig}>Earn ARB</span>
           <br /> The best place for Everybody
         </p>
+        <div className={styles.comingsoon} >
+          <h2>We are building up the resources for you coming soon!</h2>
+        </div>
         <div className={styles.ctabuttons}>
           <a href="#" className={`${styles.btn} ${styles.use}`}>Earn</a>
           <a href="#" className={`${styles.btn} ${styles.build}`}>Learn</a>
