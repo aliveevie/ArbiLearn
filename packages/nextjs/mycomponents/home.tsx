@@ -3,6 +3,7 @@ import { FC } from "react";
 import styles from '../styles/home.module.css';
 import { Section } from "./section1";
 import { Section2 } from "./section2";
+import { Section3 } from "./section3";
 
 const Web3Section: FC = () => {
   return (
@@ -28,6 +29,7 @@ const Web3Section: FC = () => {
     </section>
     <Section />
     <Section2 />
+    <Section3 />
       </>
   );
 };
