@@ -10,7 +10,8 @@ export const Section = () => {
       <Image src={animation} alt="Background animation" className={styles.backgroundImage} layout="fill" />
       <div className={styles.content}>
         <h1>Discover Your Path to Digital Excellence</h1>
-        <p>In Web3 by Learning and Earning ARB</p>
+        <p>Learn and Earn ARB in the World of Web3</p>
+        <a href="#" className={styles.button}>Get Started</a>
       </div>
     </div>
   );
