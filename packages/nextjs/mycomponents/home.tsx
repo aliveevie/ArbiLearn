@@ -1,10 +1,13 @@
 // Web3Section.tsx
 import { FC } from "react";
 import styles from '../styles/home.module.css';
+import { Section } from "./section1";
+
 
 const Web3Section: FC = () => {
   return (
-    <section className={styles.web3Section}>
+      <>
+          <section className={styles.web3Section}>
       <div className="container">
         <h1 className={styles.arbilearn}>
           <span className={styles.arbi}>Arbi</span>
@@ -23,6 +26,8 @@ const Web3Section: FC = () => {
         </div>
       </div>
     </section>
+    <Section />
+      </>
   );
 };
 
