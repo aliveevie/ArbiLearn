@@ -2,7 +2,7 @@
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTwitter, faFacebookF, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
-import styles from '../styles/footer.module.css'; // Adjust the path if needed
+import styles from '../styles/Footer.module.css'; // Adjust the path if needed
 
 export const Footer = () => {
   return (
@@ -36,3 +36,5 @@ export const Footer = () => {
     </footer>
   );
 };
+
+export default Footer;

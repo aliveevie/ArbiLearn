@@ -2,6 +2,7 @@ import './globals.css'
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 import Header from '@/mycomponents/newheader'
+import Footer from '@/mycomponents/footer'
 
 import { cookieToInitialState } from 'wagmi'
 
@@ -24,7 +25,7 @@ export default function RootLayout({
       <body>
           <Header />
           <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
-          
+          <Footer />
       </body>
     </html>
   )

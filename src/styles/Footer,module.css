@@ -1,0 +1,29 @@
+/* Footer.module.css */
+.footer {
+    background-color: #333;
+    color: #fff;
+    padding: 20px;
+  }
+  
+  .footerContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .navLinks a,
+  .socialIcons a {
+    color: #fff;
+    margin: 0 10px;
+    text-decoration: none;
+  }
+  
+  .contactInfo p {
+    margin: 0;
+  }
+  
+  .socialIcons {
+    display: flex;
+    gap: 10px;
+  }
+  
