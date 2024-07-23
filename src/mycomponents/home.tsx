@@ -1,14 +1,20 @@
 // Web3Section.tsx
-import { FC } from "react";
+"use client";
+
+import { FC, useEffect } from "react";
 import styles from '../styles/home.module.css';
 import { Section } from "./section1";
 import { Section2 } from "./section2";
 import { Section3 } from "./section3";
-import { Footer } from "./footer";
+import Connecting from "./connection";
+import { useAccount } from "wagmi";
+
+
 
 const Web3Section: FC = () => {
   return (
       <>
+      <Connecting />
           <section className={styles.web3Section}>
       <div className="container">
         <h1 className={styles.arbilearn}>
@@ -23,15 +29,15 @@ const Web3Section: FC = () => {
           <h2>We are building up the resources for you coming soon!</h2>
         </div>
         <div className={styles.ctabuttons}>
-          <a href="#" className={`${styles.btn} ${styles.use}`}>Earn</a>
-          <a href="#" className={`${styles.btn} ${styles.build}`}>Learn</a>
+          <a href="./dashboard" className={`${styles.btn} ${styles.use}`}>Earn</a>
+          <a href="./dashboard" className={`${styles.btn} ${styles.build}`}>Learn</a>
         </div>
       </div>
     </section>
-    <Section />
-    <Section2 />
-    <Section3 />
-    
+          <Section />
+          <Section2 />
+          <Section3 />
+          
       </>
   );
 };
