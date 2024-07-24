@@ -12,9 +12,19 @@ import { useAccount } from "wagmi";
 
 
 const Web3Section: FC = () => {
+
+  const { isConnected, isDisconnected } = useAccount();
+
+  if(isConnected){
+    window.location.href = './dashboard'
+  }else{
+    window.location.href = '/'
+  }
+
+
+
   return (
       <>
-      <Connecting />
           <section className={styles.web3Section}>
       <div className="container">
         <h1 className={styles.arbilearn}>
