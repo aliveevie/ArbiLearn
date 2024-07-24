@@ -1,56 +1,81 @@
 "use client";
 
 import { useState } from 'react';
+import styles from '../../styles/Dashboar.module.css';
 
 export default function Page() {
-  const [points, setPoints] = useState(0);
-  const [progress, setProgress] = useState(0);
+  const [selectedChapter, setSelectedChapter] = useState(null);
+  const [selectedSubtopic, setSelectedSubtopic] = useState(null);
 
   const chapters = [
-    { title: "Chapter 1: Introduction", content: "Introduction to Arbitrum..." },
-    { title: "Chapter 2: Getting Started", content: "How to set up your environment..." },
-    { title: "Chapter 3: Smart Contracts", content: "Understanding smart contracts on Arbitrum..." },
-    { title: "Chapter 4: Arbitrum Rollup", content: "Detailed look at Arbitrum Rollup..." },
-    { title: "Chapter 5: Tools and Resources", content: "Essential tools and resources for Arbitrum..." },
-    { title: "Chapter 6: Developing on Arbitrum", content: "Step-by-step guide to developing on Arbitrum..." },
-    { title: "Chapter 7: Deploying Contracts", content: "How to deploy smart contracts on Arbitrum..." },
-    { title: "Chapter 8: Interacting with Contracts", content: "Interacting with deployed contracts..." },
-    { title: "Chapter 9: Advanced Topics", content: "Advanced topics in Arbitrum development..." },
-    { title: "Chapter 10: Conclusion", content: "Wrapping up and next steps..." },
+    {
+      title: "Chapter 1: Introduction",
+      subtopics: [
+        { title: "Introduce Yourself", content: "Content about introducing yourself..." },
+        { title: "About Arbitrum", content: "Content about Arbitrum..." }
+      ]
+    },
+    {
+      title: "Chapter 2: Getting Started",
+      subtopics: [
+        { title: "Setup Environment", content: "Content on setting up your environment..." },
+        { title: "First Steps", content: "Content on your first steps with Arbitrum..." }
+      ]
+    },
+    {
+      title: "Chapter 3: Smart Contracts",
+      subtopics: [
+        { title: "Introduction to Smart Contracts", content: "Content on smart contracts..." },
+        { title: "Writing Your First Contract", content: "Content on writing your first contract..." }
+      ]
+    },
+    // Add more chapters and subtopics here
   ];
 
-  const handleChapterClick = (index: number) => {
-    // Logic for chapter click, e.g., updating progress and points
-    setPoints(points + 10);
-    setProgress((index + 1) * 10);
+  const handleChapterClick = (index:any) => {
+    setSelectedChapter(index);
+    setSelectedSubtopic(null);
   };
 
+  const handleSubtopicClick = (index:any) => {
+    setSelectedSubtopic(index);
+  };
+
+  const renderSubtopics = () => {
+    if (selectedChapter === null) return null;
+    return (
+      <ul className={styles.subtopicsList}>
+        {chapters[selectedChapter].subtopics.map((subtopic, index) => (
+          <li key={index} onClick={() => handleSubtopicClick(index)} className={styles.subtopicItem}>
+            {subtopic.title}
+          </li>
+        ))}
+      </ul>
+    );
+  };
+
+  const renderContent = () => {
+    if (selectedSubtopic === null || selectedChapter === null) return <p>Select a subtopic to view its content.</p>;
+    return <p>{chapters[selectedChapter]?.subtopics[selectedSubtopic].content}</p>;
+  };
+  
+
   return (
-    <div style={{ display: 'flex' }}>
-      <aside style={{ width: '20%', padding: '10px', background: '#f4f4f4' }}>
+    <div className={styles.container}>
+      <aside className={styles.sidebar}>
         <h2>Learn Arbitrum</h2>
-        <ul>
+        <ul className={styles.chaptersList}>
           {chapters.map((chapter, index) => (
-            <li key={index} onClick={() => handleChapterClick(index)} style={{ cursor: 'pointer' }}>
+            <li key={index} onClick={() => handleChapterClick(index)} className={styles.chapterItem}>
               {chapter.title}
             </li>
           ))}
         </ul>
+        {renderSubtopics()}
       </aside>
-      <main style={{ width: '80%', padding: '20px' }}>
-        <div>
-          <h1>Welcome to the Dashboard!</h1>
-          <div>
-            <h2>Introduction</h2>
-            <p>This is an introductory guide to learning Arbitrum...</p>
-          </div>
-          <div>
-            <h2>Points Earned: {points}</h2>
-            <div style={{ width: '100%', background: '#e0e0e0', height: '30px', borderRadius: '5px', margin: '10px 0' }}>
-              <div style={{ width: `${progress}%`, background: '#76c7c0', height: '100%', borderRadius: '5px' }}></div>
-            </div>
-          </div>
-        </div>
+      <main className={styles.content}>
+        <h1>Welcome to the Dashboard!</h1>
+        {renderContent()}
       </main>
     </div>
   );
