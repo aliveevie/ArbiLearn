@@ -15,12 +15,15 @@ const Web3Section: FC = () => {
 
   const { isConnected, isDisconnected } = useAccount();
 
-  if(isConnected){
-    window.location.href = './dashboard'
-  }else{
-    window.location.href = '/'
-  }
-
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      if (isConnected) {
+        window.location.href = './dashboard';
+      } else {
+        window.location.href = '/';
+      }
+    }
+  }, []);
 
 
   return (
