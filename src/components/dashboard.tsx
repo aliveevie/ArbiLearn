@@ -5,6 +5,7 @@ import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
+import Chapter1 from "./chapters/chapter";
 
 
 export function Dashboard() {
@@ -20,10 +21,6 @@ export function Dashboard() {
   if(isDisconnected){
     router.push('/') 
   }
-
-  
-
-
 
   return (
     <div className="flex w-full min-h-screen">
@@ -102,37 +99,9 @@ export function Dashboard() {
           </Button>
         </div>
         {activeSection === "welcome" && (
-          <div>
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
-              <h1 className="text-2xl font-bold">1.1 Welcome to Arbitrum 101</h1>
-            </div>
-            <div className="space-y-4">
-              <p>
-                Welcome to the Arbitrum 101 course! This course has been designed to give you all the tools and
-                knowledge you will need to be able to start building useful dApps (decentralized applications) on the
-                Arbitrum network using Arbitrum.
-              </p>
-              <p>
-                The course offers a comprehensive overview of dApp development using Arbitrum, beginning with basic
-                concepts like the Arbitrum Rollup, the Arbitrum Virtual Machine, and the process of setting up the
-                essential tools for network development. It then progresses to more advanced topics, including the
-                creation of fungible and non-fungible resources, concluding with insights into managing authorization
-                rules.
-              </p>
-              <p>
-                If some of the terms used here don't quite make sense to you, do not worry! We will explain what all of
-                this means in the following chapters. Plus we have included a glossary at the end of this chapter to
-                help with terminology as well.
-              </p>
-              <p>
-                This course is designed in a way that allows you to learn at your own pace but you can expect it to take
-                around two weeks to complete if you are going through a couple of lessons each day. By the end of the
-                course, you should feel confident participating in Arbitrum challenges and hackathons - and even bring
-                your awesome ideas to working prototypes!
-              </p>
-            </div>
-          </div>
+              <Chapter1 />
         )}
+        
         {activeSection === "primer" && (
           <div>
             <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
