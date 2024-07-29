@@ -3,12 +3,28 @@
 import { SetStateAction, JSX, SVGProps, useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
+import { useRouter } from "next/navigation";
+import { useAccount } from "wagmi";
+
 
 export function Dashboard() {
   const [activeSection, setActiveSection] = useState("welcome")
   const handleSectionClick = (section: any) => {
     setActiveSection(section)
   }
+
+  const { isDisconnected } = useAccount();
+
+  const router = useRouter();
+
+  if(isDisconnected){
+    router.push('/') 
+  }
+
+  
+
+
+
   return (
     <div className="flex w-full min-h-screen">
       <aside className="w-64 bg-gray-800 text-white flex flex-col">
@@ -29,9 +45,8 @@ export function Dashboard() {
           >
             <div className="flex items-center space-x-2">
               <BookIcon className="w-5 h-5" />
-              <span>1.1 Welcome to Arbitrum 101</span>
+              <span>What is Arbitrum</span>
             </div>
-            <div className="ml-7">ebook</div>
           </div>
           <div
             className={`p-2 rounded ${activeSection === "primer" ? "bg-blue-600" : ""}`}
@@ -39,9 +54,9 @@ export function Dashboard() {
           >
             <div className="flex items-center space-x-2">
               <BookIcon className="w-5 h-5" />
-              <span>1.2 Primer on Arbitrum</span>
+              <span>How To Start Developing On Arbitrum</span>
             </div>
-            <div className="ml-7">ebook</div>
+            
           </div>
           <div
             className={`p-2 rounded ${activeSection === "quiz" ? "bg-blue-600" : ""}`}
@@ -59,7 +74,7 @@ export function Dashboard() {
           >
             <div className="flex items-center space-x-2">
               <ReplyIcon className="w-5 h-5" />
-              <span>Chapter 1 Feedback</span>
+              <span>Feedback</span>
             </div>
             <div className="ml-7">Course evaluation (short)</div>
           </div>
@@ -69,9 +84,9 @@ export function Dashboard() {
           >
             <div className="flex items-center space-x-2">
               <BookIcon className="w-5 h-5" />
-              <span>Arbitrum 101 Glossary</span>
+              <span>Understand How Arbitrum Works
+              </span>
             </div>
-            <div className="ml-7">ebook</div>
           </div>
         </nav>
       </aside>
