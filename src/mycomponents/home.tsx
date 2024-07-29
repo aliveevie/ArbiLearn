@@ -8,6 +8,8 @@ import { Section2 } from "./section2";
 import { Section3 } from "./section3";
 import Connecting from "./connection";
 import { useAccount } from "wagmi";
+import { Connection } from "wagmi";
+import { useRouter } from "next/navigation";
 
 
 
@@ -15,18 +17,17 @@ const Web3Section: FC = () => {
 
   const { isConnected, isDisconnected } = useAccount();
 
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      if (isConnected) {
-        window.location.href = './dashboard';
-      } 
+  const router = useRouter();
+
+    if (isConnected) {
+      router.push('/dashboard');
     }
-  }, []);
+  
 
 
   return (
       <>
-          <section className={styles.web3Section}>
+      <section className={styles.web3Section}>
       <div className="container">
         <h1 className={styles.arbilearn}>
           <span className={styles.arbi}>Arbi</span>
