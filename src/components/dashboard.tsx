@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import Chapter1 from "./chapters/chapter";
+import Chapter2 from "./chapters/chapter2";
 
 
 export function Dashboard() {
@@ -101,40 +102,12 @@ export function Dashboard() {
         {activeSection === "welcome" && (
               <Chapter1 />
         )}
-        
+
         {activeSection === "primer" && (
-          <div>
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
-              <h1 className="text-2xl font-bold">1.2 Primer on Arbitrum</h1>
-            </div>
-            <div className="space-y-4">
-              <p>
-                This section will provide a primer on Arbitrum, covering the basics of what Arbitrum is, how it works,
-                and why it is an important development in the world of blockchain technology.
-              </p>
-              <p>
-                Arbitrum is a Layer 2 scaling solution for Ethereum, which means it is built on top of the Ethereum
-                blockchain to provide faster and cheaper transactions. Arbitrum uses a technology called "optimistic
-                rollups" to achieve this.
-              </p>
-              <p>
-                Optimistic rollups work by batching multiple Ethereum transactions together and submitting them to the
-                Ethereum mainnet as a single transaction. This reduces the load on the Ethereum network and allows for
-                much faster and cheaper transactions.
-              </p>
-              <p>
-                Arbitrum also has its own virtual machine, called the Arbitrum Virtual Machine (AVM), which is
-                compatible with Ethereum's Ethereum Virtual Machine (EVM). This means that developers can write smart
-                contracts for Arbitrum using the same tools and languages they use for Ethereum.
-              </p>
-              <p>
-                One of the key benefits of Arbitrum is that it inherits the security guarantees of the Ethereum
-                blockchain. This means that transactions on Arbitrum are just as secure as transactions on Ethereum, but
-                with much faster and cheaper processing.
-              </p>
-            </div>
-          </div>
+              <Chapter2 />
         )}
+
+
         {activeSection === "quiz" && (
           <div>
             <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
