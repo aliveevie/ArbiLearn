@@ -33,7 +33,7 @@ export function Dashboard() {
 
   return (
     <div className="flex w-full min-h-screen">
-     <aside className="w-64 bg-gray-800 text-white flex flex-col hover:bg-gray-700">
+     <aside className="w-64 bg-gray-800 text-white flex flex-col hover:bg-gray-700 cursor-pointer ">
         <div className="p-4 text-xl font-bold">ArbiLearn</div>
         <div className="px-4 py-2">
           <div className="flex items-center justify-between">
@@ -49,7 +49,7 @@ export function Dashboard() {
             className={`p-2 rounded ${activeSection === "welcome" ? "bg-blue-600" : ""}`}
             onClick={() => handleSectionClick("welcome")}
           >
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 hover:bg-gray-700">
               <BookIcon className="w-5 h-5" />
               <span>What is Arbitrum</span>
             </div>
