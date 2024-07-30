@@ -7,6 +7,8 @@ import { useRouter } from "next/navigation";
 import { useAccount } from "wagmi";
 import Chapter1 from "./chapters/chapter";
 import Chapter2 from "./chapters/chapter2";
+import Chapter3 from "./chapters/chapter3";
+import Chapter4 from "./chapters/chapter4";
 
 
 export function Dashboard() {
@@ -62,9 +64,9 @@ export function Dashboard() {
           >
             <div className="flex items-center space-x-2">
               <FilePenIcon className="w-5 h-5" />
-              <span>Chapter 1 Quiz</span>
+              <span>How Arbitrum Works</span>
             </div>
-            <div className="ml-7">Exam</div>
+           
           </div>
           <div
             className={`p-2 rounded ${activeSection === "feedback" ? "bg-blue-600" : ""}`}
@@ -72,9 +74,8 @@ export function Dashboard() {
           >
             <div className="flex items-center space-x-2">
               <ReplyIcon className="w-5 h-5" />
-              <span>Feedback</span>
+              <span>Run an Orbit</span>
             </div>
-            <div className="ml-7">Course evaluation (short)</div>
           </div>
           <div
             className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
@@ -109,32 +110,10 @@ export function Dashboard() {
 
 
         {activeSection === "quiz" && (
-          <div>
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
-              <h1 className="text-2xl font-bold">Chapter 1 Quiz</h1>
-            </div>
-            <div className="space-y-4">
-              <p>
-                This is the Chapter 1 quiz. You will be asked a series of questions to test your understanding of the
-                material covered in the first chapter of the Arbitrum 101 course.
-              </p>
-              <p>Good luck!</p>
-            </div>
-          </div>
+              <Chapter3 />
         )}
         {activeSection === "feedback" && (
-          <div>
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
-              <h1 className="text-2xl font-bold">Chapter 1 Feedback</h1>
-            </div>
-            <div className="space-y-4">
-              <p>
-                This is the Chapter 1 feedback form. Please take a few minutes to provide your thoughts and feedback on
-                the first chapter of the Arbitrum 101 course.
-              </p>
-              <p>Your feedback is valuable and will help us improve the course for future students.</p>
-            </div>
-          </div>
+            <Chapter4 />
         )}
         {activeSection === "glossary" && (
           <div>
