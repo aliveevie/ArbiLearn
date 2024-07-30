@@ -9,6 +9,7 @@ import Chapter1 from "./chapters/chapter";
 import Chapter2 from "./chapters/chapter2";
 import Chapter3 from "./chapters/chapter3";
 import Chapter4 from "./chapters/chapter4";
+import Chapter5 from "./chapters/chapter5";
 
 
 export function Dashboard() {
@@ -77,16 +78,18 @@ export function Dashboard() {
               <span>Run an Orbit</span>
             </div>
           </div>
+
           <div
             className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
             onClick={() => handleSectionClick("glossary")}
           >
             <div className="flex items-center space-x-2">
               <BookIcon className="w-5 h-5" />
-              <span>Understand How Arbitrum Works
+              <span>Build your First dApp
               </span>
             </div>
           </div>
+          
         </nav>
       </aside>
       <main className="flex-1 p-6 bg-white">
@@ -116,18 +119,7 @@ export function Dashboard() {
             <Chapter4 />
         )}
         {activeSection === "glossary" && (
-          <div>
-            <div className="bg-gradient-to-r from-purple-600 to-blue-600 text-white p-6 rounded-md mb-4">
-              <h1 className="text-2xl font-bold">Arbitrum 101 Glossary</h1>
-            </div>
-            <div className="space-y-4">
-              <p>
-                This is the Arbitrum 101 glossary. Here you will find definitions and explanations of the key terms and
-                concepts covered in the course.
-              </p>
-              <p>Feel free to refer back to this glossary as you progress through the course.</p>
-            </div>
-          </div>
+            <Chapter5 />
         )}
       </main>
     </div>
