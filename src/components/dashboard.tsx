@@ -10,6 +10,8 @@ import Chapter2 from "./chapters/chapter2";
 import Chapter3 from "./chapters/chapter3";
 import Chapter4 from "./chapters/chapter4";
 import Chapter5 from "./chapters/chapter5";
+import Chapter6 from "./chapters/chapter6";
+import Chapter7 from "./chapters/chapter7";
 
 
 export function Dashboard() {
@@ -89,7 +91,29 @@ export function Dashboard() {
               </span>
             </div>
           </div>
-          
+
+          <div
+            className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
+            onClick={() => handleSectionClick("chapter6")}
+          >
+            <div className="flex items-center space-x-2">
+              <BookIcon className="w-5 h-5" />
+              <span>Run a Node
+              </span>
+            </div>
+          </div>
+
+          <div
+            className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
+            onClick={() => handleSectionClick("chapter7")}
+          >
+            <div className="flex items-center space-x-2">
+              <BookIcon className="w-5 h-5" />
+              <span>Arbitrum Bridge
+              </span>
+            </div>
+          </div>
+
         </nav>
       </aside>
       <main className="flex-1 p-6 bg-white">
@@ -118,9 +142,20 @@ export function Dashboard() {
         {activeSection === "feedback" && (
             <Chapter4 />
         )}
+
         {activeSection === "glossary" && (
             <Chapter5 />
         )}
+
+        {activeSection === "chapter6" && (
+            <Chapter6 />
+        )}
+
+        {activeSection === "chapter7" && (
+            <Chapter7 />
+        )}
+
+
       </main>
     </div>
   )
