@@ -12,6 +12,9 @@ import Chapter4 from "./chapters/chapter4";
 import Chapter5 from "./chapters/chapter5";
 import Chapter6 from "./chapters/chapter6";
 import Chapter7 from "./chapters/chapter7";
+import Chapter8 from "./chapters/chapter8";
+import Chapter9 from "./chapters/chapter9";
+import Chapter10 from "./chapters/chapter10";
 
 
 export function Dashboard() {
@@ -30,8 +33,8 @@ export function Dashboard() {
 
   return (
     <div className="flex w-full min-h-screen">
-      <aside className="w-64 bg-gray-800 text-white flex flex-col">
-        <div className="p-4 text-xl font-bold">Arbitrum 101</div>
+     <aside className="w-64 bg-gray-800 text-white flex flex-col hover:bg-gray-700">
+        <div className="p-4 text-xl font-bold">ArbiLearn</div>
         <div className="px-4 py-2">
           <div className="flex items-center justify-between">
             <span>Back to course page</span>
@@ -114,6 +117,40 @@ export function Dashboard() {
             </div>
           </div>
 
+          <div
+            className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
+            onClick={() => handleSectionClick("chapter8")}
+          >
+            <div className="flex items-center space-x-2">
+              <BookIcon className="w-5 h-5" />
+              <span>Write a Stylus Contract
+              </span>
+            </div>
+          </div>
+
+          <div
+            className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
+            onClick={() => handleSectionClick("chapter9")}
+          >
+            <div className="flex items-center space-x-2">
+              <BookIcon className="w-5 h-5" />
+              <span>FAQ
+              </span>
+            </div>
+          </div>
+
+
+          <div
+            className={`p-2 rounded ${activeSection === "glossary" ? "bg-blue-600" : ""}`}
+            onClick={() => handleSectionClick("chapter10")}
+          >
+            <div className="flex items-center space-x-2">
+              <BookIcon className="w-5 h-5" />
+              <span>Glossary-
+              </span>
+            </div>
+          </div>
+
         </nav>
       </aside>
       <main className="flex-1 p-6 bg-white">
@@ -135,7 +172,6 @@ export function Dashboard() {
               <Chapter2 />
         )}
 
-
         {activeSection === "quiz" && (
               <Chapter3 />
         )}
@@ -153,6 +189,18 @@ export function Dashboard() {
 
         {activeSection === "chapter7" && (
             <Chapter7 />
+        )}
+
+        {activeSection === "chapter8" && (
+            <Chapter8 />
+        )}
+
+        {activeSection === "chapter9" && (
+            <Chapter9 />
+        )}
+
+        {activeSection === "chapter10" && (
+            <Chapter10 />
         )}
 
 
