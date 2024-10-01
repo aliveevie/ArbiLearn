@@ -25,13 +25,15 @@ export function HeaderComponent() {
           <Link href="/about" className="text-gray-600 hover:text-gray-900">About</Link>
           <div className="relative"
                onMouseEnter={() => setIsCoursesOpen(true)}
-               onMouseLeave={() => setIsCoursesOpen(false)}>
+               >
             <button className="text-gray-600 hover:text-gray-900 flex items-center">
               Courses
               <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             {isCoursesOpen && (
-              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+              <div 
+              onMouseLeave={() => setIsCoursesOpen(false)}
+              className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
                 <Link href="/courses/intro-to-web3" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Intro to Web3</Link>
                 <Link href="/courses/learn-arbitrum" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Learn Arbitrum</Link>
                 <Link href="/courses/fullstack-dev" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Fullstack Dev</Link>
@@ -43,13 +45,15 @@ export function HeaderComponent() {
           </div>
           <div className="relative"
                onMouseEnter={() => setIsProgramsOpen(true)}
-               onMouseLeave={() => setIsProgramsOpen(false)}>
+          >
             <button className="text-gray-600 hover:text-gray-900 flex items-center">
               Programs
               <ChevronDown className="ml-1 h-4 w-4" />
             </button>
             {isProgramsOpen && (
-              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
+              <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10"
+                onMouseLeave={() => setIsProgramsOpen(false)}
+              >
                 <Link href="/programs/learn-to-earn" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Learn-to-Earn</Link>
                 <Link href="/programs/web2-web3" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Web2-Web3</Link>
                 <Link href="/programs/master-web3" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Master Web3</Link>
