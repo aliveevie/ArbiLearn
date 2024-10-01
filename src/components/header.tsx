@@ -6,6 +6,7 @@ import Link from 'next/link'
 import { ChevronDown } from 'lucide-react'
 import { useWeb3Modal } from '@web3modal/react'
 import { Button } from "@/components/ui/button"
+import logo from '../../public/logo.png'; // Replace with the path to your logo image
 
 export function HeaderComponent() {
   const [isProgramsOpen, setIsProgramsOpen] = useState(false)
@@ -15,8 +16,8 @@ export function HeaderComponent() {
   return (
     <header className="bg-white shadow-sm">
       <div className="container mx-auto px-4 py-2 flex items-center justify-between">
-        <Link href="/" className="flex-shrink-0">
-          <Image src="/placeholder.svg?height=40&width=40" alt="Logo" width={40} height={40} />
+        <Link href="/public/logo.png" className="flex-shrink-0">
+          <Image src={logo} alt="Logo" width={60} height={60} />
         </Link>
         
         <nav className="flex-grow flex justify-center space-x-6">
@@ -59,10 +60,7 @@ export function HeaderComponent() {
           </div>
           <Link href="/contact" className="text-gray-600 hover:text-gray-900">Contact</Link>
         </nav>
-        
-        <Button onClick={() => open()} className="bg-[#6366F1] hover:bg-[#4F46E5] text-white">
-          Connect Wallet
-        </Button>
+          <w3m-button />
       </div>
     </header>
   )
