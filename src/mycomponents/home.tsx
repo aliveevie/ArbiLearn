@@ -23,7 +23,6 @@ const Web3Section: FC = () => {
       router.push('/dashboard');
     }
   
-
   return (
       <>
         <Hero />
