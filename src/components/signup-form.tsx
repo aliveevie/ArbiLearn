@@ -5,24 +5,26 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Github, Mail, Lock, User, Chrome } from 'lucide-react'
+import { Github, Mail, Lock, User, Chrome, AtSign } from 'lucide-react'
 import Link from 'next/link'
 
-export function LoginFormComponent() {
+export function SignupFormComponent() {
   const [username, setUsername] = useState('')
+  const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleSignup = (e: React.FormEvent) => {
     e.preventDefault()
-    // Handle login logic here
-    console.log('Login attempted with:', { username, password })
+    // Handle signup logic here
+    console.log('Signup attempted with:', { username, email, password, confirmPassword })
   }
 
   return (
     <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md">
-      <h2 className="text-2xl font-bold text-center text-gray-800">Login to ArbiLearn</h2>
+      <h2 className="text-2xl font-bold text-center text-gray-800">Sign Up for ArbiLearn</h2>
       
-      <form onSubmit={handleLogin} className="space-y-4">
+      <form onSubmit={handleSignup} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="username">Username</Label>
           <div className="relative">
@@ -30,9 +32,24 @@ export function LoginFormComponent() {
             <Input
               id="username"
               type="text"
-              placeholder="Enter your username"
+              placeholder="Choose a username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
+              className="pl-10"
+              required
+            />
+          </div>
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="email">Email</Label>
+          <div className="relative">
+            <AtSign className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Input
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               className="pl-10"
               required
             />
@@ -45,7 +62,7 @@ export function LoginFormComponent() {
             <Input
               id="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="pl-10"
@@ -53,13 +70,28 @@ export function LoginFormComponent() {
             />
           </div>
         </div>
-        <Button type="submit" className="w-full">Login</Button>
+        <div className="space-y-2">
+          <Label htmlFor="confirmPassword">Confirm Password</Label>
+          <div className="relative">
+            <Lock className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
+            <Input
+              id="confirmPassword"
+              type="password"
+              placeholder="Confirm your password"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              className="pl-10"
+              required
+            />
+          </div>
+        </div>
+        <Button type="submit" className="w-full">Sign Up</Button>
       </form>
 
       <div className="relative">
         <Separator className="my-4" />
         <span className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
-          Or continue with
+          Or sign up with
         </span>
       </div>
 
@@ -85,12 +117,13 @@ export function LoginFormComponent() {
       </div>
 
       <div className="text-center">
-        <span className="text-sm text-gray-600">Don't have an account? </span>
-        <Link href="/signup">
+        <span className="text-sm text-gray-600">Already have an account? </span>
+        <Link href="/login" >
             <Button variant="link" className="text-sm text-blue-600 hover:underline">
-              Sign up
+              Log in
             </Button>
         </Link>
+     
       </div>
     </div>
   )
