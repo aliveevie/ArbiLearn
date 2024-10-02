@@ -7,15 +7,18 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Github, Mail, Lock, User, Chrome } from 'lucide-react'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation';
 
 export function LoginFormComponent() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
+  const router = useRouter();
+
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle login logic here
-    console.log('Login attempted with:', { username, password })
+    router.push('/profile')
   }
 
   return (
