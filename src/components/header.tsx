@@ -64,9 +64,12 @@ export function HeaderComponent() {
           </div>
           <Link href="#" className="text-gray-600 hover:text-gray-900">Contact</Link>
         </nav>
-        <Button className="bg-[#6366F1] hover:bg-[#4F46E5] text-white">
-          LogIn
-        </Button>
+        <Link href="/login" >
+            <Button className="bg-[#6366F1] hover:bg-[#4F46E5] text-white">
+              LogIn
+            </Button>
+        </Link>
+       
       </div>
     </header>
   )
