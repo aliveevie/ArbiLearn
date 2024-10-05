@@ -6,18 +6,20 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Github, Mail, Lock, User, Chrome, AtSign } from 'lucide-react'
-import Link from 'next/link'
+import Link from 'next/link';
+import { useRouter } from 'next/router'
 
 export function SignupFormComponent() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const router = useRouter();
 
   const handleSignup = (e: React.FormEvent) => {
     e.preventDefault()
     // Handle signup logic here
-    console.log('Signup attempted with:', { username, email, password, confirmPassword })
+    router.push('/profile')
   }
 
   return (
