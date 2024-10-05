@@ -1,7 +1,8 @@
+"use client";
+
+import { LearnerDashboardComponent } from "@/components/learner-dashboard"
 export default function Page(){
     return (
-        <div>
-            <h2>Hello Profile</h2>
-        </div>
+        <LearnerDashboardComponent />
     )
 }
