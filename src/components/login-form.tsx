@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react';
 import { Button } from "@/components/ui/button";
@@ -8,6 +8,8 @@ import { Separator } from "@/components/ui/separator";
 import { Github, Mail, Lock, User, Chrome } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import { HeaderComponent } from './header';
+import Head from 'next/head';
 
 export function LoginFormComponent() {
   const [username, setUsername] = useState('')
@@ -22,9 +24,9 @@ export function LoginFormComponent() {
   }
 
   return (
-    <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md">
+    <><HeaderComponent /><div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md mt-20">
       <h2 className="text-2xl font-bold text-center text-gray-800">Login to ArbiLearn</h2>
-      
+
       <form onSubmit={handleLogin} className="space-y-4">
         <div className="space-y-2">
           <Label htmlFor="username">Username</Label>
@@ -37,8 +39,7 @@ export function LoginFormComponent() {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="pl-10"
-              required
-            />
+              required />
           </div>
         </div>
         <div className="space-y-2">
@@ -52,8 +53,7 @@ export function LoginFormComponent() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               className="pl-10"
-              required
-            />
+              required />
           </div>
         </div>
         <Button type="submit" className="w-full">Login</Button>
@@ -90,11 +90,11 @@ export function LoginFormComponent() {
       <div className="text-center">
         <span className="text-sm text-gray-600">Don't have an account? </span>
         <Link href="/signup">
-            <Button variant="link" className="text-sm text-blue-600 hover:underline">
-              Sign up
-            </Button>
+          <Button variant="link" className="text-sm text-blue-600 hover:underline">
+            Sign up
+          </Button>
         </Link>
       </div>
-    </div>
+    </div></>
   )
 }

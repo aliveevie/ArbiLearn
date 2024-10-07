@@ -1,14 +1,12 @@
-import './globals.css'
+import './globals.css';
 import type { Metadata } from 'next'
 import { headers } from 'next/headers'
 // import Header from '@/mycomponents/newheader'
 import { FooterComponent } from '@/components/footer'
 import { HeaderComponent } from '@/components/header'
-
 import { cookieToInitialState } from 'wagmi'
-
 import { config } from '../../config'
-import Web3ModalProvider from '../../context';
+import Web3ModalProvider from '../../context'
 
 export const metadata: Metadata = {
   title: 'ArbiLearn',
@@ -24,7 +22,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <HeaderComponent />
           <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
           <FooterComponent />
       </body>
