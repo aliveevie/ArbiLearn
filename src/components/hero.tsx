@@ -10,7 +10,7 @@ import learner3 from '../../public/learner3.jpg';
 import Image from "next/image";
 import { useWeb3Modal } from '@web3modal/wagmi/react'
 import { HeaderComponent } from "./header";
-import { CoursesCatalogComponent } from "./courses-catalog";
+import { CoursesCatalogComponent } from "./components-courses-catalog-component";
 
 
 
