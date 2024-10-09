@@ -5,42 +5,51 @@ import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
 import { ChevronLeft, ChevronRight } from 'lucide-react'
+import course1 from '../../public/courses/course1.jpg'
+import course2 from '../../public/courses/course2.jpg'
+import course3 from '../../public/courses/course3.jpg'
+import course4 from '../../public/courses/course4.jpg'
+import course5 from '../../public/courses/course5.jpg'
+import course6 from '../../public/courses/course6.jpg'
+import Image from 'next/image'
+
+
 
 const courses = [
   {
     id: 1,
     title: "Introduction to Blockchain",
-    image: "/placeholder.svg?height=200&width=300",
+    image: course1,
     link: "/courses/intro-to-blockchain"
   },
   {
     id: 2,
     title: "Smart Contract Development",
-    image: "/placeholder.svg?height=200&width=300",
+    image: course2,
     link: "/courses/smart-contract-development"
   },
   {
     id: 3,
     title: "DeFi Fundamentals",
-    image: "/placeholder.svg?height=200&width=300",
+    image: course3,
     link: "/courses/defi-fundamentals"
   },
   {
     id: 4,
     title: "NFT Creation and Trading",
-    image: "/placeholder.svg?height=200&width=300",
+    image: course4,
     link: "/courses/nft-creation-trading"
   },
   {
     id: 5,
     title: "Crypto Trading Strategies",
-    image: "/placeholder.svg?height=200&width=300",
+    image: course5,
     link: "/courses/crypto-trading-strategies"
   },
   {
     id: 6,
     title: "Blockchain for Enterprise",
-    image: "/placeholder.svg?height=200&width=300",
+    image: course6,
     link: "/courses/blockchain-for-enterprise"
   }
 ]
@@ -111,7 +120,7 @@ export function CoursesCatalogComponent() {
                   onMouseLeave={() => setHoveredCourse(null)}
                 >
                   <CardContent className="p-0">
-                    <img 
+                    <Image
                       src={course.image} 
                       alt={course.title} 
                       className="w-full h-[200px] object-cover rounded-t-lg"
