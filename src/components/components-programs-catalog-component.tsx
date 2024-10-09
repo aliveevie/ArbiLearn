@@ -4,46 +4,54 @@ import { useState, useRef, useEffect } from 'react'
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import Link from 'next/link'
-import { ChevronLeft, ChevronRight } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import Image from 'next/image';
+import program1 from '../../public/courses/program1.jpg';
+import program2 from '../../public/courses/program2.jpg';
+import program3 from '../../public/courses/program3.jpg';
+import program4 from '../../public/courses/program4.jpg';
+import program5 from '../../public/courses/program5.jpg';
+import program6 from '../../public/courses/program6.jpg';
 
 const programs = [
   {
     id: 1,
     title: "Blockchain Developer Bootcamp",
-    image: "/placeholder.svg?height=200&width=300",
+    image: program1,
     link: "/programs/blockchain-developer-bootcamp"
   },
   {
     id: 2,
     title: "DeFi Specialist Certification",
-    image: "/placeholder.svg?height=200&width=300",
+    image: program2,
     link: "/programs/defi-specialist-certification"
   },
   {
     id: 3,
     title: "Crypto Trading Mastery",
-    image: "/placeholder.svg?height=200&width=300",
+    image: program3,
     link: "/programs/crypto-trading-mastery"
   },
   {
     id: 4,
     title: "NFT Creation and Marketing",
-    image: "/placeholder.svg?height=200&width=300",
+    image: program4,
     link: "/programs/nft-creation-marketing"
   },
   {
     id: 5,
     title: "Blockchain for Business Leaders",
-    image: "/placeholder.svg?height=200&width=300",
+    image: program5,
     link: "/programs/blockchain-for-business-leaders"
   },
   {
     id: 6,
     title: "Web3 Full Stack Development",
-    image: "/placeholder.svg?height=200&width=300",
+    image: program6,
     link: "/programs/web3-full-stack-development"
   }
 ]
+
 
 export function ProgramsCatalogComponent() {
   const [hoveredProgram, setHoveredProgram] = useState<number | null>(null)
@@ -111,7 +119,7 @@ export function ProgramsCatalogComponent() {
                   onMouseLeave={() => setHoveredProgram(null)}
                 >
                   <CardContent className="p-0">
-                    <img 
+                    <Image
                       src={program.image} 
                       alt={program.title} 
                       className="w-full h-[200px] object-cover rounded-t-lg"
