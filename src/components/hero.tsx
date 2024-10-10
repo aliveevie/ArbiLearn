@@ -15,7 +15,6 @@ import { ProgramsCatalogComponent } from "./components-programs-catalog-componen
 
 
 export function Hero() {
-
   const { open, close } = useWeb3Modal()
 
   function handleModalShow(){

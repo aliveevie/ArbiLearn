@@ -38,6 +38,25 @@ interface Course {
   modules: Module[]
 }
 
+interface Program {
+  id: number
+  title: string
+  description: string
+  image: string
+  content: string
+  modules: Module[]
+}
+
+interface EnrolledCourse extends Course {
+  progress: number
+  started: boolean
+}
+
+interface EnrolledProgram extends Program {
+  progress: number
+  started: boolean
+}
+
 const courses: Course[] = [
   {
     id: 1,
@@ -64,24 +83,71 @@ const courses: Course[] = [
           { id: 3, title: "Hash Functions", content: "Hash functions are mathematical algorithms that transform data of arbitrary size into a fixed-size output. They play a crucial role in blockchain for creating digital signatures and maintaining the integrity of the blockchain.", completed: false },
         ]
       },
-      {
-        id: 3,
-        title: "Blockchain Applications",
-        lessons: [
-          { id: 1, title: "Cryptocurrencies", content: "Cryptocurrencies are digital or virtual currencies that use cryptography for security. Bitcoin, the first and most well-known cryptocurrency, was the original application of blockchain technology.", completed: false },
-          { id: 2, title: "Smart Contracts", content: "Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They automatically enforce and execute the terms of an agreement when predetermined conditions are met.", completed: false },
-          { id: 3, title: "Supply Chain Management", content: "Blockchain can create more transparent and efficient supply chains by providing a secure, decentralized record of all transactions and movements within a supply network.", completed: false },
-        ]
-      }
     ]
   },
-  // ... other courses
+  {
+    id: 2,
+    title: "Smart Contract Development",
+    description: "Learn to create and deploy smart contracts on blockchain platforms.",
+    image: "/placeholder.svg?height=100&width=200",
+    content: "This course will teach you how to develop, test, and deploy smart contracts on various blockchain platforms. You'll learn Solidity programming and best practices for creating secure and efficient smart contracts.",
+    modules: [
+      {
+        id: 1,
+        title: "Introduction to Smart Contracts",
+        lessons: [
+          { id: 1, title: "What are Smart Contracts?", content: "Smart contracts are self-executing contracts with the terms of the agreement directly written into code. They automatically enforce and execute the terms of an agreement when predetermined conditions are met.", completed: false },
+          { id: 2, title: "Solidity Basics", content: "Solidity is an object-oriented programming language for writing smart contracts. It is used for implementing smart contracts on various blockchain platforms, particularly Ethereum.", completed: false },
+        ]
+      },
+    ]
+  },
 ]
 
-interface EnrolledCourse extends Course {
-  progress: number
-  started: boolean
-}
+const programs: Program[] = [
+  {
+    id: 1,
+    title: "Blockchain Developer Bootcamp",
+    description: "Comprehensive program to become a blockchain developer",
+    image: "/placeholder.svg?height=100&width=200",
+    content: "This bootcamp covers everything from blockchain basics to advanced smart contract development. You'll learn about various blockchain platforms, decentralized application (DApp) development, and best practices in the industry.",
+    modules: [
+      {
+        id: 1,
+        title: "Blockchain Fundamentals",
+        lessons: [
+          { id: 1, title: "Introduction to Blockchain", content: "Learn the basics of blockchain technology, its history, and its potential applications.", completed: false },
+          { id: 2, title: "Cryptography Basics", content: "Understand the cryptographic principles that underpin blockchain technology.", completed: false },
+        ]
+      },
+      {
+        id: 2,
+        title: "Smart Contract Development",
+        lessons: [
+          { id: 1, title: "Solidity Programming", content: "Learn Solidity, the primary language for writing smart contracts on Ethereum.", completed: false },
+          { id: 2, title: "Smart Contract Security", content: "Understand common vulnerabilities and best practices for securing smart contracts.", completed: false },
+        ]
+      },
+    ]
+  },
+  {
+    id: 2,
+    title: "DeFi Specialist Certification",
+    description: "Become an expert in Decentralized Finance (DeFi)",
+    image: "/placeholder.svg?height=100&width=200",
+    content: "This program will give you a deep understanding of Decentralized Finance (DeFi) protocols, mechanisms, and applications. You'll learn about lending platforms, decentralized exchanges, yield farming, and more.",
+    modules: [
+      {
+        id: 1,
+        title: "DeFi Fundamentals",
+        lessons: [
+          { id: 1, title: "What is DeFi?", content: "Understand the basics of Decentralized Finance and how it differs from traditional finance.", completed: false },
+          { id: 2, title: "DeFi Protocols Overview", content: "Get an overview of major DeFi protocols and their functions.", completed: false },
+        ]
+      },
+    ]
+  },
+]
 
 export function LearnerDashboardComponent() {
   const router = useRouter()
@@ -97,10 +163,14 @@ export function LearnerDashboardComponent() {
   const [showViewProfile, setShowViewProfile] = useState(false)
   const [showSettings, setShowSettings] = useState(false)
   const [showCourses, setShowCourses] = useState(false)
+  const [showPrograms, setShowPrograms] = useState(false)
   const [showCourseDetails, setShowCourseDetails] = useState(false)
+  const [showProgramDetails, setShowProgramDetails] = useState(false)
   const [showLearningSandbox, setShowLearningSandbox] = useState(false)
   const [selectedCourse, setSelectedCourse] = useState<EnrolledCourse | null>(null)
+  const [selectedProgram, setSelectedProgram] = useState<EnrolledProgram | null>(null)
   const [enrolledCourses, setEnrolledCourses] = useState<EnrolledCourse[]>([])
+  const [enrolledPrograms, setEnrolledPrograms] = useState<EnrolledProgram[]>([])
   const [selectedModule, setSelectedModule] = useState<Module | null>(null)
   const [selectedLesson, setSelectedLesson] = useState<Lesson | null>(null)
 
@@ -131,11 +201,23 @@ export function LearnerDashboardComponent() {
     setShowCourseDetails(true)
   }
 
+  const handleViewProgram = (program: Program) => {
+    setSelectedProgram(program as EnrolledProgram)
+    setShowProgramDetails(true)
+  }
+
   const handleEnroll = (course: Course) => {
     if (!enrolledCourses.find(c => c.id === course.id)) {
       setEnrolledCourses([...enrolledCourses, { ...course, progress: 0, started: false }])
     }
     setShowCourses(false)
+  }
+
+  const handleEnrollProgram = (program: Program) => {
+    if (!enrolledPrograms.find(p => p.id === program.id)) {
+      setEnrolledPrograms([...enrolledPrograms, { ...program, progress: 0, started: false }])
+    }
+    setShowPrograms(false)
   }
 
   const handleStartCourse = (courseId: number) => {
@@ -148,12 +230,32 @@ export function LearnerDashboardComponent() {
     }
   }
 
+  const handleStartProgram = (programId: number) => {
+    const program = enrolledPrograms.find(p => p.id === programId)
+    if (program) {
+      setSelectedProgram(program)
+      setSelectedModule(program.modules[0])
+      setSelectedLesson(program.modules[0].lessons[0])
+      setShowLearningSandbox(true)
+    }
+  }
+
   const handleContinueCourse = (courseId: number) => {
     const course = enrolledCourses.find(c => c.id === courseId)
     if (course) {
       setSelectedCourse(course)
       setSelectedModule(course.modules[0])
       setSelectedLesson(course.modules[0].lessons[0])
+      setShowLearningSandbox(true)
+    }
+  }
+
+  const handleContinueProgram = (programId: number) => {
+    const program = enrolledPrograms.find(p => p.id === programId)
+    if (program) {
+      setSelectedProgram(program)
+      setSelectedModule(program.modules[0])
+      setSelectedLesson(program.modules[0].lessons[0])
       setShowLearningSandbox(true)
     }
   }
@@ -192,12 +294,36 @@ export function LearnerDashboardComponent() {
         })
       )
       setSelectedLesson({ ...selectedLesson, completed: true })
+    } else if (selectedProgram && selectedModule && selectedLesson) {
+      setEnrolledPrograms(prevPrograms => 
+        prevPrograms.map(program => {
+          if (program.id === selectedProgram.id) {
+            const updatedModules = program.modules.map(module => {
+              if (module.id === selectedModule.id) {
+                const updatedLessons = module.lessons.map(lesson => 
+                  lesson.id === selectedLesson.id ? { ...lesson, completed: true } : lesson
+                )
+                return { ...module, lessons: updatedLessons }
+              }
+              return module
+            })
+            const totalLessons = program.modules.reduce((sum, module) => sum + module.lessons.length, 0)
+            const completedLessons = updatedModules.reduce((sum, module) => 
+              sum + module.lessons.filter(lesson => lesson.completed).length, 0
+            )
+            const newProgress = Math.round((completedLessons / totalLessons) * 100)
+            return { ...program, modules: updatedModules, progress: newProgress, started: true }
+          }
+          return program
+        })
+      )
+      setSelectedLesson({ ...selectedLesson, completed: true })
     }
   }
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow">
+      <header className="bg-white  shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex items-center justify-between">
           <h1 className="text-2xl font-bold text-gray-900">ArbiLearn</h1>
           <div className="flex items-center space-x-4">
@@ -276,7 +402,7 @@ export function LearnerDashboardComponent() {
           </Card>
         ) : (
           <>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Courses in Progress</CardTitle>
@@ -288,11 +414,20 @@ export function LearnerDashboardComponent() {
               </Card>
               <Card>
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                  <CardTitle className="text-sm font-medium">Programs in Progress</CardTitle>
+                  <BookOpen className="h-4 w-4 text-muted-foreground" />
+                </CardHeader>
+                <CardContent>
+                  <div className="text-2xl font-bold">{enrolledPrograms.length}</div>
+                </CardContent>
+              </Card>
+              <Card>
+                <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
                   <CardTitle className="text-sm font-medium">Completed Courses</CardTitle>
                   <Award className="h-4 w-4 text-muted-foreground" />
                 </CardHeader>
                 <CardContent>
-                  <div  className="text-2xl font-bold">{completedCourses}</div>
+                  <div className="text-2xl font-bold">{completedCourses}</div>
                 </CardContent>
               </Card>
               <Card>
@@ -309,6 +444,7 @@ export function LearnerDashboardComponent() {
             <Tabs defaultValue="courses" className="space-y-4">
               <TabsList>
                 <TabsTrigger value="courses">My Courses</TabsTrigger>
+                <TabsTrigger value="programs">My Programs</TabsTrigger>
                 <TabsTrigger value="achievements">Achievements</TabsTrigger>
                 <TabsTrigger value="earnings">Earnings</TabsTrigger>
               </TabsList>
@@ -344,10 +480,42 @@ export function LearnerDashboardComponent() {
                   </CardContent>
                 </Card>
               </TabsContent>
+              <TabsContent value="programs">
+                <Card>
+                  <CardContent className="p-6">
+                    {enrolledPrograms.length > 0 ? (
+                      <div className="space-y-4">
+                        {enrolledPrograms.map((program) => (
+                          <Card key={program.id}>
+                            <CardHeader>
+                              <CardTitle>{program.title}</CardTitle>
+                              <CardDescription>{program.description}</CardDescription>
+                            </CardHeader>
+                            <CardContent>
+                              <Progress value={program.progress} className="w-full" />
+                              <p className="mt-2 text-sm text-gray-600">{program.progress}% complete</p>
+                            </CardContent>
+                            <CardFooter>
+                              {program.started ? (
+                                <Button onClick={() => handleContinueProgram(program.id)}>Continue</Button>
+                              ) : (
+                                <Button onClick={() => handleStartProgram(program.id)}>Start</Button>
+                              )}
+                            </CardFooter>
+                          </Card>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="text-center text-gray-600">You haven't enrolled in any programs yet. Browse our catalog to begin your learning journey!</p>
+                    )}
+                    <Button className="w-full mt-4" onClick={() => setShowPrograms(true)}>Browse Programs</Button>
+                  </CardContent>
+                </Card>
+              </TabsContent>
               <TabsContent value="achievements">
                 <Card>
                   <CardContent className="p-6">
-                    <p className="text-center text-gray-600">Complete courses to earn achievements and showcase your skills!</p>
+                    <p className="text-center text-gray-600">Complete courses and programs to earn achievements and showcase your skills!</p>
                   </CardContent>
                 </Card>
               </TabsContent>
@@ -497,6 +665,34 @@ export function LearnerDashboardComponent() {
         </DialogContent>
       </Dialog>
 
+      <Dialog open={showPrograms} onOpenChange={setShowPrograms}>
+        <DialogContent className="max-w-4xl">
+          <DialogHeader>
+            <DialogTitle>Browse Programs</DialogTitle>
+          </DialogHeader>
+          <ScrollArea className="h-[400px] w-full rounded-md border p-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {programs.map((program) => (
+                <Card key={program.id}>
+                  <CardHeader>
+                    <img src={program.image} alt={program.title} className="w-full h-32 object-cover rounded-t-lg" />
+                    <CardTitle>{program.title}</CardTitle>
+                    <CardDescription>{program.description}</CardDescription>
+                  </CardHeader>
+                  <CardFooter className="flex justify-between">
+                    <Button variant="outline" size="sm" onClick={() => handleViewProgram(program)}>
+                      <Eye className="mr-2 h-4 w-4" />
+                      View
+                    </Button>
+                    <Button size="sm" onClick={() => handleEnrollProgram(program)}>Enroll</Button>
+                  </CardFooter>
+                </Card>
+              ))}
+            </div>
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={showCourseDetails} onOpenChange={setShowCourseDetails}>
         <DialogContent className="max-w-2xl">
           <DialogHeader>
@@ -519,6 +715,28 @@ export function LearnerDashboardComponent() {
         </DialogContent>
       </Dialog>
 
+      <Dialog open={showProgramDetails} onOpenChange={setShowProgramDetails}>
+        <DialogContent className="max-w-2xl">
+          <DialogHeader>
+            <DialogTitle>{selectedProgram?.title}</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <img src={selectedProgram?.image} alt={selectedProgram?.title} className="w-full h-48 object-cover rounded-lg" />
+            <p>{selectedProgram?.description}</p>
+            <div className="border-t pt-4">
+              <h4 className="font-semibold mb-2">Program Content:</h4>
+              <p>{selectedProgram?.content}</p>
+            </div>
+            <Button className="w-full" onClick={() => {
+              if (selectedProgram) handleEnrollProgram(selectedProgram)
+              setShowProgramDetails(false)
+            }}>
+              Enroll in This Program
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       <Dialog open={showLearningSandbox} onOpenChange={setShowLearningSandbox}>
         <DialogContent className="max-w-6xl h-[90vh]">
           <DialogHeader className="flex flex-row items-center justify-between">
@@ -526,15 +744,15 @@ export function LearnerDashboardComponent() {
               <ChevronLeft className="mr-2 h-4 w-4" />
               Back to Dashboard
             </Button>
-            <DialogTitle>{selectedCourse?.title}</DialogTitle>
+            <DialogTitle>{selectedCourse?.title || selectedProgram?.title}</DialogTitle>
             <div className="w-[100px]"></div>
           </DialogHeader>
           <div className="flex h-full mt-4">
             <div className="w-1/4 pr-4 border-r">
-              <h3 className="text-lg font-semibold mb-4">Course Modules</h3>
+              <h3 className="text-lg font-semibold mb-4">Modules</h3>
               <ScrollArea className="h-[calc(90vh-180px)]">
                 <Accordion type="single" collapsible className="w-full">
-                  {selectedCourse?.modules.map((module) => (
+                  {(selectedCourse?.modules || selectedProgram?.modules)?.map((module) => (
                     <AccordionItem value={`module-${module.id}`} key={module.id}>
                       <AccordionTrigger onClick={() => handleSelectModule(module)}>{module.title}</AccordionTrigger>
                       <AccordionContent>
@@ -563,7 +781,6 @@ export function LearnerDashboardComponent() {
                     <h2 className="text-2xl font-bold mb-4">{selectedLesson.title}</h2>
                     <div className="prose max-w-none">
                       <p>{selectedLesson.content}</p>
-                      {/* Add more content, interactive elements, or media here */}
                       <img src={`/placeholder.svg?height=200&width=400&text=${encodeURIComponent(selectedLesson.title)}`} alt={selectedLesson.title} className="my-4 rounded-lg" />
                       <p>This is where you would add more detailed content for the lesson, including text, images, videos, and interactive elements.</p>
                     </div>
