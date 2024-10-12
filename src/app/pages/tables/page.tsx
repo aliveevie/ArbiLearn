@@ -11,7 +11,7 @@ export default function CreateTables() {
   const handleCreateTables = async () => {
     setIsLoading(true)
     try {
-      const response = await fetch('/api/create-tables')
+      const response = await fetch('/apis/create-tables')
       const data = await response.json()
       setMessage(data.message)
       setTables(data.tables || [])

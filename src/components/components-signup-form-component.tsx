@@ -5,11 +5,11 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
-import { Github, Mail, Lock, User, Chrome, AtSign } from 'lucide-react'
+import { Github, Mail, Lock, User, Chrome, AtSign, AlertCircle } from 'lucide-react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { HeaderComponent } from './header'
-import { Alert, AlertDescription } from "@/components/ui/alert"
+import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 
 export function SignupFormComponent() {
   const [username, setUsername] = useState('')
@@ -17,12 +17,14 @@ export function SignupFormComponent() {
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('')
   const [error, setError] = useState('')
+  const [userExists, setUserExists] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const router = useRouter()
 
   const handleSignup = async (e: React.FormEvent) => {
     e.preventDefault()
     setError('')
+    setUserExists(false)
     setIsLoading(true)
 
     if (password !== confirmPassword) {
@@ -38,13 +40,18 @@ export function SignupFormComponent() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, email, password }),
-      })
+      });
+
+      const data = await response.json();
 
       if (response.ok) {
         router.push('/profile')
       } else {
-        const data = await response.json()
-        setError(data.error || 'An error occurred during signup')
+        if (data.error === "User already exists") {
+          setUserExists(true)
+        } else {
+          setError(data.error || 'An error occurred during signup')
+        }
       }
     } catch (err) {
       setError('An error occurred during signup')
@@ -58,8 +65,19 @@ export function SignupFormComponent() {
       <HeaderComponent />
       <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md mt-20">
         <h2 className="text-2xl font-bold text-center text-gray-800">Sign Up for ArbiLearn</h2>
-        {error && (
+        {userExists && (
           <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>User Already Exists</AlertTitle>
+            <AlertDescription>
+              An account with this email or username already exists. Please try logging in or use a different email/username.
+            </AlertDescription>
+          </Alert>
+        )}
+        {error && !userExists && (
+          <Alert variant="destructive">
+            <AlertCircle className="h-4 w-4" />
+            <AlertTitle>Error</AlertTitle>
             <AlertDescription>{error}</AlertDescription>
           </Alert>
         )}
