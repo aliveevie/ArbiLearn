@@ -15,7 +15,7 @@ export async function POST(req: NextRequest) {
 
     // Check if user already exists
     const existingUser = await sql`
-      SELECT * FROM users WHERE email = ${email}
+      SELECT * FROM users WHERE email = ${email} OR username = ${username}
     `;
 
     if (existingUser.rows.length > 0) {
