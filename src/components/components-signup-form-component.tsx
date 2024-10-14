@@ -42,12 +42,15 @@ export function SignupFormComponent() {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ username, email, password }),
+        credentials: 'include'
       });
 
       const data = await response.json();
 
+      console.log(data)
+
       if (response.ok) {
-        router.push('/profile')
+        router.push('/apis/test')
       } else {
         if (data.error === "User already exists") {
           setUserExists(true)

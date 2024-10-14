@@ -3,20 +3,22 @@ import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
-const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET;
+
+if (!JWT_SECRET) {
+  console.error("JWT_SECRET is not set in environment variables");
+  process.exit(1);
+}
 
 export async function POST(req: NextRequest) {
   try {
-    // Parse the request body
     const body = await req.json();
     const { username, email, password } = body;
 
-    // Validate input
     if (!username || !email || !password) {
       return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
-    // Check if user already exists
     const existingUser = await sql`
       SELECT * FROM users WHERE email = ${email} OR username = ${username}
     `;
@@ -25,50 +27,58 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "User already exists" }, { status: 409 });
     }
 
-    // Hash the password
     const saltRounds = 10;
     const hashedPassword = await bcrypt.hash(password, saltRounds);
 
-    // Insert the new user
     const result = await sql`
       INSERT INTO users (username, email, password)
       VALUES (${username}, ${email}, ${hashedPassword})
       RETURNING id, username, email
     `;
 
-    // Sign the JWT token
     const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
 
-    // Create the response
-    const response = NextResponse.json(result.rows[0], { 
-      status: 201,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      }
+    const response = NextResponse.json(
+      { message: "User created successfully", user: result.rows[0] },
+      { status: 201 }
+    );
+
+    // Determine if we're in a secure context
+    const isSecure = process.env.NODE_ENV === 'production' || req.headers.get('x-forwarded-proto') === 'https';
+
+    // Set the cookie
+    response.cookies.set({
+      name: 'auth_token',
+      value: token,
+      httpOnly: true,
+      secure: isSecure,
+      sameSite: 'lax',
+      maxAge: 3600, // 1 hour
+      path: '/',
     });
 
-    // Set the auth_token cookie
-    response.cookies.set('auth_token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
-      maxAge: 3600, // 1 hour
-      path: '/apis/test',
-    });
+    // Set CORS headers
+    const origin = req.headers.get('origin');
+    response.headers.set('Access-Control-Allow-Origin', origin || '');
+    response.headers.set('Access-Control-Allow-Credentials', 'true');
+
+    console.log("Response headers:", response.headers);
+    console.log("Response cookies:", response.cookies.getAll());
 
     return response;
     
   } catch (error) {
     console.error("Signup error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { 
-      status: 500,
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-        'Access-Control-Allow-Headers': 'Content-Type, Authorization',
-      }
-    });
+    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
   }
+}
+
+export async function OPTIONS(req: NextRequest) {
+  const origin = req.headers.get('origin');
+  const response = NextResponse.json({}, { status: 200 });
+  response.headers.set('Access-Control-Allow-Origin', origin || '');
+  response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  response.headers.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  response.headers.set('Access-Control-Allow-Credentials', 'true');
+  return response;
 }
