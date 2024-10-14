@@ -36,6 +36,10 @@ export async function POST(req: NextRequest) {
       RETURNING id, username, email
     `;
 
+    if (!JWT_SECRET) {
+      throw new Error("JWT_SECRET is not defined");
+    }
+
     const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
 
     const response = NextResponse.json(
