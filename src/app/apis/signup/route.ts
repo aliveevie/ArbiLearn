@@ -1,6 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { sql } from "@vercel/postgres";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 export async function POST(req: NextRequest) {
   try {
@@ -33,8 +36,11 @@ export async function POST(req: NextRequest) {
       RETURNING id, username, email
     `;
 
-    // Return the new user (excluding the password)
-    return NextResponse.json(result.rows[0], { 
+    // Sign the JWT token
+    const token = jwt.sign({ userId: result.rows[0].id }, JWT_SECRET, { expiresIn: '1h' });
+
+    // Create the response
+    const response = NextResponse.json(result.rows[0], { 
       status: 201,
       headers: {
         'Access-Control-Allow-Origin': '*',
@@ -43,6 +49,17 @@ export async function POST(req: NextRequest) {
       }
     });
 
+    // Set the auth_token cookie
+    response.cookies.set('auth_token', token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+      sameSite: 'strict',
+      maxAge: 3600, // 1 hour
+      path: '/apis/test',
+    });
+
+    return response;
+    
   } catch (error) {
     console.error("Signup error:", error);
     return NextResponse.json({ error: "Internal server error" }, { 
