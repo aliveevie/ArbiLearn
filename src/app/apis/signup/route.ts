@@ -48,13 +48,14 @@ export async function POST(req: NextRequest) {
     );
 
     // Determine if we're in a secure context
-    const isSecure = process.env.NODE_ENV === 'production' || req.headers.get('x-forwarded-proto') === 'https';
+    const isSecure = process.env.NODE_ENV === 'production';
+    console.log(isSecure)
 
     // Set the cookie
     response.cookies.set({
       name: 'auth_token',
       value: token,
-      httpOnly: true,
+      httpOnly: false,
       secure: isSecure,
       sameSite: 'lax',
       maxAge: 3600, // 1 hour
@@ -66,8 +67,8 @@ export async function POST(req: NextRequest) {
     response.headers.set('Access-Control-Allow-Origin', origin || '');
     response.headers.set('Access-Control-Allow-Credentials', 'true');
 
-    console.log("Response headers:", response.headers);
-    console.log("Response cookies:", response.cookies.getAll());
+    // console.log("Response headers:", response.headers);
+   // console.log("Response cookies:", response.cookies.getAll());
 
     return response;
     
