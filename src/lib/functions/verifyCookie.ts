@@ -1,4 +1,4 @@
-function verifyToken() {
+export function verifyToken() {
     // Log all cookies for debugging
     console.log('All cookies:', document.cookie);
   
