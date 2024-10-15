@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { verifyToken } from "@/lib/functions/verifyCookie";
 import { LearnerDashboardComponent } from "@/components/components-learner-dashboard-component";
 import Link from "next/link";
+import { LoaderComponent } from "@/components/loader";
 
 export default function Page() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -20,7 +21,7 @@ export default function Page() {
   }, []);
 
   if (isLoading) {
-    return <div className="flex justify-center items-center h-screen">Loading...</div>;
+    return <LoaderComponent />
   }
 
   if (!isAuthenticated) {
