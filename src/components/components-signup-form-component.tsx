@@ -50,7 +50,7 @@ export function SignupFormComponent() {
       console.log(data)
 
       if (response.ok) {
-        router.push('/apis/test')
+        router.push('/profile')
       } else {
         if (data.error === "User already exists") {
           setUserExists(true)
