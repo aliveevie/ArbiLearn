@@ -9,22 +9,21 @@ import { Github, Mail, Lock, User, Chrome } from 'lucide-react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { HeaderComponent } from './header';
+import { toast } from 'react-hot-toast';
 
 export function LoginFormComponent() {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
 
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
-    setError('')
 
     try {
-      const response = await fetch('/apis/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -35,12 +34,13 @@ export function LoginFormComponent() {
       const data = await response.json();
 
       if (response.ok) {
+        toast.success('Login successful');
         router.push('/profile');
       } else {
-        setError(data.message || 'Invalid username or password');
+        toast.error(data.message || 'Invalid username or password');
       }
     } catch (error) {
-      setError('An error occurred. Please try again.');
+      toast.error('An error occurred. Please try again.');
     } finally {
       setIsLoading(false)
     }
@@ -53,11 +53,6 @@ export function LoginFormComponent() {
         <h2 className="text-2xl font-bold text-center text-gray-800">Login to ArbiLearn</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
-          {error && (
-            <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-              <span className="block sm:inline">{error}</span>
-            </div>
-          )}
           <div className="space-y-2">
             <Label htmlFor="username">Username</Label>
             <div className="relative">
