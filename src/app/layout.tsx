@@ -7,6 +7,8 @@ import { HeaderComponent } from '@/components/header'
 import { cookieToInitialState } from 'wagmi'
 import { config } from '../../config'
 import Web3ModalProvider from '../../context'
+import { UserProvider } from '../components/userContext'
+
 
 export const metadata: Metadata = {
   title: 'ArbiLearn',
@@ -21,9 +23,11 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get('cookie'))
   return (
     <html lang="en">
-      <body>
-          <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
-          <FooterComponent />
+      <body> 
+        <UserProvider>
+            <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
+            <FooterComponent />
+        </UserProvider>
       </body>
     </html>
   )
