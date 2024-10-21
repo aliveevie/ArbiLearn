@@ -33,7 +33,7 @@ export function Hero() {
                     Learn Web3 with ArbiLearn
                   </h1>
                   <p className="max-w-xl text-muted-foreground md:text-xl">
-                    Dive into the world of Arbitrum and Web3 with interactive tutorials, quizzes, and a comprehensive
+                    Dive into the world of Web3 with interactive tutorials, quizzes, and a comprehensive
                     glossary. Start your journey to becoming a Web3 expert today.
                   </p>
                 </div>
@@ -72,7 +72,7 @@ export function Hero() {
                     Unlock Your Web3 Potential
                   </h1>
                   <p className="max-w-xl text-muted-foreground md:text-xl">
-                    ArbiLearn offers a comprehensive platform to help you understand Arbitrum and Web3 concepts. Explore
+                    ArbiLearn offers a comprehensive platform to help you understand Web3 concepts. Explore
                     our interactive tutorials, quizzes, and glossary to become a Web3 expert.
                   </p>
                 </div>
@@ -96,7 +96,7 @@ export function Hero() {
                 <div className="inline-block rounded-lg bg-muted px-3 py-1 text-sm">Key Features</div>
                 <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Unlock Your Web3 Potential</h2>
                 <p className="max-w-3xl text-muted-foreground md:text-xl lg:text-base xl:text-xl">
-                  ArbiLearn offers a comprehensive platform to help you understand Arbitrum and Web3 concepts. Explore
+                  ArbiLearn offers a comprehensive platform to help you understand different chains and Web3 concepts. Explore
                   our interactive tutorials, quizzes, and glossary to become a Web3 expert.
                 </p>
               </div>
