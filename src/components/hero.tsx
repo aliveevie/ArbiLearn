@@ -30,7 +30,7 @@ export function Hero() {
               <div className="flex flex-col justify-center space-y-4">
                 <div className="space-y-2">
                   <h1 className="text-3xl font-bold tracking-tighter sm:text-5xl xl:text-6xl">
-                    Learn Arbitrum and Web3 with ArbiLearn
+                    Learn Web3 with ArbiLearn
                   </h1>
                   <p className="max-w-xl text-muted-foreground md:text-xl">
                     Dive into the world of Arbitrum and Web3 with interactive tutorials, quizzes, and a comprehensive
