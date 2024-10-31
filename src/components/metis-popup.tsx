@@ -4,10 +4,10 @@ import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
 import { X } from 'lucide-react'
+import metifNFT from '../../public/MetilNFT.png'
 
 const MetisPopup = () => {
   const [isOpen, setIsOpen] = useState(false)
-  const [imageError, setImageError] = useState(false)
   const router = useRouter()
 
   useEffect(() => {
@@ -16,61 +16,60 @@ const MetisPopup = () => {
   }, [])
 
   const handleClose = () => setIsOpen(false)
-  const handleContinue = () => router.push('/metil-learn')
-
-  const handleImageError = () => {
-    console.error('Failed to load image')
-    setImageError(true)
-  }
+  const handleMint = () => router.push('/metil-learn')
 
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 m-4 max-w-md w-full relative">
+    <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+      <div className="bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 rounded-2xl shadow-2xl max-w-md w-full relative overflow-hidden">
+        {/* Decorative elements */}
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400" />
+        <div className="absolute top-0 right-0 w-24 h-24 bg-gradient-to-b from-purple-400/20 to-transparent rounded-full -translate-y-1/2 translate-x-1/2" />
+        
         <button
           onClick={handleClose}
-          className="absolute top-2 right-2 text-gray-500 hover:text-gray-700"
+          className="absolute top-4 right-4 text-gray-300 hover:text-white transition-colors"
         >
           <X size={24} />
         </button>
-        <div className="mb-4">
-          {!imageError ? (
+
+        <div className="p-8">
+          <div className="mb-6 relative">
+            <div className="absolute inset-0 bg-gradient-to-b from-transparent to-gray-900/80 rounded-xl" />
             <Image
-              src="/placeholder.svg?height=300&width=400&text=MetilLearn+NFT"
+              src={metifNFT}
               alt="MetilLearn NFT Concept"
               width={400}
-              height={300}
-              className="w-full h-auto rounded-lg shadow-md"
-              onError={handleImageError}
+              height={200}
+              className="w-full h-[200px] object-cover rounded-xl"
             />
-          ) : (
-            <div className="w-full h-[300px] bg-gray-200 flex items-center justify-center rounded-lg shadow-md">
-              <p className="text-gray-500">Failed to load image</p>
-            </div>
-          )}
-        </div>
-        <h2 className="text-2xl font-bold mb-4 text-center text-blue-600">
-          Discover MetilLearn NFT
-        </h2>
-        <p className="text-gray-700 mb-6 text-center">
-          Embark on a journey to master Metis blockchain technology and mint your
-          exclusive MetilLearn NFT. Unlock a world of opportunities in the
-          decentralized ecosystem!
-        </p>
-        <div className="flex justify-between">
-          <button
-            onClick={handleClose}
-            className="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded transition duration-300"
-          >
-            Maybe Later
-          </button>
-          <button
-            onClick={handleContinue}
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded transition duration-300"
-          >
-            Learn More
-          </button>
+          </div>
+
+          <h2 className="text-3xl font-bold mb-3 text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-purple-400">
+            Discover MetilLearn NFT
+          </h2>
+
+          <p className="text-gray-300 mb-8 leading-relaxed">
+            Embark on a journey to master Metis blockchain technology and mint your
+            exclusive MetilLearn NFT. Join our community of learners and unlock
+            unprecedented opportunities in the decentralized ecosystem!
+          </p>
+
+          <div className="flex gap-4">
+            <button
+              onClick={handleClose}
+              className="flex-1 px-6 py-3 text-gray-300 hover:text-white bg-gray-800/50 hover:bg-gray-700/50 rounded-xl font-medium transition-colors"
+            >
+              Maybe Later
+            </button>
+            <button
+              onClick={handleMint}
+              className="flex-1 px-6 py-3 text-white font-medium bg-gradient-to-r from-blue-500 to-purple-500 rounded-xl hover:from-blue-600 hover:to-purple-600 transition-colors"
+            >
+              Mint NFT
+            </button>
+          </div>
         </div>
       </div>
     </div>
