@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { X, ArrowLeft } from 'lucide-react'
-import './MetisPopup.css'
+import './metisPopup.css'
 import metiNFT from '../../public/MetilNFT.png'
 import { Button } from './ui/button'
 
