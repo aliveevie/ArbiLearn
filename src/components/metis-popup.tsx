@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
-import { X } from 'lucide-react'
+import { X, ArrowLeft } from 'lucide-react'
 import './MetisPopup.css'
 import metiNFT from '../../public/MetilNFT.png'
 import MintNFTComponent from './mint-nft-component'
@@ -20,22 +20,28 @@ const MetisPopup = () => {
 
   const handleClose = () => setIsOpen(false)
   const handleMint = () => setShowMintComponent(true)
+  const handleBack = () => setShowMintComponent(false)
 
   if (!isOpen) return null
 
   return (
     <div className="popup-overlay">
-      <div className="popup-container">
+      <div className={`popup-container ${showMintComponent ? 'mint-mode' : ''}`}>
         <div className="popup-header" />
-        <button onClick={handleClose} className="popup-close">
-          <X size={24} />
-        </button>
-
-        <div className="popup-content">
-          {showMintComponent ? (
+        {showMintComponent ? (
+          <div className="mint-wrapper">
+            <button onClick={handleBack} className="popup-back-button">
+              <ArrowLeft size={20} />
+              <span>Back</span>
+            </button>
             <MintNFTComponent />
-          ) : (
-            <>
+          </div>
+        ) : (
+          <>
+            <button onClick={handleClose} className="popup-close">
+              <X size={24} />
+            </button>
+            <div className="popup-content">
               <div className="popup-image-container">
                 <div className="popup-image-overlay" />
                 <Image
@@ -71,9 +77,9 @@ const MetisPopup = () => {
                   Mint NFT
                 </button>
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   )

@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 
 const MintNFTComponent: React.FC = () => {
-  const [iframeHeight, setIframeHeight] = useState('750px')
+  const [iframeHeight, setIframeHeight] = useState('150px')
 
   useEffect(() => {
     const handleResize = () => {
@@ -27,8 +27,9 @@ const MintNFTComponent: React.FC = () => {
         style={{ maxWidth: '100%', border: 'none', borderRadius: '12px', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)' }}
         title="Mint MetilLearn NFT"
       />
+
     </div>
   )
 }
 
-export default MintNFTComponent
+export default MintNFTComponent;
