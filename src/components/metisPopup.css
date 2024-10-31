@@ -11,19 +11,16 @@
   }
   
   .popup-container {
-    background: linear-gradient(to bottom right, #1a202c, #2a4365, #44337a);
+    background: linear-gradient(135deg, #1a1b1f 0%, #2d2d3a 100%);
     border-radius: 1rem;
     box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-    max-width: 28rem;
+    max-width: 32rem;
     width: 100%;
     position: relative;
     overflow: hidden;
   }
   
-  /* Special styling for mint mode */
   .popup-container.mint-mode {
-    background: #1a1b1f;
-    max-width: 32rem;
     height: 90vh;
     max-height: 800px;
   }
@@ -31,7 +28,8 @@
   .mint-wrapper {
     position: relative;
     height: 100%;
-    padding: 1rem;
+    padding-top: 3rem;
+    background: #1a1b1f;
   }
   
   .popup-header {
@@ -41,6 +39,7 @@
     width: 100%;
     height: 4px;
     background: linear-gradient(to right, #3182ce, #805ad5, #d53f8c);
+    z-index: 2;
   }
   
   .popup-close {
@@ -52,10 +51,11 @@
     border: none;
     cursor: pointer;
     transition: color 0.3s ease;
+    z-index: 2;
   }
   
   .popup-close:hover {
-    color: #fff;
+    color: #ffffff;
   }
   
   .popup-content {
@@ -65,20 +65,20 @@
   .popup-image-container {
     position: relative;
     margin-bottom: 1.5rem;
+    border-radius: 0.75rem;
+    overflow: hidden;
   }
   
   .popup-image-overlay {
     position: absolute;
     inset: 0;
     background: linear-gradient(to bottom, transparent, rgba(26, 32, 44, 0.8));
-    border-radius: 0.75rem;
   }
   
   .popup-image {
     width: 100%;
     height: 200px;
     object-fit: cover;
-    border-radius: 0.75rem;
   }
   
   .popup-title {
@@ -88,12 +88,14 @@
     background: linear-gradient(to right, #63b3ed, #d6bcfa);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    text-align: center;
   }
   
   .popup-description {
     color: #e2e8f0;
     margin-bottom: 2rem;
     line-height: 1.625;
+    text-align: center;
   }
   
   .popup-buttons {
@@ -106,31 +108,27 @@
     padding: 0.75rem 1.5rem;
     border-radius: 0.75rem;
     font-weight: 500;
+    border: none;
+    cursor: pointer;
     transition: all 0.3s ease;
   }
   
   .popup-button-secondary {
     color: #e2e8f0;
-    background-color: rgba(45, 55, 72, 0.5);
+    background: rgba(45, 55, 72, 0.5);
   }
   
   .popup-button-secondary:hover {
-    background-color: rgba(45, 55, 72, 0.7);
+    background: rgba(45, 55, 72, 0.7);
   }
   
   .popup-button-primary {
-    color: #fff;
+    color: #ffffff;
     background: linear-gradient(to right, #3182ce, #805ad5);
   }
   
   .popup-button-primary:hover {
     background: linear-gradient(to right, #2c5282, #6b46c1);
-  }
-  
-  .popup-content .mint-nft-container {
-    width: 100%;
-    height: 100%;
-    overflow: auto;
   }
   
   .popup-back-button {
@@ -140,19 +138,16 @@
     z-index: 10;
     display: flex;
     align-items: center;
+    gap: 0.5rem;
     background: none;
     border: none;
     color: #e2e8f0;
-    font-size: 1rem;
+    font-size: 0.875rem;
     cursor: pointer;
     padding: 0.5rem;
     transition: color 0.3s ease;
   }
   
   .popup-back-button:hover {
-    color: #fff;
-  }
-  
-  .popup-back-button span {
-    margin-left: 0.5rem;
+    color: #ffffff;
   }
