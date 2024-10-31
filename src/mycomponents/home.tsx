@@ -12,7 +12,7 @@ import { Connection } from "wagmi";
 import { useRouter } from "next/navigation";
 import { Hero } from "@/components/hero";
 import MetisPopup from "@/components/metis-popup";
-
+import MintNFTComponent from "@/components/mint-nft-component";
 
 const Web3Section: FC = () => {
 
@@ -27,7 +27,8 @@ const Web3Section: FC = () => {
   return (
       <>
         <Hero />
-        <MetisPopup />
+        <MintNFTComponent />
+
       </>
   );
 };
