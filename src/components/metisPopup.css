@@ -112,3 +112,9 @@
   .popup-button-primary:hover {
     background: linear-gradient(to right, #2c5282, #6b46c1);
   }
+
+  .popup-content .mint-nft-container {
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+  }

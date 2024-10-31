@@ -27,8 +27,7 @@ const Web3Section: FC = () => {
   return (
       <>
         <Hero />
-        <MintNFTComponent />
-
+        <MetisPopup />
       </>
   );
 };
