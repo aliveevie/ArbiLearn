@@ -12,4 +12,3 @@ export const contract = getContract({
   chain: defineChain(59902),
   address: "0x4de4F5eCad3d6B145450467d6B592b58F6aB7F6f"
 });
-
