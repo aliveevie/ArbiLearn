@@ -126,6 +126,7 @@ export function HeaderComponent() {
               <Link href="#" className="block py-2 text-sm text-gray-700 hover:bg-gray-100">Master Web3</Link>
               <Link href="#" className="block py-2 text-sm text-gray-700 hover:bg-gray-100">Networking</Link>
               <Link href="#" className="block py-2 text-sm text-gray-700 hover:bg-gray-100">Hackathons</Link>
+              <Link href="learn-earn-metis" className="block py-2 text-sm text-gray-700 hover:bg-gray-100">Learn Earn Metis</Link>
             </div>
           )}
           <Link href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact</Link>
