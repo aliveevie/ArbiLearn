@@ -129,7 +129,11 @@ export function HeaderComponent() {
             </div>
           )}
           <Link href="#" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">Contact</Link>
-          <Link href="/login" className="block px-4 py-2 text-gray-700 hover:bg-gray-100">LogIn</Link>
+          <div className="flex justify-center py-2">
+            <Button className="w-full bg-[#6366F1] hover:bg-[#4F46E5] text-white">
+              <Link href="/login" className="block text-center">LogIn</Link>
+            </Button>
+          </div>
         </div>
       )}
     </header>
