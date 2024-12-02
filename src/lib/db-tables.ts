@@ -1,5 +1,14 @@
 import { sql } from "@vercel/postgres";
 
+/**
+ * Creates a users table in the database if it doesn't exist.
+ * The table contains columns for:
+ * - id: Auto-incrementing primary key
+ * - username: Unique username limited to 50 characters
+ * - email: Unique email address limited to 100 characters
+ * - password: Hashed password string
+ * - created_at: Timestamp of when the user was created
+ */
 export async function createUsersTable() {
   await sql`
     CREATE TABLE IF NOT EXISTS users (
@@ -22,3 +31,6 @@ export async function createTestTable() {
   `;
   console.log("Test table created successfully");
 }
+
+
+
