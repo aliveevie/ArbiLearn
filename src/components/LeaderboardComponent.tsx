@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trophy, Zap, Award } from 'lucide-react';
-import { User, currentUser } from '../types';
+import { User, currentUser } from  '../../types';
 
 interface LeaderboardComponentProps {
   leaderboardData: User[];
