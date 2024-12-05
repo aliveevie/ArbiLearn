@@ -1,160 +1,187 @@
+import React from 'react';
+import { X, Trophy, Target, Zap, Award, ImageIcon, Coins, LayoutIcon, UserIcon, ArrowUp } from 'lucide-react';
+import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card';
+import { BadgeDisplay } from './BadgeDisplay';
+import { User } from '../types';
+
+interface DetailedViewProps {
+  setSelectedView: (view: string | null) => void;
+}
+
+export const RankView: React.FC<DetailedViewProps & { user: User; leaderboard: User[] }> = ({ user, leaderboard, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Trophy className="mr-2 text-yellow-500" />
+        Your Ranking Details
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="mb-4 p-4 bg-blue-100 rounded-lg">
+        <p className="text-2xl font-bold text-blue-800">Rank #{user.rank}</p>
+        <p className="text-gray-600">Out of {leaderboard.length} participants</p>
+      </div>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600">Points to Next Rank:</span>
+          <span className="font-semibold">{100 - (user.points % 100)}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600">Ranking Trend:</span>
+          <span className="text-green-500 flex items-center">
+            <ArrowUp className="h-4 w-4 mr-1" />
+            Improving
+          </span>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+);
+
+export const PointsView: React.FC<DetailedViewProps & { points: number }> = ({ points, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Target className="mr-2 text-blue-500" />
+        Points Overview
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-center mb-6">
+        <p className="text-5xl font-bold text-blue-600">{points}</p>
+        <p className="text-gray-500 mt-2">Total Points Earned</p>
+      </div>
+      <div className="space-y-4">
+        <div className="p-3 bg-blue-50 rounded-lg">
+          <h4 className="font-semibold text-blue-800">Recent Achievements</h4>
+          <p className="text-sm text-gray-600">+50 points from daily challenges</p>
+          <p className="text-sm text-gray-600">+100 points from quiz completion</p>
+        </div>
+        <div className="p-3 bg-green-50 rounded-lg">
+          <h4 className="font-semibold text-green-800">Available Points</h4>
+          <p className="text-sm text-gray-600">Complete daily tasks to earn more!</p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
+);
+
+export const StreakView: React.FC<DetailedViewProps & { streak: number }> = ({ streak, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Zap className="mr-2 text-orange-500" />
+        Streak Status
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-center">
+        <p className="text-4xl font-bold text-orange-500">{streak}</p>
+        <p className="text-gray-600 mt-2">Days Streak</p>
+      </div>
+    </CardContent>
+  </Card>
+);
+
+export const BadgesView: React.FC<DetailedViewProps> = ({ setSelectedView }) => (
+  <div className="fixed inset-0 m-auto w-full max-w-md h-fit">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <BadgeDisplay />
+  </div>
+);
+
+export const NFTsView: React.FC<DetailedViewProps & { nfts: number }> = ({ nfts, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <ImageIcon className="mr-2 text-purple-500" />
+        Your NFT Collection
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">{nfts} NFTs</p>
+    </CardContent>
+  </Card>
+);
+
+export const TokensView: React.FC<DetailedViewProps & { tokens: number }> = ({ tokens, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Coins className="mr-2 text-yellow-500" />
+        Token Balance
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">{tokens} Tokens</p>
+    </CardContent>
+  </Card>
+);
+
+export const TasksView: React.FC<DetailedViewProps & { tasks: number }> = ({ tasks, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <LayoutIcon className="mr-2 text-indigo-500" />
+        Task Progress
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">{tasks} Tasks Completed</p>
+    </CardContent>
+  </Card>
+);
+
+export const LevelView: React.FC<DetailedViewProps & { level: number }> = ({ level, setSelectedView }) => (
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <UserIcon className="mr-2 text-red-500" />
+        Level Status
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">Level {level}</p>
+    </CardContent>
+  </Card>
+);
+
+Finally, let's create our main MetisLearnMobile component:
+
+```tsx file="MetisLearnMobile.tsx"
 'use client'
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, CoinsIcon as Coin, Image, User, Target } from 'lucide-react'
+import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X } from 'lucide-react'
 import { Button } from "@/components/ui/button"
-import { BadgeDisplay } from './badge-display'
-
-// Mock data for the current user
-const currentUser = {
-  name: 'Charlie',
-  rank: 3,
-  points: 1100,
-  streak: 3,
-  badges: 3,
-  nfts: 2,
-  tokens: 500,
-  tasksCompleted: 15,
-  level: 4
-}
-
-// Mock data for leaderboard
-const leaderboardData = [
-  { id: 1, name: 'Alice', points: 1200, streak: 7, badges: 5 },
-  { id: 2, name: 'Bob', points: 1150, streak: 5, badges: 4 },
-  { id: 3, name: 'Charlie', points: 1100, streak: 3, badges: 3 },
-  { id: 4, name: 'David', points: 1050, streak: 4, badges: 3 },
-  { id: 5, name: 'Eve', points: 1000, streak: 2, badges: 2 },
-]
-
-const UserProfileComponent: React.FC<{ user: typeof currentUser; onIconClick: (icon: string) => void }> = ({ user, onIconClick }) => (
-  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-    <h2 className="text-2xl font-bold text-blue-800 mb-4">Your MetisLearn Profile</h2>
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('rank')}>
-        <Trophy size={24} className="text-yellow-500 mb-2" />
-        <span className="text-sm text-gray-600">Rank</span>
-        <span className="text-lg font-semibold">{user.rank}</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('points')}>
-        <Target size={24} className="text-blue-500 mb-2" />
-        <span className="text-sm text-gray-600">Points</span>
-        <span className="text-lg font-semibold">{user.points}</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('streak')}>
-        <Zap size={24} className="text-orange-500 mb-2" />
-        <span className="text-sm text-gray-600">Streak</span>
-        <span className="text-lg font-semibold">{user.streak} days</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('badges')}>
-        <Award size={24} className="text-purple-500 mb-2" />
-        <span className="text-sm text-gray-600">Badges</span>
-        <span className="text-lg font-semibold">{user.badges}</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('nfts')}>
-        <Image size={24} className="text-green-500 mb-2" />
-        <span className="text-sm text-gray-600">NFTs</span>
-        <span className="text-lg font-semibold">{user.nfts}</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('tokens')}>
-        <Coin size={24} className="text-yellow-600 mb-2" />
-        <span className="text-sm text-gray-600">Tokens</span>
-        <span className="text-lg font-semibold">{user.tokens}</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('tasks')}>
-        <Layout size={24} className="text-indigo-500 mb-2" />
-        <span className="text-sm text-gray-600">Tasks</span>
-        <span className="text-lg font-semibold">{user.tasksCompleted}</span>
-      </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('level')}>
-        <User size={24} className="text-red-500 mb-2" />
-        <span className="text-sm text-gray-600">Level</span>
-        <span className="text-lg font-semibold">{user.level}</span>
-      </div>
-    </div>
-  </div>
-)
-
-const LeaderboardComponent: React.FC = () => (
-  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-    <h2 className="text-2xl font-bold text-blue-800 mb-4">Leaderboard</h2>
-    <div className="overflow-x-auto">
-      <table className="w-full">
-        <thead>
-          <tr className="text-left border-b">
-            <th className="pb-2">Rank</th>
-            <th className="pb-2">Name</th>
-            <th className="pb-2"><Trophy size={16} className="inline mr-1" /> Points</th>
-            <th className="pb-2"><Zap size={16} className="inline mr-1" /> Streak</th>
-            <th className="pb-2"><Award size={16} className="inline mr-1" /> Badges</th>
-          </tr>
-        </thead>
-        <tbody>
-          {leaderboardData.map((user, index) => (
-            <tr key={user.id} className={user.name === currentUser.name ? "bg-blue-100 font-semibold" : ""}>
-              <td className="py-2">{index + 1}</td>
-              <td>{user.name}{user.name === currentUser.name && " (You)"}</td>
-              <td>{user.points}</td>
-              <td>{user.streak}</td>
-              <td>{user.badges}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </div>
-  </div>
-)
-
-const RankView: React.FC<{ user: typeof currentUser; leaderboard: typeof leaderboardData }> = ({ user, leaderboard }) => (
-  <div>
-    <p>Your Rank: {user.rank}</p>
-    {/* Add more details as needed */}
-  </div>
-)
-
-const PointsView: React.FC<{ points: number }> = ({ points }) => (
-  <div>
-    <p>Your Points: {points}</p>
-    {/* Add more details as needed */}
-  </div>
-)
-
-const StreakView: React.FC<{ streak: number }> = ({ streak }) => (
-  <div>
-    <p>Your Streak: {streak} days</p>
-    {/* Add more details as needed */}
-  </div>
-)
-
-const BadgesView: React.FC = () => (
-  <BadgeDisplay />
-)
-
-const NFTsView: React.FC<{ nfts: number }> = ({ nfts }) => (
-  <div>
-    <p>Your NFTs: {nfts}</p>
-    {/* Add more details as needed */}
-  </div>
-)
-
-const TokensView: React.FC<{ tokens: number }> = ({ tokens }) => (
-  <div>
-    <p>Your Tokens: {tokens}</p>
-  </div>
-)
-
-const TasksView: React.FC<{ tasks: number }> = ({ tasks }) => (
-  <div>
-    <p>Tasks Completed: {tasks}</p>
-  </div>
-)
-
-const LevelView: React.FC<{ level: number }> = ({ level }) => (
-  <div>
-    <p>Your Level: {level}</p>
-  </div>
-)
+import UserProfileComponent from './components/UserProfileComponent'
+import LeaderboardComponent from './components/LeaderboardComponent'
+import { RankView, PointsView, StreakView, BadgesView, NFTsView, TokensView, TasksView, LevelView } from './components/DetailedViews'
+import { currentUser, leaderboardData } from './types'
 
 const MetisLearnMobile: React.FC = () => {
   const [selectedTopic, setSelectedTopic] = useState<string | null>(null)
@@ -326,14 +353,14 @@ const MetisLearnMobile: React.FC = () => {
               exit={{ opacity: 0, y: -20 }}
               transition={{ duration: 0.3 }}
             >
-              {selectedView === 'rank' && <RankView user={currentUser} leaderboard={leaderboardData} />}
-              {selectedView === 'points' && <PointsView points={currentUser.points} />}
-              {selectedView === 'streak' && <StreakView streak={currentUser.streak} />}
-              {selectedView === 'badges' && <BadgesView />}
-              {selectedView === 'nfts' && <NFTsView nfts={currentUser.nfts} />}
-              {selectedView === 'tokens' && <TokensView tokens={currentUser.tokens} />}
-              {selectedView === 'tasks' && <TasksView tasks={currentUser.tasksCompleted} />}
-              {selectedView === 'level' && <LevelView level={currentUser.level} />}
+              {selectedView === 'rank' && <RankView user={currentUser} leaderboard={leaderboardData} setSelectedView={setSelectedView} />}
+              {selectedView === 'points' && <PointsView points={currentUser.points} setSelectedView={setSelectedView} />}
+              {selectedView === 'streak' && <StreakView streak={currentUser.streak} setSelectedView={setSelectedView} />}
+              {selectedView === 'badges' && <BadgesView setSelectedView={setSelectedView} />}
+              {selectedView === 'nfts' && <NFTsView nfts={currentUser.nfts} setSelectedView={setSelectedView} />}
+              {selectedView === 'tokens' && <TokensView tokens={currentUser.tokens} setSelectedView={setSelectedView} />}
+              {selectedView === 'tasks' && <TasksView tasks={currentUser.tasksCompleted} setSelectedView={setSelectedView} />}
+              {selectedView === 'level' && <LevelView level={currentUser.level} setSelectedView={setSelectedView} />}
               {selectedTopic && topics.find(t => t.id === selectedTopic)?.content}
               {!selectedView && !selectedTopic && (
                 <>
