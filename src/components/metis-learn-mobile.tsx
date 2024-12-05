@@ -29,7 +29,7 @@ const leaderboardData = [
 ]
 
 const UserProfileComponent: React.FC<{ user: typeof currentUser; onIconClick: (icon: string) => void }> = ({ user, onIconClick }) => (
-  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
+  <div className="bg-blue rounded-lg shadow-lg p-6 mb-6">
     <h2 className="text-2xl font-bold text-blue-800 mb-4">Your MetisLearn Profile</h2>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
       <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('rank')}>
