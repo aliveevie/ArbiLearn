@@ -2,9 +2,10 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, Coins as Coin, Image, User, Target } from 'lucide-react'
+import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, Coins as Coin, Image, User, Target, ArrowUp, CoinsIcon, ImageIcon, LayoutIcon, UserIcon } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { BadgeDisplay } from './badge-display'
+import { Card, CardHeader, CardTitle, CardContent } from './ui/card'
 // Removed the import of BadgeDisplay as it causes an error
 
 // Mock data for the current user
@@ -30,48 +31,48 @@ const leaderboardData = [
 ]
 
 const UserProfileComponent: React.FC<{ user: typeof currentUser; onIconClick: (icon: string) => void }> = ({ user, onIconClick }) => (
-  <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
-    <h2 className="text-2xl font-bold text-blue-800 mb-4">Your MetisLearn Profile</h2>
+  <div className="bg-blue-500 rounded-lg shadow-lg p-6 mb-6">
+    <h2 className="text-2xl font-bold text-white mb-4">Your MetisLearn Profile</h2>
     <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('rank')}>
-        <Trophy size={24} className="text-yellow-500 mb-2" />
-        <span className="text-sm text-gray-600">Rank</span>
-        <span className="text-lg font-semibold">{user.rank}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('rank')}>
+        <Trophy size={24} className="text-yellow-500 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Rank</span>
+        <span className="text-lg font-semibold text-white">{user.rank}</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('points')}>
-        <Target size={24} className="text-blue-500 mb-2" />
-        <span className="text-sm text-gray-600">Points</span>
-        <span className="text-lg font-semibold">{user.points}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('points')}>
+        <Target size={24} className="text-white mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Points</span>
+        <span className="text-lg font-semibold text-white">{user.points}</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('streak')}>
-        <Zap size={24} className="text-orange-500 mb-2" />
-        <span className="text-sm text-gray-600">Streak</span>
-        <span className="text-lg font-semibold">{user.streak} days</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('streak')}>
+        <Zap size={24} className="text-orange-500 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Streak</span>
+        <span className="text-lg font-semibold text-white">{user.streak} days</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('badges')}>
-        <Award size={24} className="text-purple-500 mb-2" />
-        <span className="text-sm text-gray-600">Badges</span>
-        <span className="text-lg font-semibold">{user.badges}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('badges')}>
+        <Award size={24} className="text-purple-500 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Badges</span>
+        <span className="text-lg font-semibold text-white">{user.badges}</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('nfts')}>
-        <Image size={24} className="text-green-500 mb-2" />
-        <span className="text-sm text-gray-600">NFTs</span>
-        <span className="text-lg font-semibold">{user.nfts}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('nfts')}>
+        <Image size={24} className="text-green-500 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">NFTs</span>
+        <span className="text-lg font-semibold text-white">{user.nfts}</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('tokens')}>
-        <Coin size={24} className="text-yellow-600 mb-2" />
-        <span className="text-sm text-gray-600">Tokens</span>
-        <span className="text-lg font-semibold">{user.tokens}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('tokens')}>
+        <Coin size={24} className="text-yellow-600 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Tokens</span>
+        <span className="text-lg font-semibold text-white">{user.tokens}</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('tasks')}>
-        <Layout size={24} className="text-indigo-500 mb-2" />
-        <span className="text-sm text-gray-600">Tasks</span>
-        <span className="text-lg font-semibold">{user.tasksCompleted}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('tasks')}>
+        <Layout size={24} className="text-indigo-500 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Tasks</span>
+        <span className="text-lg font-semibold text-white">{user.tasksCompleted}</span>
       </div>
-      <div className="flex flex-col items-center p-2 bg-blue-50 rounded-lg" onClick={() => onIconClick('level')}>
-        <User size={24} className="text-red-500 mb-2" />
-        <span className="text-sm text-gray-600">Level</span>
-        <span className="text-lg font-semibold">{user.level}</span>
+      <div className="flex flex-col items-center p-2 bg-blue-400 rounded-lg cursor-pointer hover:bg-blue-300 transition-colors" onClick={() => onIconClick('level')}>
+        <User size={24} className="text-red-500 mb-2 cursor-pointer hover:scale-110 transition-transform" />
+        <span className="text-sm text-white">Level</span>
+        <span className="text-lg font-semibold text-white">{user.level}</span>
       </div>
     </div>
   </div>
@@ -86,9 +87,9 @@ const LeaderboardComponent: React.FC = () => (
           <tr className="text-left border-b">
             <th className="pb-2">Rank</th>
             <th className="pb-2">Name</th>
-            <th className="pb-2"><Trophy size={16} className="inline mr-1" /> Points</th>
-            <th className="pb-2"><Zap size={16} className="inline mr-1" /> Streak</th>
-            <th className="pb-2"><Award size={16} className="inline mr-1" /> Badges</th>
+            <th className="pb-2"><Trophy size={16} className="inline mr-1 cursor-pointer hover:scale-110 transition-transform" /> Points</th>
+            <th className="pb-2"><Zap size={16} className="inline mr-1 cursor-pointer hover:scale-110 transition-transform" /> Streak</th>
+            <th className="pb-2"><Award size={16} className="inline mr-1 cursor-pointer hover:scale-110 transition-transform" /> Badges</th>
           </tr>
         </thead>
         <tbody>
@@ -106,55 +107,165 @@ const LeaderboardComponent: React.FC = () => (
     </div>
   </div>
 )
-
 const RankView: React.FC<{ user: typeof currentUser; leaderboard: typeof leaderboardData }> = ({ user, leaderboard }) => (
-  <div>
-    <p>Your Rank: {user.rank}</p>
-    {/* Add more details as needed */}
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Trophy className="mr-2 text-yellow-500" />
+        Your Ranking Details
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="mb-4 p-4 bg-blue-100 rounded-lg">
+        <p className="text-2xl font-bold text-blue-800">Rank #{user.rank}</p>
+        <p className="text-gray-600">Out of {leaderboard.length} participants</p>
+      </div>
+      <div className="space-y-4">
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600">Points to Next Rank:</span>
+          <span className="font-semibold">{100 - (user.points % 100)}</span>
+        </div>
+        <div className="flex justify-between items-center">
+          <span className="text-gray-600">Ranking Trend:</span>
+          <span className="text-green-500 flex items-center">
+            <ArrowUp className="h-4 w-4 mr-1" />
+            Improving
+          </span>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
 )
 
 const PointsView: React.FC<{ points: number }> = ({ points }) => (
-  <div>
-    <p>Your Points: {points}</p>
-    {/* Add more details as needed */}
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Target className="mr-2 text-blue-500" />
+        Points Overview
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-center mb-6">
+        <p className="text-5xl font-bold text-blue-600">{points}</p>
+        <p className="text-gray-500 mt-2">Total Points Earned</p>
+      </div>
+      <div className="space-y-4">
+        <div className="p-3 bg-blue-50 rounded-lg">
+          <h4 className="font-semibold text-blue-800">Recent Achievements</h4>
+          <p className="text-sm text-gray-600">+50 points from daily challenges</p>
+          <p className="text-sm text-gray-600">+100 points from quiz completion</p>
+        </div>
+        <div className="p-3 bg-green-50 rounded-lg">
+          <h4 className="font-semibold text-green-800">Available Points</h4>
+          <p className="text-sm text-gray-600">Complete daily tasks to earn more!</p>
+        </div>
+      </div>
+    </CardContent>
+  </Card>
 )
 
 const StreakView: React.FC<{ streak: number }> = ({ streak }) => (
-  <div>
-    <p>Your Streak: {streak} days</p>
-    {/* Add more details as needed */}
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <Zap className="mr-2 text-orange-500" />
+        Streak Status
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <div className="text-center">
+        <p className="text-4xl font-bold text-orange-500">{streak}</p>
+        <p className="text-gray-600 mt-2">Days Streak</p>
+      </div>
+    </CardContent>
+  </Card>
 )
 
 const BadgesView: React.FC = () => (
-  <BadgeDisplay />
+  <div className="fixed inset-0 m-auto w-full max-w-md h-fit">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <BadgeDisplay />
+  </div>
 )
 
 const NFTsView: React.FC<{ nfts: number }> = ({ nfts }) => (
-  <div>
-    <p>Your NFTs: {nfts}</p>
-    {/* Add more details as needed */}
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <ImageIcon className="mr-2 text-purple-500" />
+        Your NFT Collection
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">{nfts} NFTs</p>
+    </CardContent>
+  </Card>
 )
 
 const TokensView: React.FC<{ tokens: number }> = ({ tokens }) => (
-  <div>
-    <p>Your Tokens: {tokens}</p>
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <CoinsIcon className="mr-2 text-yellow-500" />
+        Token Balance
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">{tokens} Tokens</p>
+    </CardContent>
+  </Card>
 )
 
 const TasksView: React.FC<{ tasks: number }> = ({ tasks }) => (
-  <div>
-    <p>Tasks Completed: {tasks}</p>
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <LayoutIcon className="mr-2 text-indigo-500" />
+        Task Progress
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">{tasks} Tasks Completed</p>
+    </CardContent>
+  </Card>
 )
 
 const LevelView: React.FC<{ level: number }> = ({ level }) => (
-  <div>
-    <p>Your Level: {level}</p>
-  </div>
+  <Card className="fixed inset-0 m-auto w-full max-w-md h-fit bg-white rounded-lg shadow-lg">
+    <div className="absolute top-4 right-4">
+      <X className="h-6 w-6 text-gray-400 hover:text-gray-600 cursor-pointer" onClick={() => setSelectedView(null)} />
+    </div>
+    <CardHeader>
+      <CardTitle className="flex items-center text-blue-800">
+        <UserIcon className="mr-2 text-red-500" />
+        Level Status
+      </CardTitle>
+    </CardHeader>
+    <CardContent>
+      <p className="text-2xl font-bold text-center">Level {level}</p>
+    </CardContent>
+  </Card>
 )
 
 const MetisLearnMobile: React.FC = () => {
@@ -366,4 +477,8 @@ const MetisLearnMobile: React.FC = () => {
 }
 
 export default MetisLearnMobile
+
+function setSelectedView(arg0: null): void {
+  throw new Error('Function not implemented.')
+}
 
