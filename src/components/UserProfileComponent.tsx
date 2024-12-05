@@ -1,6 +1,6 @@
 import React from 'react';
 import { Trophy, Target, Zap, Award, Image, Coins, Layout, User } from 'lucide-react';
-import { User as UserType } from '../types';
+import { User as UserType } from '../../types';
 import styles from '../styles/UserProfileComponent.module.css';
 
 interface UserProfileComponentProps {
