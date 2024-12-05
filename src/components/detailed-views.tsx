@@ -2,7 +2,19 @@ import React from 'react'
 import { Trophy, Target, Zap, Award, ImageIcon, CoinsIcon, LayoutIcon, UserIcon } from 'lucide-react'
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 
-export const RankView: React.FC<{ user: typeof currentUser; leaderboard: typeof leaderboardData }> = ({ user, leaderboard }) => (
+interface User {
+  rank: number;
+  points: number;
+  name: string;
+}
+
+interface LeaderboardEntry {
+  id: React.Key | null | undefined;
+  name: string;
+  points: number;
+}
+
+export const RankView: React.FC<{ user: User; leaderboard: LeaderboardEntry[] }> = ({ user, leaderboard }) => (
   <Card className="w-full max-w-md mx-auto">
     <CardHeader>
       <CardTitle className="flex items-center text-blue-800">
@@ -16,7 +28,7 @@ export const RankView: React.FC<{ user: typeof currentUser; leaderboard: typeof 
         <p>Points: {user.points}</p>
       </div>
       <ul className="space-y-2">
-        {leaderboard.map((entry, index) => (
+        {leaderboard.map((entry: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; points: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }, index: number) => (
           <li key={entry.id} className={`p-2 ${entry.name === user.name ? 'bg-blue-100 font-semibold' : 'bg-gray-50'} rounded-lg`}>
             <span className="mr-2">{index + 1}.</span>
             <span>{entry.name}</span>
