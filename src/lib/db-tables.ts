@@ -31,6 +31,3 @@ export async function createTestTable() {
   `;
   console.log("Test table created successfully");
 }
-
-
-
