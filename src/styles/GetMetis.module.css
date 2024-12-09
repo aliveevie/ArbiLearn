@@ -1,0 +1,101 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  
+  .title {
+    text-align: center;
+    color: #1a1a1a;
+    margin-bottom: 2rem;
+    font-size: 2.5rem;
+  }
+  
+  .priceContainer {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 3rem;
+  }
+  
+  .priceCard {
+    background: linear-gradient(135deg, #2193b0, #6dd5ed);
+    padding: 1.5rem 3rem;
+    border-radius: 1rem;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    transition: transform 0.3s ease;
+  }
+  
+  .priceCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .priceLabel {
+    display: block;
+    color: white;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .priceValue {
+    display: block;
+    color: white;
+    font-size: 2rem;
+    font-weight: bold;
+  }
+  
+  .methodsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .methodCard {
+    background: white;
+    padding: 1.5rem;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .methodCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .methodCard h3 {
+    color: #2193b0;
+    margin-bottom: 1rem;
+  }
+  
+  .methodCard ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .methodCard li {
+    margin-bottom: 0.5rem;
+    color: #4a4a4a;
+    position: relative;
+    padding-left: 1.5rem;
+  }
+  
+  .methodCard li:before {
+    content: "•";
+    color: #2193b0;
+    position: absolute;
+    left: 0;
+  }
+  
+  @media (max-width: 768px) {
+    .container {
+      padding: 1rem;
+    }
+    
+    .title {
+      font-size: 2rem;
+    }
+    
+    .priceValue {
+      font-size: 1.5rem;
+    }
+  }

@@ -2,11 +2,12 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, CoinsIcon as Coin, Image, User, Target } from 'lucide-react'
+import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, CoinsIcon, DollarSign as Coin, Image, User, Target, DollarSign } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { BadgeDisplay } from './badge-display'
 import MetisBlockchainFundamentals from './metis-blockchain-fundamentals'
 import SmartContractDevelopment from './smartcontractdev'
+import GetMetis from './getmetis'
 
 // Mock data for the current user
 const currentUser = {
@@ -195,18 +196,9 @@ const MetisLearnMobile: React.FC = () => {
         <Button onClick={() => alert('NFT Minted!')} className="w-full mt-4">Mint Completion NFT</Button>
       </>
     )},
-    { id: 'dapps', title: 'Decentralized Applications (DApps)', icon: Layout, content: (
+    { id: 'dapps', title: 'Get Metis', icon: DollarSign, content: (
       <>
-        <h3 className="text-xl font-semibold mb-4">Building DApps on Metis</h3>
-        <p className="mb-4">Create powerful decentralized applications that leverage Metis' high throughput and low latency.</p>
-        <h4 className="text-lg font-semibold mb-2">DApp Development Process:</h4>
-        <ol className="list-decimal list-inside mb-4">
-          <li>Setting up the development environment</li>
-          <li>Integrating Metis wallet connections</li>
-          <li>Interacting with smart contracts on Metis</li>
-          <li>Optimizing user experience for Layer 2</li>
-        </ol>
-        <p className="mb-4">By the end of this module, you'll be able to build and deploy full-stack DApps on the Metis network.</p>
+        <GetMetis />
         <Button onClick={() => alert('NFT Minted!')} className="w-full mt-4">Mint Completion NFT</Button>
       </>
     )},
@@ -257,7 +249,7 @@ const MetisLearnMobile: React.FC = () => {
                         setSelectedView(null)
                         if (isMobile) setShowSidebar(false)
                       }}
-                      className="w-full text-left flex items-center p-2 rounded-md hover:bg-blue-50 transition-colors duration-200"
+                      className="w-full text-left flex items-center gap-3 px-4 py-3 rounded-lg hover:bg-blue-100/80 active:bg-blue-200/80 transition-all duration-200 text-sm md:text-base font-medium focus:outline-none focus:ring-2 focus:ring-blue-500/40"
                     >
                       <topic.icon className="mr-2 text-blue-500" size={20} />
                       <span className="text-gray-700">{topic.title}</span>
