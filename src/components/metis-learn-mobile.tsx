@@ -76,6 +76,8 @@ const UserProfileComponent: React.FC<{ user: typeof currentUser; onIconClick: (i
   </div>
 )
 
+//
+
 const LeaderboardComponent: React.FC = () => (
   <div className="bg-white rounded-lg shadow-lg p-6 mb-6">
     <h2 className="text-2xl font-bold text-blue-800 mb-4">Leaderboard</h2>

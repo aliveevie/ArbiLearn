@@ -20,9 +20,9 @@ const Web3Section: FC = () => {
 
   const router = useRouter();
 
-    if (isConnected) {
-      router.push('/dashboard');
-    }
+    // if (isConnected) {
+    //   router.push('/dashboard');
+    // }
   
   return (
       <>
