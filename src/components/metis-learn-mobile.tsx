@@ -6,6 +6,7 @@ import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X,
 import { Button } from "@/components/ui/button"
 import { BadgeDisplay } from './badge-display'
 import MetisBlockchainFundamentals from './metis-blockchain-fundamentals'
+import SmartContractDevelopment from './smartcontractdev'
 
 // Mock data for the current user
 const currentUser = {
@@ -190,15 +191,7 @@ const MetisLearnMobile: React.FC = () => {
     )},
     { id: 'smart-contracts', title: 'Smart Contract Development', icon: Code, content: (
       <>
-        <h3 className="text-xl font-semibold mb-4">Smart Contract Development on Metis</h3>
-        <p className="mb-4">Developing smart contracts on Metis is similar to Ethereum, but with some key differences to leverage Metis' unique features.</p>
-        <h4 className="text-lg font-semibold mb-2">Topics Covered:</h4>
-        <ul className="list-disc list-inside mb-4">
-          <li>Solidity basics for Metis</li>
-          <li>Interacting with Metis-specific features</li>
-          <li>Optimizing for Layer 2 performance</li>
-        </ul>
-        <p className="mb-4">Learn to write, test, and deploy smart contracts that take full advantage of Metis' scalability and low fees.</p>
+        <SmartContractDevelopment />
         <Button onClick={() => alert('NFT Minted!')} className="w-full mt-4">Mint Completion NFT</Button>
       </>
     )},
