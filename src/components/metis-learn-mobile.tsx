@@ -5,6 +5,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, CoinsIcon as Coin, Image, User, Target } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { BadgeDisplay } from './badge-display'
+import MetisBlockchainFundamentals from './metis-blockchain-fundamentals'
 
 // Mock data for the current user
 const currentUser = {
@@ -183,15 +184,7 @@ const MetisLearnMobile: React.FC = () => {
   const topics = [
     { id: 'fundamentals', title: 'Metis Blockchain Fundamentals', icon: Cube, content: (
       <>
-        <h3 className="text-xl font-semibold mb-4">Metis Blockchain Fundamentals</h3>
-        <p className="mb-4">Metis is a Layer 2 blockchain solution built on Ethereum. It aims to solve scalability issues while maintaining security and decentralization.</p>
-        <h4 className="text-lg font-semibold mb-2">Key Concepts:</h4>
-        <ul className="list-disc list-inside mb-4">
-          <li>Optimistic Rollups</li>
-          <li>Decentralized Autonomous Companies (DACs)</li>
-          <li>Metis Virtual Machine (MVM)</li>
-        </ul>
-        <p className="mb-4">Metis provides faster and cheaper transactions compared to the Ethereum mainnet, making it ideal for DApps and DeFi projects.</p>
+        <MetisBlockchainFundamentals />
         <Button onClick={() => alert('NFT Minted!')} className="w-full mt-4">Mint Completion NFT</Button>
       </>
     )},
