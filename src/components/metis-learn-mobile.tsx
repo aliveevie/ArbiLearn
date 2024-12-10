@@ -8,6 +8,7 @@ import { BadgeDisplay } from './badge-display'
 import MetisBlockchainFundamentals from './metis-blockchain-fundamentals'
 import SmartContractDevelopment from './smartcontractdev'
 import GetMetis from './getmetis'
+import Layer2Solution from './layer-two-solution'
 
 // Mock data for the current user
 const currentUser = {
@@ -204,17 +205,8 @@ const MetisLearnMobile: React.FC = () => {
     )},
     { id: 'layer2', title: 'Layer 2 Scaling Solutions', icon: Layers, content: (
       <>
-        <h3 className="text-xl font-semibold mb-4">Layer 2 Scaling with Metis</h3>
-        <p className="mb-4">Understand how Metis provides scalability as a Layer 2 solution and how it compares to other scaling technologies.</p>
-        <h4 className="text-lg font-semibold mb-2">Key Topics:</h4>
-        <ul className="list-disc list-inside mb-4">
-          <li>Optimistic Rollups vs. other L2 solutions</li>
-          <li>Metis' unique approach to scalability</li>
-          <li>Bridging assets between Ethereum and Metis</li>
-          <li>Future roadmap and scalability improvements</li>
-        </ul>
-        <p className="mb-4">Gain insights into the technical aspects of Layer 2 scaling and how Metis is pushing the boundaries of blockchain performance.</p>
-        <Button onClick={() => alert('NFT Minted!')} className="w-full mt-4">Mint Completion NFT</Button>
+      <Layer2Solution />
+      <Button onClick={() => alert('NFT Minted!')} className="w-full mt-4">Mint Completion NFT</Button>
       </>
     )},
   ]
