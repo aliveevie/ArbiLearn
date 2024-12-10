@@ -32,8 +32,6 @@ const Web3Section: FC = () => {
   );
 };
 
-
-
 const HomePage: FC = () => {
   return (
     <div className="flex flex-col min-h-screen">
