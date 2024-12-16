@@ -1,6 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+canvas {
+  touch-action: none;
+}
 
 @layer base {
   :root {
@@ -60,10 +63,10 @@
 }
 
 @layer base {
-  * {
+  /* * {
     @apply border-border;
-  }
-  body {
+  } */
+  /* body {
     @apply bg-background text-foreground;
-  }
+  } */
 }
