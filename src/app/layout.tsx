@@ -23,10 +23,15 @@ export default function RootLayout({
   const initialState = cookieToInitialState(config, headers().get('cookie'))
   return (
     <html lang="en">
-      <body> 
+      <body className="min-h-screen flex flex-col"> 
         <UserProvider>
-            <Web3ModalProvider initialState={initialState}>{children}</Web3ModalProvider>
+          <Web3ModalProvider initialState={initialState}>
+            <HeaderComponent />
+            <main className="flex-grow">
+              {children}
+            </main>
             <FooterComponent />
+          </Web3ModalProvider>
         </UserProvider>
       </body>
     </html>

@@ -1,11 +1,12 @@
-import HomePage from "@/mycomponents/home";
-// New Themes!
+import { Hero } from "@/components/hero"
+import { HeaderComponent } from "@/components/header"
 
 export default function Home() {
-
   return (
-    <>
-          <HomePage /> 
-    </>
-  );
+    <main className="min-h-screen">
+   
+      <Hero />
+    </main>
+  )
 }
+

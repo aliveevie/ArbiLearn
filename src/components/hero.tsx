@@ -15,14 +15,13 @@ import { ProgramsCatalogComponent } from "./components-programs-catalog-componen
 
 
 export function Hero() {
-  const { open, close } = useWeb3Modal()
+  // const { open, close } = useWeb3Modal()
 
   function handleModalShow(){
-      open()
+      console.log("Erro!")
   }
-  
   return (
-    <><HeaderComponent /><div className="flex flex-col min-h-screen">
+    <><div className="flex flex-col min-h-screen">
       <main className="flex-1">
         <section className="w-full py-12 md:py-24 lg:py-32 xl:py-48">
           <div className="container mx-auto px-4 md:px-6">
@@ -42,7 +41,7 @@ export function Hero() {
                     href="#"
                     className="inline-flex h-10 items-center justify-center rounded-md bg-primary px-8 text-sm font-medium text-primary-foreground shadow transition-colors hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50"
                     prefetch={false}
-                    onClick={handleModalShow}
+                  
                   >
                     Start Learning
                   </Link>
