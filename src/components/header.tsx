@@ -26,11 +26,20 @@ export function HeaderComponent() {
 
     window.addEventListener('resize', handleResize);
     window.addEventListener('scroll', handleScroll);
+
+    // Prevent body scroll when mobile menu is open
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+
     return () => {
       window.removeEventListener('resize', handleResize);
       window.removeEventListener('scroll', handleScroll);
+      document.body.style.overflow = 'unset';
     };
-  }, []);
+  }, [isMobileMenuOpen]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -65,6 +74,7 @@ export function HeaderComponent() {
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
 
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link href="/" className="text-gray-700 hover:text-gray-900 font-medium">
               Home
@@ -150,26 +160,34 @@ export function HeaderComponent() {
         </div>
       </header>
 
-      {/* Mobile Menu Overlay */}
+      {/* Mobile Menu with Overlay */}
       {isMobileMenuOpen && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={toggleMobileMenu}>
+        <>
+          {/* Dark overlay that covers the entire screen */}
           <div 
-            className="fixed inset-y-0 right-0 w-full max-w-sm bg-white shadow-xl z-50"
+            className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40" 
+            onClick={toggleMobileMenu}
+          />
+          
+          {/* Mobile menu panel */}
+          <div 
+            className="fixed inset-y-0 right-0 w-full max-w-sm bg-slate-50 shadow-xl z-50 overflow-hidden"
             onClick={e => e.stopPropagation()}
           >
-            <div className="flex justify-between items-center p-4 border-b">
+            <div className="flex justify-between items-center p-4 border-b bg-white">
               <Link href="/" className="flex-shrink-0" onClick={toggleMobileMenu}>
                 <Image src={logo} alt="ArbiLearn Logo" width={60} height={60} />
               </Link>
               <button 
                 onClick={toggleMobileMenu} 
-                className="text-gray-600 focus:outline-none" 
+                className="text-gray-600 hover:text-gray-900 focus:outline-none" 
                 aria-label="Close menu"
               >
                 <X size={24} />
               </button>
             </div>
-            <nav className="overflow-y-auto h-full pb-20">
+
+            <nav className="h-full overflow-y-auto pb-32">
               <div className="px-4 py-6 space-y-6">
                 <Link 
                   href="/" 
@@ -185,13 +203,15 @@ export function HeaderComponent() {
                 >
                   About
                 </Link>
+
+                {/* Courses Dropdown */}
                 <div className="space-y-2">
                   <button 
                     onClick={() => toggleDropdown('courses')} 
                     className="flex justify-between items-center w-full text-lg font-medium text-gray-700 hover:text-gray-900"
                   >
                     Courses
-                    <ChevronDown className={`h-5 w-5 transform transition-transform ${isCoursesOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-5 w-5 transform transition-transform duration-200 ${isCoursesOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {isCoursesOpen && (
                     <div className="pl-4 space-y-2">
@@ -240,13 +260,15 @@ export function HeaderComponent() {
                     </div>
                   )}
                 </div>
+
+                {/* Programs Dropdown */}
                 <div className="space-y-2">
                   <button 
                     onClick={() => toggleDropdown('programs')} 
                     className="flex justify-between items-center w-full text-lg font-medium text-gray-700 hover:text-gray-900"
                   >
                     Programs
-                    <ChevronDown className={`h-5 w-5 transform transition-transform ${isProgramsOpen ? 'rotate-180' : ''}`} />
+                    <ChevronDown className={`h-5 w-5 transform transition-transform duration-200 ${isProgramsOpen ? 'rotate-180' : ''}`} />
                   </button>
                   {isProgramsOpen && (
                     <div className="pl-4 space-y-2">
@@ -295,6 +317,7 @@ export function HeaderComponent() {
                     </div>
                   )}
                 </div>
+
                 <Link 
                   href="/contact" 
                   className="block text-lg font-medium text-gray-700 hover:text-gray-900"
@@ -303,19 +326,28 @@ export function HeaderComponent() {
                   Contact
                 </Link>
               </div>
+
+              {/* Fixed bottom buttons */}
               <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t">
                 <div className="grid grid-cols-2 gap-4">
-                  <Button variant="outline" className="w-full font-medium" onClick={toggleMobileMenu}>
+                  <Button 
+                    variant="outline" 
+                    className="w-full font-medium" 
+                    onClick={toggleMobileMenu}
+                  >
                     <Link href="/start-learning">Start Learning</Link>
                   </Button>
-                  <Button className="w-full bg-[#6366F1] hover:bg-[#4F46E5] text-white font-medium" onClick={toggleMobileMenu}>
+                  <Button 
+                    className="w-full bg-[#6366F1] hover:bg-[#4F46E5] text-white font-medium" 
+                    onClick={toggleMobileMenu}
+                  >
                     <Link href="/login">Login</Link>
                   </Button>
                 </div>
               </div>
             </nav>
           </div>
-        </div>
+        </>
       )}
 
       {/* Spacer to prevent content from hiding under fixed header */}
