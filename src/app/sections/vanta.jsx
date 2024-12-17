@@ -54,8 +54,7 @@ export function VantaGlobe() {
       />
       <div 
         ref={vantaRef}
-        className="fixed inset-0 -z-10 bg-black"
-        style={{ height: '100vh', width: '100vw' }}
+        className="absolute inset-0 -z-10"
       />
     </>
   );

@@ -6,7 +6,7 @@ import { VantaGlobe } from './sections/vanta'
 export default function Home() {
   return (
     <main className="min-h-screen">
-       <VantaGlobe />
+       <WelcomeSection />
     </main>
   )
 }
