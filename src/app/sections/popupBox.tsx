@@ -11,7 +11,7 @@ const MobilePopup: React.FC<MobilePopupProps> = ({
   mintNFT,
   content
 }) => {
-  // if (!isOpen) return null;
+  if (!isOpen) return null;
 
   return (
     <div className="mobile-popup-overlay">
