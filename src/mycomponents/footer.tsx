@@ -1,6 +1,7 @@
 "use client";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { IconProp } from '@fortawesome/fontawesome-svg-core';
 import { faTwitter, faFacebookF, faLinkedinIn, faInstagram } from '@fortawesome/free-brands-svg-icons';
 import styles from '../styles/Footer.module.css'; // Adjust the path if needed
 
@@ -16,16 +17,16 @@ export const Footer = () => {
         </div>
         <div className={styles.socialIcons}>
           <a href="#" aria-label="Twitter">
-            <FontAwesomeIcon icon={faTwitter} />
+            <FontAwesomeIcon icon={faTwitter as IconProp} />
           </a>
           <a href="#" aria-label="Facebook">
-            <FontAwesomeIcon icon={faFacebookF} />
+            <FontAwesomeIcon icon={faFacebookF as IconProp} />
           </a>
           <a href="#" aria-label="LinkedIn">
-            <FontAwesomeIcon icon={faLinkedinIn} />
+            <FontAwesomeIcon icon={faLinkedinIn as IconProp} />
           </a>
           <a href="#" aria-label="Instagram">
-            <FontAwesomeIcon icon={faInstagram} />
+            <FontAwesomeIcon icon={faInstagram as IconProp} />
           </a>
         </div>
         <div className={styles.contactInfo}>

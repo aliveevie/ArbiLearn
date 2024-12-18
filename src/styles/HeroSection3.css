@@ -1,0 +1,99 @@
+.hero-section-3 {
+    background: linear-gradient(135deg, #6e45e2, #88d3ce);
+    color: #ffffff;
+    padding: 4rem 0;
+    text-align: center;
+  }
+  
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  
+  h1 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .protocols-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .protocol-card {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    transition: transform 0.3s ease;
+  }
+  
+  .protocol-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .protocol-card h3 {
+    font-size: 1.5rem;
+    margin: 1rem 0;
+  }
+  
+  .protocol-card p {
+    margin-bottom: 1rem;
+  }
+  
+  .cta-button {
+    background-color: #ffffff;
+    color: #6e45e2;
+    border: none;
+    border-radius: 5px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  
+  .cta-button:hover {
+    background-color: #f0f0f0;
+  }
+  
+  .speedrun-ethereum {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .speedrun-ethereum h3 {
+    font-size: 1.8rem;
+    margin: 1rem 0;
+  }
+  
+  .speedrun-ethereum p {
+    margin-bottom: 1rem;
+  }
+  
+  @media (max-width: 768px) {
+    h1 {
+      font-size: 2.5rem;
+    }
+  
+    .subtitle {
+      font-size: 1rem;
+    }
+  
+    .protocols-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  
+  
