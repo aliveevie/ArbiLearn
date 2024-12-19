@@ -8,6 +8,7 @@ import { cookieToInitialState } from 'wagmi'
 import { config } from '../../config'
 import Web3ModalProvider from '../../context'
 import { UserProvider } from '../components/userContext'
+import SectionHeader from './sections/headerSection';
 
 
 export const metadata: Metadata = {
@@ -26,8 +27,8 @@ export default function RootLayout({
       <body className="min-h-screen flex flex-col"> 
         <UserProvider>
           <Web3ModalProvider initialState={initialState}>
-            <HeaderComponent />
-            <main className="flex-grow">
+              <SectionHeader />            
+              <main className="flex-grow">
               {children}
             </main>
             <FooterComponent />
