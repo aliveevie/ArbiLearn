@@ -5,6 +5,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import '../../styles/Header.css';
+import arbilearn from '../../../public/logo.png'
+
 
 const SectionHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,7 +19,7 @@ const SectionHeader: React.FC = () => {
     <header className="header">
       <div className="header-container">
         <Link href="/" className="logo-link">
-          <Image src="/arbilearn-logo.svg" alt="ArbiLearn Logo" width={150} height={40} />
+          <Image src={arbilearn} alt="ArbiLearn Logo" width={50} height={50} />
         </Link>
         <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
           <Link href="/peeps" className="nav-link" onClick={toggleMenu}>
