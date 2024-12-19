@@ -7,6 +7,8 @@ import { ArrowRight, Gamepad2, Coins, Zap, Rocket } from 'lucide-react';
 import '../../styles/HeroSection3.css';
 import MobilePopup from './popupBox'
 
+
+
 const HeroSection3: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
   const [popupContent, setPopupContent] = useState({
