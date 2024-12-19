@@ -65,6 +65,7 @@ export function WelcomeSection() {
           </button>
         </div>
       </div>
-    </section></>
+    </section>
+  </>
   );
 }
