@@ -6,17 +6,28 @@ import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import '../../styles/Header.css';
 import arbilearn from '../../../public/logo.png'
+import PeepComponent from './start-peep'
 
 
 const SectionHeader: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [showPeepComponent, setShowPeepComponent] = useState(false); // New state for PeepComponent
+
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const handleStartPeepsClick = () => {
+    setShowPeepComponent(true); // Show PeepComponent when button is clicked
+    toggleMenu(); // Optionally close the menu
+  };
+
+
   return (
-    <header className="header">
+    <><div>
+      
+      <header className="header">
       <div className="header-container">
         <Link href="/" className="logo-link">
           <Image src={arbilearn} alt="ArbiLearn Logo" width={50} height={50} />
@@ -28,15 +39,18 @@ const SectionHeader: React.FC = () => {
           <Link href="/join-program" className="nav-link" onClick={toggleMenu}>
             Join Program
           </Link>
-          <Link href="/start-peeps" className="nav-link cta-button" onClick={toggleMenu}>
+          <button className="nav-link cta-button" onClick={handleStartPeepsClick}>
             Start Peeps
-          </Link>
+          </button>
         </nav>
         <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
           {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
     </header>
+       {showPeepComponent && <PeepComponent />} {/* Conditionally render PeepComponent */}
+    </div>
+    </>
   );
 };
 
