@@ -1,9 +1,8 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { X, Minus, Maximize2 } from 'lucide-react'
+import { LoginFormComponent } from "@/components/login-form"
 import '../../styles/peepComp.css'
-import { LoginFormComponent } from "@/components/login-form";
 
 interface PeepComponentProps {
   onClose: () => void;
@@ -40,27 +39,36 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
   }
 
   const doubleBackBrowserButton = () => {
-      setIsRegistering(false)
-      setSelectedOption(null)
+    setIsRegistering(false)
+    setSelectedOption(null)
   }
 
   return (
-    <div className={`peep-overlay ${isMinimized ? 'minimized' : ''}`}>
+    <div className="peep-overlay">
       <div 
         className={`peep-container ${isMinimized ? 'minimized' : ''} ${
           isExpanded ? 'expanded' : ''
         }`}
       >
-        <div className="peep-controls">
-          <button onClick={onClose} className="peep-control-btn">
-            <X />
-          </button>
-          <button onClick={handleMinimize} className="peep-control-btn">
-            <Minus />
-          </button>
-          <button onClick={handleExpand} className="peep-control-btn">
-            <Maximize2 />
-          </button>
+        <div className="status-bar">
+          <div className="status-bar-left" />
+          <div className="status-controls">
+            <button 
+              className="status-dot dot-close"
+              onClick={onClose}
+              aria-label="Close"
+            />
+            <button 
+              className="status-dot dot-minimize"
+              onClick={handleMinimize}
+              aria-label="Minimize"
+            />
+            <button 
+              className="status-dot dot-expand"
+              onClick={handleExpand}
+              aria-label="Expand"
+            />
+          </div>
         </div>
 
         <div className="peep-content">
@@ -69,19 +77,19 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
               <h2 className="peep-title">Where would you like to continue?</h2>
               <div className="peep-buttons">
                 <button
-                  className="peep-button farcaster"
+                  className="peep-button"
                   onClick={() => handleOptionClick('farcaster')}
                 >
                   Farcaster
                 </button>
                 <button
-                  className="peep-button telegram"
+                  className="peep-button"
                   onClick={() => handleOptionClick('telegram')}
                 >
                   Telegram
                 </button>
                 <button
-                  className="peep-button browser"
+                  className="peep-button"
                   onClick={() => handleOptionClick('browser')}
                 >
                   Stay on Browser
@@ -98,7 +106,7 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
                 Please check back soon!
               </p>
               <button
-                className="peep-button browser"
+                className="peep-button"
                 onClick={() => setSelectedOption(null)}
               >
                 Go Back
@@ -106,20 +114,21 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
             </>
           )}
 
-          {isRegistering &&  (
-            <div className="peep-form">
-            <LoginFormComponent />
-
-                <button
-                  type="button"
-                  className="peep-button telegram mt-4"
-                  onClick={doubleBackBrowserButton}
-                >
-                  Go Back
-                </button>
-             
+          {isRegistering && (
+            <div className="">
+              <LoginFormComponent />
+              <button
+                className="peep-button mt-4"
+                onClick={doubleBackBrowserButton}
+              >
+                Go Back
+              </button>
             </div>
           )}
+        </div>
+
+        <div className="home-indicator">
+          <div className="home-indicator-bar" />
         </div>
       </div>
     </div>

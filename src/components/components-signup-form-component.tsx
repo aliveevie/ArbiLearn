@@ -10,6 +10,9 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { HeaderComponent } from './header'
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { LoginFormComponent } from './login-form'
+import  BlockchainGame  from './gaming-learning'
+
 
 export function SignupFormComponent() {
   const [username, setUsername] = useState('')
@@ -21,6 +24,10 @@ export function SignupFormComponent() {
   const [isLoading, setIsLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showSignIn, setShowSignIn] = useState(false);
+  const [showBlockchainGame, setShowBlockchainGame] = useState(false);
+
+
   const router = useRouter()
 
   const handleSignup = async (e: React.FormEvent) => {
@@ -47,10 +54,9 @@ export function SignupFormComponent() {
 
       const data = await response.json();
 
-      console.log(data)
-
+    
       if (response.ok) {
-        router.push('/profile')
+        setShowBlockchainGame(true);
       } else {
         if (data.error === "User already exists") {
           setUserExists(true)
@@ -65,11 +71,18 @@ export function SignupFormComponent() {
     }
   }
 
+  if (showBlockchainGame) {
+    return <BlockchainGame />;
+  }
+
+  if (showSignIn) {
+    return <LoginFormComponent />;
+  }
+
   return (
     <>
-      <HeaderComponent />
-      <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md mt-20">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Sign Up for ArbiLearn</h2>
+      <div className="w-full max-w-md mx-auto space-y-6">
+        <h2 className="text-2xl font-bold text-center text-gray-800">Register</h2>
         {userExists && (
           <Alert variant="destructive">
             <AlertCircle className="h-4 w-4" />
@@ -173,25 +186,14 @@ export function SignupFormComponent() {
         <div className="relative">
           <Separator className="my-4" />
           <span className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
-            Or sign up with
+            Or Try with
           </span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline" className="w-full">
-            <Github className="mr-2 h-4 w-4" />
-            GitHub
-          </Button>
-          <Button variant="outline" className="w-full">
-            <Mail className="mr-2 h-4 w-4" />
-            Google
-          </Button>
         </div>
 
         <div className="space-y-4">
           <Button variant="outline" className="w-full">
-            <Chrome className="mr-2 h-4 w-4" />
-            MetaMask
+            <Mail className="mr-2 h-4 w-4" />
+            Google
           </Button>
           <Button variant="outline" className="w-full">
             Connect Wallet
@@ -200,11 +202,9 @@ export function SignupFormComponent() {
 
         <div className="text-center">
           <span className="text-sm text-gray-600">Already have an account? </span>
-          <Link href="/login">
-            <Button variant="link" className="text-sm text-blue-600 hover:underline">
-              Log in
-            </Button>
-          </Link>
+          <Button variant="link" className="text-sm text-blue-600 hover:underline" onClick={() => setShowSignIn(true)}>
+            Login
+          </Button>
         </div>
       </div>
     </>

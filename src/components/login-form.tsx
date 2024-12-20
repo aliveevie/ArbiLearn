@@ -6,22 +6,23 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
 import { Github, Mail, Lock, User, Chrome } from 'lucide-react';
-import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { HeaderComponent } from './header';
+import { SignupFormComponent } from "@/components/components-signup-form-component";
+import BlockchainGame from "@/components/gaming-learning";
+
 
 export function LoginFormComponent() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
-  const [error, setError] = useState('')
-
-  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [showSignup, setShowSignup] = useState(false);
+  const [showBlockchainGame, setShowBlockchainGame] = useState(false);
 
   const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setIsLoading(true)
-    setError('')
+    e.preventDefault();
+    setIsLoading(true);
+    setError('');
 
     try {
       const response = await fetch('/apis/login', {
@@ -35,20 +36,28 @@ export function LoginFormComponent() {
       const data = await response.json();
 
       if (response.ok) {
-        router.push('/profile');
+        setShowBlockchainGame(true);
       } else {
         setError(data.message || 'Invalid username or password');
       }
     } catch (error) {
       setError('An error occurred. Please try again.');
     } finally {
-      setIsLoading(false)
+      setIsLoading(false);
     }
+  };
+
+  if (showBlockchainGame) {
+    return <BlockchainGame />;
+  }
+
+  if (showSignup) {
+    return <SignupFormComponent />;
   }
 
   return (
     <>
-      <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md mt-20">
+      <div className="w-full max-w-md mx-auto space-y-6">
         <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
@@ -92,23 +101,15 @@ export function LoginFormComponent() {
 
         <div className="relative">
           <Separator className="my-4" />
-          <span className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
-            Or Login with
+          <span className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-1 text-sm text-gray-500">
+            Or Try with
           </span>
-        </div>
-
-        <div className="grid grid-cols-2 gap-4">
-         
-          <Button variant="outline" className="w-full">
-            <Mail className="mr-2 h-4 w-4" />
-            Google
-          </Button>
         </div>
 
         <div className="space-y-4">
           <Button variant="outline" className="w-full">
-            <Chrome className="mr-2 h-4 w-4" />
-            MetaMask
+            <Mail className="mr-2 h-4 w-4" />
+            Google
           </Button>
           <Button variant="outline" className="w-full">
             Connect Wallet
@@ -117,13 +118,11 @@ export function LoginFormComponent() {
 
         <div className="text-center">
           <span className="text-sm text-gray-600">Don't have an account? </span>
-          <Link href="/signup">
-            <Button variant="link" className="text-sm text-blue-600 hover:underline">
-              Sign up
-            </Button>
-          </Link>
+          <Button variant="link" className="text-sm text-blue-600 hover:underline" onClick={() => setShowSignup(true)}>
+            Sign up
+          </Button>
         </div>
       </div>
     </>
-  )
+  );
 }
