@@ -1,58 +1,60 @@
 'use client'
 
-import React, { useState } from 'react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Menu, X } from 'lucide-react';
-import '../../styles/Header.css';
+import React, { useState } from 'react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Menu, X } from 'lucide-react'
+import '../../styles/Header.css'
 import arbilearn from '../../../public/logo.png'
-import PeepComponent from './start-peep'
+import PeepsComponent from  './start-peep'
 
 
 const SectionHeader: React.FC = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [showPeepComponent, setShowPeepComponent] = useState(false); // New state for PeepComponent
-
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isPeepOpen, setIsPeepOpen] = useState(false)
 
   const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen);
-  };
+    setIsMenuOpen(!isMenuOpen)
+  }
 
   const handleStartPeepsClick = () => {
-    setShowPeepComponent(true); // Show PeepComponent when button is clicked
-    toggleMenu(); // Optionally close the menu
-  };
+    setIsPeepOpen(true)
+    if (isMenuOpen) {
+      setIsMenuOpen(false)
+    }
+  }
 
+  const handleClosePeep = () => {
+    setIsPeepOpen(false)
+  }
 
   return (
-    <><div>
-      
+    <>
       <header className="header">
-      <div className="header-container">
-        <Link href="/" className="logo-link">
-          <Image src={arbilearn} alt="ArbiLearn Logo" width={50} height={50} />
-        </Link>
-        <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-          <Link href="/peeps" className="nav-link" onClick={toggleMenu}>
-            Peeps
+        <div className="header-container">
+          <Link href="/" className="logo-link">
+            <Image src={arbilearn} alt="ArbiLearn Logo" width={50} height={50} />
           </Link>
-          <Link href="/join-program" className="nav-link" onClick={toggleMenu}>
-            Join Program
-          </Link>
-          <button className="nav-link cta-button" onClick={handleStartPeepsClick}>
-            Start Peeps
+          <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
+            <Link href="/peeps" className="nav-link" onClick={toggleMenu}>
+              Peeps
+            </Link>
+            <Link href="/join-program" className="nav-link" onClick={toggleMenu}>
+              Join Program
+            </Link>
+            <button className="nav-link cta-button" onClick={handleStartPeepsClick}>
+              Start Peeps
+            </button>
+          </nav>
+          <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
-        </nav>
-        <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
-          {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-    </header>
-       {showPeepComponent && <PeepComponent />} {/* Conditionally render PeepComponent */}
-    </div>
+        </div>
+      </header>
+      {isPeepOpen && <PeepsComponent onClose={handleClosePeep} />}
     </>
-  );
-};
+  )
+}
 
-export default SectionHeader;
+export default SectionHeader
 

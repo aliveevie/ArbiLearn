@@ -1,18 +1,27 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { X, Minus, Maximize2 } from 'lucide-react'
 import '../../styles/peepComp.css'
+import { LoginFormComponent } from "@/components/login-form";
 
-export default function PeepComponent() {
-  const [isOpen, setIsOpen] = useState(true)
+interface PeepComponentProps {
+  onClose: () => void;
+}
+
+export default function PeepComponent({ onClose }: PeepComponentProps) {
   const [isMinimized, setIsMinimized] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [isRegistering, setIsRegistering] = useState(false)
 
-  const handleClose = () => setIsOpen(false)
-  
+  useEffect(() => {
+    document.body.classList.add('peep-active')
+    return () => {
+      document.body.classList.remove('peep-active')
+    }
+  }, [])
+
   const handleMinimize = () => {
     setIsMinimized(!isMinimized)
     setIsExpanded(false)
@@ -30,17 +39,20 @@ export default function PeepComponent() {
     }
   }
 
-  if (!isOpen) return null
+  const doubleBackBrowserButton = () => {
+      setIsRegistering(false)
+      setSelectedOption(null)
+  }
 
   return (
-    <div className="peep-overlay">
+    <div className={`peep-overlay ${isMinimized ? 'minimized' : ''}`}>
       <div 
         className={`peep-container ${isMinimized ? 'minimized' : ''} ${
           isExpanded ? 'expanded' : ''
         }`}
       >
         <div className="peep-controls">
-          <button onClick={handleClose} className="peep-control-btn">
+          <button onClick={onClose} className="peep-control-btn">
             <X />
           </button>
           <button onClick={handleMinimize} className="peep-control-btn">
@@ -94,58 +106,18 @@ export default function PeepComponent() {
             </>
           )}
 
-          {isRegistering && (
+          {isRegistering &&  (
             <div className="peep-form">
-              <h2 className="peep-title">Register</h2>
-              <form onSubmit={(e) => e.preventDefault()}>
-                <div className="peep-form-group">
-                  <label className="peep-label" htmlFor="name">
-                    Name
-                  </label>
-                  <input
-                    id="name"
-                    type="text"
-                    className="peep-input"
-                    placeholder="Enter your name"
-                  />
-                </div>
-                <div className="peep-form-group">
-                  <label className="peep-label" htmlFor="email">
-                    Email
-                  </label>
-                  <input
-                    id="email"
-                    type="email"
-                    className="peep-input"
-                    placeholder="Enter your email"
-                  />
-                </div>
-                <div className="peep-form-group">
-                  <label className="peep-label" htmlFor="password">
-                    Password
-                  </label>
-                  <input
-                    id="password"
-                    type="password"
-                    className="peep-input"
-                    placeholder="Enter your password"
-                  />
-                </div>
-                <button type="submit" className="peep-button browser">
-                  Register
-                </button>
-                <div className="peep-divider">or</div>
-                <button type="button" className="peep-button farcaster">
-                  Connect Wallet
-                </button>
+            <LoginFormComponent />
+
                 <button
                   type="button"
                   className="peep-button telegram mt-4"
-                  onClick={() => setIsRegistering(false)}
+                  onClick={doubleBackBrowserButton}
                 >
                   Go Back
                 </button>
-              </form>
+             
             </div>
           )}
         </div>

@@ -1,185 +1,198 @@
 .peep-overlay {
-    position: fixed;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(10px);
-    z-index: 50;
-    transition: all 0.3s ease;
-  }
-  
-  .peep-container {
-    position: relative;
-    width: 380px;
-    height: 600px;
-    background: rgba(23, 23, 28, 0.9);
-    border-radius: 24px;
-    overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    box-shadow: 
-      0 0 0 1px rgba(255, 255, 255, 0.1),
-      0 4px 6px -1px rgba(0, 0, 0, 0.1),
-      0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  }
-  
-  .peep-container.minimized {
-    transform: scale(0.8) translateY(40vh);
-    opacity: 0.6;
-  }
-  
-  .peep-container.expanded {
-    width: 100%;
-    height: 100%;
-    border-radius: 0;
-  }
-  
-  .peep-controls {
-    position: absolute;
-    top: 16px;
-    left: 16px;
-    display: flex;
-    gap: 12px;
-    z-index: 10;
-  }
-  
-  .peep-control-btn {
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    border: none;
-    background: rgba(255, 255, 255, 0.1);
-    color: white;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-  }
-  
-  .peep-control-btn:hover {
-    background: rgba(255, 255, 255, 0.2);
-    transform: translateY(-1px);
-  }
-  
-  .peep-control-btn svg {
-    width: 16px;
-    height: 16px;
-  }
-  
-  .peep-content {
-    height: 100%;
-    padding: 64px 24px 24px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .peep-title {
-    color: white;
-    font-size: 24px;
-    font-weight: 600;
-    margin-bottom: 32px;
-    text-align: center;
-  }
-  
-  .peep-buttons {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    width: 100%;
-    max-width: 320px;
-  }
-  
-  .peep-button {
-    position: relative;
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 12px;
-    color: white;
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
-  }
-  
-  .peep-button::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
-    opacity: 0;
-    transition: opacity 0.3s ease;
-  }
-  
-  .peep-button:hover {
-    transform: translateY(-2px);
-  }
-  
-  .peep-button:hover::before {
-    opacity: 1;
-  }
-  
-  .peep-button.farcaster {
-    background: linear-gradient(135deg, #9333EA, #7C3AED);
-    box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
-  }
-  
-  .peep-button.telegram {
-    background: linear-gradient(135deg, #38BDF8, #2563EB);
-    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
-  }
-  
-  .peep-button.browser {
-    background: linear-gradient(135deg, #4ADE80, #22C55E);
-    box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
-  }
-  
-  .peep-form {
-    width: 100%;
-    max-width: 320px;
-    background: rgba(255, 255, 255, 0.05);
-    padding: 24px;
-    border-radius: 16px;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .peep-form-group {
-    margin-bottom: 16px;
-  }
-  
-  .peep-label {
-    display: block;
-    color: rgba(255, 255, 255, 0.8);
-    margin-bottom: 8px;
-    font-size: 14px;
-  }
-  
-  .peep-input {
-    width: 100%;
-    padding: 12px;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 8px;
-    color: white;
-    transition: all 0.2s ease;
-  }
-  
-  .peep-input:focus {
-    outline: none;
-    border-color: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
-  }
-  
-  .peep-divider {
-    width: 100%;
-    text-align: center;
-    color: rgba(255, 255, 255, 0.6);
-    margin: 16px 0;
-  }
-  
-  
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+}
+
+.peep-overlay.active {
+  overflow: hidden;
+}
+
+.peep-container {
+  position: relative;
+  width: 380px;
+  height: 720px;
+  background: #17171C;
+  border-radius: 40px;
+  overflow: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Phone frame styling */
+.peep-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 150px;
+  height: 24px;
+  background: #000;
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+  z-index: 10;
+}
+
+.peep-container.minimized {
+  transform: scale(0.8) translateY(40vh);
+  opacity: 0.6;
+}
+
+.peep-container.expanded {
+  width: 100%;
+  height: 100%;
+  border-radius: 0;
+}
+
+.peep-controls {
+  position: absolute;
+  top: 40px;
+  left: 20px;
+  display: flex;
+  gap: 12px;
+  z-index: 1001;
+}
+
+.peep-control-btn {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.peep-control-btn:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: translateY(-1px);
+}
+
+.peep-content {
+  height: 100%;
+  padding: 80px 24px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  overflow-y: auto;
+}
+
+.peep-title {
+  color: white;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.peep-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+  max-width: 320px;
+}
+
+.peep-button {
+  position: relative;
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.peep-button::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.peep-button:hover {
+  transform: translateY(-2px);
+}
+
+.peep-button:hover::before {
+  opacity: 1;
+}
+
+.peep-button.farcaster {
+  background: linear-gradient(135deg, #9333EA, #7C3AED);
+  box-shadow: 0 4px 12px rgba(147, 51, 234, 0.3);
+}
+
+.peep-button.telegram {
+  background: linear-gradient(135deg, #38BDF8, #2563EB);
+  box-shadow: 0 4px 12px rgba(56, 189, 248, 0.3);
+}
+
+.peep-button.browser {
+  background: linear-gradient(135deg, #4ADE80, #22C55E);
+  box-shadow: 0 4px 12px rgba(74, 222, 128, 0.3);
+}
+
+.peep-form {
+  width: 100%;
+  max-width: 600px;
+  background: rgba(205, 255, 255, 1);
+  padding: 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.peep-form-group {
+  margin-bottom: 16px;
+}
+
+.peep-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.peep-input {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: white;
+  transition: all 0.2s ease;
+}
+
+.peep-input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+.peep-divider {
+  width: 100%;
+  text-align: center;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 16px 0;
+}
+
+body.peep-active {
+  overflow: hidden;
+}
+

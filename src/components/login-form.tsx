@@ -48,7 +48,6 @@ export function LoginFormComponent() {
 
   return (
     <>
-      <HeaderComponent />
       <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md mt-20">
         <h2 className="text-2xl font-bold text-center text-gray-800">Login to ArbiLearn</h2>
 
