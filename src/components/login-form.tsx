@@ -49,7 +49,7 @@ export function LoginFormComponent() {
   return (
     <>
       <div className="w-full max-w-md mx-auto space-y-6 p-6 bg-white rounded-xl shadow-md mt-20">
-        <h2 className="text-2xl font-bold text-center text-gray-800">Login to ArbiLearn</h2>
+        <h2 className="text-2xl font-bold text-center text-gray-800">Login</h2>
 
         <form onSubmit={handleLogin} className="space-y-4">
           {error && (
@@ -93,15 +93,12 @@ export function LoginFormComponent() {
         <div className="relative">
           <Separator className="my-4" />
           <span className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white px-2 text-sm text-gray-500">
-            Or continue with
+            Or Login with
           </span>
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          <Button variant="outline" className="w-full">
-            <Github className="mr-2 h-4 w-4" />
-            GitHub
-          </Button>
+         
           <Button variant="outline" className="w-full">
             <Mail className="mr-2 h-4 w-4" />
             Google
