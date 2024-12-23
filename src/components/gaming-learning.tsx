@@ -38,8 +38,8 @@ export default function BlockchainGame() {
   ]
 
   return (
-    <div className={styles.container}>
-      <div className={styles.phoneFrame}>
+    <div>
+      <div>
         <div className={styles.statusBar}>
           <div className={styles.statusBarLeft}></div>
           <div className={styles.statusBarRight}>

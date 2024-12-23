@@ -15,6 +15,8 @@ export function SignupFormComponent() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [showSignup, setShowSignup] = useState(false);
+  const [showBlockchainGame, setShowBlockchainGame] = useState(false);
   const router = useRouter();
 
   const handleSignup = (e: React.FormEvent) => {
