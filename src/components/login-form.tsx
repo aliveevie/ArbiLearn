@@ -9,7 +9,7 @@ import { Github, Mail, Lock, User, Chrome } from 'lucide-react';
 import { HeaderComponent } from './header';
 import { SignupFormComponent } from "@/components/components-signup-form-component";
 import BlockchainGame from "@/components/gaming-learning";
-
+import ProfileSection from "../app/sections/profile";
 
 export function LoginFormComponent() {
   const [username, setUsername] = useState('');
@@ -48,7 +48,7 @@ export function LoginFormComponent() {
   };
 
   if (showBlockchainGame) {
-    return <BlockchainGame />;
+    return <ProfileSection />;
   }
 
   if (showSignup) {

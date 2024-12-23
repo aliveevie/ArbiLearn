@@ -12,7 +12,7 @@
 .peep-container {
   width: 320px;
   height: 640px;
-  background-color: rgba(205, 255, 205, 1);
+  background-color: rgba(255, 255, 205, 0);
   border-radius: 2rem;
   box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
   padding: 0.1rem;

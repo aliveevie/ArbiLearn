@@ -117,12 +117,7 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
           {isRegistering && (
             <div className="">
               <LoginFormComponent />
-              <button
-                className="peep-button mt-4"
-                onClick={doubleBackBrowserButton}
-              >
-                Go Back
-              </button>
+      
             </div>
           )}
         </div>
