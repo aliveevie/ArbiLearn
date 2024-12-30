@@ -64,7 +64,7 @@ export default function ProfileSection() {
       description: 'Web3 fundamentals, Smart Contracts',
       value: 2,
       icon: <Book size={20} />,
-      hoverButtons: ['Browse Courses', 'Enroll']
+      hoverButtons: ['Browse Courses']
     },
     {
       id: 2,
@@ -72,7 +72,7 @@ export default function ProfileSection() {
       description: 'Recent learning materials',
       value: userStats.tabsOpened,
       icon: <Layers size={20} />,
-      hoverButtons: ['View History', 'Clear Tabs']
+      hoverButtons: ['Add Tabs']
     },
     {
       id: 3,
@@ -80,7 +80,7 @@ export default function ProfileSection() {
       description: 'Gitcoin, Giveth',
       value: userStats.grantsApplied,
       icon: <GitBranch size={20} />,
-      hoverButtons: ['View Grants', 'Apply New']
+      hoverButtons: ['View Grants']
     },
     {
       id: 4,
@@ -88,7 +88,7 @@ export default function ProfileSection() {
       description: 'Recent achievements',
       value: userStats.tasksCompleted,
       icon: <CheckCircle size={20} />,
-      hoverButtons: ['View Tasks', 'Start New']
+      hoverButtons: ['View Tasks']
     },
   ]
 

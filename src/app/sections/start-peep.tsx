@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react'
 import { LoginFormComponent } from "@/components/login-form"
 import '../../styles/peepComp.css'
+import AndroidBackgrond from './androidBack'
 
 interface PeepComponentProps {
   onClose: () => void;
@@ -126,7 +127,44 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
           <div className="home-indicator-bar" />
         </div>
       </div>
+   
+
+<div className="peep-layout">
+  <div className="side-items">
+    <div className="side-item">
+      <AndroidBackgrond />
+    </div>
+    <div className="side-item">
+      <AndroidBackgrond />
+    </div>
+  </div>
+  
+  <div className="peep-grid">
+    <div className="grid-item courses">
+      <AndroidBackgrond />
+    </div>
+    <div className="grid-item tabs">
+      <AndroidBackgrond />
+    </div>
+    <div className="grid-item grants">
+      <AndroidBackgrond />
+    </div>
+    <div className="grid-item task">
+      <AndroidBackgrond />
+    </div>
+    <div className="grid-item nfts">
+      <AndroidBackgrond />
+    </div>
+    <div className="grid-item points">
+      <AndroidBackgrond />
+    </div>
+    <div className="grid-item tokens">
+      <AndroidBackgrond />
+    </div>
+  </div>
+</div>
+
+
     </div>
   )
 }
-
