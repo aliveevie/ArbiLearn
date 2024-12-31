@@ -1,7 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Edit, Book, Award, Gift, CheckCircle, Layers, GitBranch, Upload } from 'lucide-react'
+import { Edit, Book, Award, Gift, CheckCircle, Layers, GitBranch, Upload, ArrowLeft } from 'lucide-react'
+import Courses from './innerUI/course'
 import '../../styles/profileSection.css'
 
 interface UserStats {
@@ -22,6 +23,7 @@ interface UserAction {
   value: number
   icon: React.ReactNode
   hoverButtons: string[]
+  onclick?: () => void
 }
 
 interface UserProfile {
@@ -45,6 +47,9 @@ export default function ProfileSection() {
     discord: '#noname',
     avatar: 'Award'
   })
+
+  const [courses, setCourses] = useState(false)
+
   
   const userStats: UserStats = {
     grantsApplied: 2,
@@ -64,7 +69,8 @@ export default function ProfileSection() {
       description: 'Web3 fundamentals, Smart Contracts',
       value: 2,
       icon: <Book size={20} />,
-      hoverButtons: ['Browse Courses']
+      hoverButtons: ['Browse Courses'],
+      onclick: () => setCourses(true)
     },
     {
       id: 2,
@@ -72,7 +78,8 @@ export default function ProfileSection() {
       description: 'Recent learning materials',
       value: userStats.tabsOpened,
       icon: <Layers size={20} />,
-      hoverButtons: ['Add Tabs']
+      hoverButtons: ['Add Tabs'],
+      onclick: showCourses
     },
     {
       id: 3,
@@ -80,7 +87,8 @@ export default function ProfileSection() {
       description: 'Gitcoin, Giveth',
       value: userStats.grantsApplied,
       icon: <GitBranch size={20} />,
-      hoverButtons: ['View Grants']
+      hoverButtons: ['View Grants'],
+      onclick: showCourses
     },
     {
       id: 4,
@@ -88,7 +96,8 @@ export default function ProfileSection() {
       description: 'Recent achievements',
       value: userStats.tasksCompleted,
       icon: <CheckCircle size={20} />,
-      hoverButtons: ['View Tasks']
+      hoverButtons: ['View Tasks'],
+      onclick: showCourses
     },
   ]
 
@@ -113,6 +122,30 @@ export default function ProfileSection() {
       setProfile(prev => ({ ...prev, avatar: URL.createObjectURL(file) }))
     }
   }
+
+  function showCourses() {
+    setCourses(true)
+  }
+
+  function handleBack() {
+    setCourses(false)
+  }
+
+  console.log(courses)
+
+  if (courses) {
+    return (
+      <div className="profile-section">
+        <button className="back-button" onClick={() => setCourses(false)}>
+          <ArrowLeft size={18} /> Back to Profile
+        </button>
+        <Courses />
+      </div>
+    )
+  }
+
+
+  
 
   return (
     <div className="profile-section">
