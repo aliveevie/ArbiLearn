@@ -14,6 +14,7 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
   const [isRegistering, setIsRegistering] = useState(false)
+  const [showPhones, setShowPhones] = useState(false)
 
   useEffect(() => {
     document.body.classList.add('peep-active')
@@ -21,6 +22,12 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
       document.body.classList.remove('peep-active')
     }
   }, [])
+
+  useEffect(() => {
+    if (isRegistering) {
+      setShowPhones(true)
+    }
+  }, [isRegistering])
 
   const handleMinimize = () => {
     setIsMinimized(!isMinimized)
@@ -127,46 +134,6 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
           <div className="home-indicator-bar" />
         </div>
       </div>
-   
-      {isRegistering && (
-            <div className="peep-layout">
-            <div className="side-items">
-              <div className="side-item">
-                <AndroidBackgrond />
-              </div>
-              <div className="side-item">
-                <AndroidBackgrond />
-              </div>
-            </div>
-            
-            <div className="peep-grid">
-              <div className="grid-item courses">
-                <AndroidBackgrond />
-              </div>
-              <div className="grid-item tabs">
-                <AndroidBackgrond />
-              </div>
-              <div className="grid-item grants">
-                <AndroidBackgrond />
-              </div>
-              <div className="grid-item task">
-                <AndroidBackgrond />
-              </div>
-              <div className="grid-item nfts">
-                <AndroidBackgrond />
-              </div>
-              <div className="grid-item points">
-                <AndroidBackgrond />
-              </div>
-              <div className="grid-item tokens">
-                <AndroidBackgrond />
-              </div>
-            </div>
-          </div>
-    
-    
-          )}
-     
     </div>
   )
 }
