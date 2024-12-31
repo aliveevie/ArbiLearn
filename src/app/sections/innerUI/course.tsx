@@ -35,64 +35,64 @@ const Courses = () => {
   ]
 
   return (
-    <div className="courses-container">
-      <section className="section">
-        <h2 className="section-title">Web3 Learning Resources</h2>
-        <ul className="resource-list">
+    <div className="learn-portal">
+      <div className="learn-portal__block">
+        <h2 className="learn-portal__heading">Web3 Learning Resources</h2>
+        <ul className="learn-portal__list">
           {web3Resources.map((resource, index) => (
-            <li key={index} className="resource-item">
-              <a href={resource.url} target="_blank" rel="noopener noreferrer" className="resource-link">
-                <Book className="icon" size={18} />
-                {resource.name}
+            <li key={index} className="learn-portal__item">
+              <a href={resource.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
+                <Book className="learn-portal__icon" size={18} />
+                <span className="learn-portal__text">{resource.name}</span>
               </a>
             </li>
           ))}
         </ul>
-      </section>
+      </div>
 
-      <section className="section">
-        <h2 className="section-title">Build on Metis</h2>
-        <div className="subsection">
-          <h3 className="subsection-title">Documentation</h3>
-          <ul className="resource-list">
+      <div className="learn-portal__block">
+        <h2 className="learn-portal__heading">Build on Metis</h2>
+        <div className="learn-portal__group">
+          <h3 className="learn-portal__subheading">Documentation</h3>
+          <ul className="learn-portal__list">
             {metisDocs.map((doc, index) => (
-              <li key={index} className="resource-item">
-                <a href={doc.url} target="_blank" rel="noopener noreferrer" className="resource-link">
-                  <FileText className="icon" size={18} />
-                  {doc.name}
+              <li key={index} className="learn-portal__item">
+                <a href={doc.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
+                  <FileText className="learn-portal__icon" size={18} />
+                  <span className="learn-portal__text">{doc.name}</span>
                 </a>
               </li>
             ))}
           </ul>
         </div>
-        <div className="subsection">
-          <h3 className="subsection-title">Courses</h3>
-          <ul className="resource-list">
+        <div className="learn-portal__group">
+          <h3 className="learn-portal__subheading">Courses</h3>
+          <ul className="learn-portal__list">
             {metisCourses.map((course, index) => (
-              <li key={index} className="resource-item">
-                <a href={course.url} target="_blank" rel="noopener noreferrer" className="resource-link">
-                  <Layers className="icon" size={18} />
-                  {course.name}
+              <li key={index} className="learn-portal__item">
+                <a href={course.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
+                  <Layers className="learn-portal__icon" size={18} />
+                  <span className="learn-portal__text">{course.name}</span>
                 </a>
               </li>
             ))}
           </ul>
         </div>
-      </section>
+      </div>
 
-      <section className="section">
-        <h2 className="section-title">Build on Arbitrum</h2>
-        <ul className="resource-list">
+      <div className="learn-portal__block">
+        <h2 className="learn-portal__heading">Build on Arbitrum</h2>
+        <ul className="learn-portal__list">
           {arbitrumDocs.map((doc, index) => (
-            <li key={index} className="resource-item">
-              <a href={doc.url} target="_blank" rel="noopener noreferrer" className="resource-link">
-                <FileText className="icon" size={18} />
-                {doc.name}
+            <li key={index} className="learn-portal__item">
+              <a href={doc.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
+                <FileText className="learn-portal__icon" size={18} />
+                <span className="learn-portal__text">{doc.name}</span>
               </a>
             </li>
           ))}
         </ul>
-      </section>
+      </div>
     </div>
   )
 }

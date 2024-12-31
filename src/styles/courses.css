@@ -1,64 +1,163 @@
-.courses-container {
-    max-width: 1200px;
-    margin: 0 auto;
+.learn-portal {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  }
+  
+  .learn-portal__block {
+    background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.8));
+    backdrop-filter: blur(20px);
+    border-radius: 16px;
+    box-shadow: 
+      0 4px 6px -1px rgba(0, 0, 0, 0.1),
+      0 2px 4px -2px rgba(0, 0, 0, 0.05),
+      0 0 0 1px rgba(0, 0, 0, 0.05);
     padding: 2rem;
-    font-family: 'Arial', sans-serif;
-  }
-  
-  .section {
     margin-bottom: 2rem;
-    background-color: #ffffff;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    padding: 1.5rem;
   }
   
-  .section-title {
-    font-size: 1.5rem;
-    color: #333;
-    margin-bottom: 1rem;
-    border-bottom: 2px solid #3498db;
-    padding-bottom: 0.5rem;
+  .learn-portal__heading {
+    font-size: 1.875rem;
+    font-weight: 700;
+    color: #111827;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 2px solid #6366f1;
+    letter-spacing: -0.025em;
+    line-height: 1.2;
   }
   
-  .resource-list {
-    list-style-type: none;
+  .learn-portal__list {
+    list-style: none;
     padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 0.75rem;
   }
   
-  .resource-item {
-    margin-bottom: 0.75rem;
-    transition: transform 0.2s ease-in-out;
+  .learn-portal__item {
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border-radius: 12px;
+    background-color: rgba(255, 255, 255, 0.5);
   }
   
-  .resource-item:hover {
-    transform: translateX(5px);
+  .learn-portal__item:hover {
+    transform: translateX(0.5rem);
+    background-color: rgba(255, 255, 255, 0.8);
   }
   
-  .resource-link {
-    color: #3498db;
-    text-decoration: none;
+  .learn-portal__link {
     display: flex;
     align-items: center;
+    padding: 1rem;
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    gap: 0.75rem;
+    transition: color 0.15s ease;
   }
   
-  .resource-link:hover {
-    text-decoration: underline;
+  .learn-portal__link:hover {
+    color: #4338ca;
   }
   
-  .icon {
-    margin-right: 0.5rem;
-    color: #3498db;
+  .learn-portal__icon {
+    color: #6366f1;
+    flex-shrink: 0;
   }
   
-  .subsection {
-    margin-top: 1rem;
+  .learn-portal__text {
+    font-size: 1rem;
+    line-height: 1.5;
   }
   
-  .subsection-title {
-    font-size: 1.2rem;
-    color: #555;
-    margin-bottom: 0.5rem;
+  .learn-portal__group {
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+  
+  .learn-portal__subheading {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 1rem;
+  }
+  
+  /* Mobile Optimizations */
+  @media (max-width: 640px) {
+    .learn-portal {
+      padding: 1rem;
+    }
+  
+    .learn-portal__block {
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+  
+    .learn-portal__heading {
+      font-size: 1.5rem;
+    }
+  
+    .learn-portal__subheading {
+      font-size: 1.125rem;
+    }
+  
+    .learn-portal__link {
+      padding: 0.875rem;
+    }
+  
+    .learn-portal__text {
+      font-size: 0.9375rem;
+    }
+  }
+  
+  /* Dark mode support */
+  @media (prefers-color-scheme: dark) {
+    .learn-portal__block {
+      background: linear-gradient(to bottom right, rgba(17, 24, 39, 0.8), rgba(17, 24, 39, 0.9));
+    }
+  
+    .learn-portal__heading {
+      color: #f3f4f6;
+      border-bottom-color: #818cf8;
+    }
+  
+    .learn-portal__item {
+      background-color: rgba(31, 41, 55, 0.5);
+    }
+  
+    .learn-portal__item:hover {
+      background-color: rgba(31, 41, 55, 0.8);
+    }
+  
+    .learn-portal__link {
+      color: #818cf8;
+    }
+  
+    .learn-portal__link:hover {
+      color: #a5b4fc;
+    }
+  
+    .learn-portal__icon {
+      color: #818cf8;
+    }
+  
+    .learn-portal__subheading {
+      color: #e5e7eb;
+    }
+  
+    .learn-portal__group {
+      border-top-color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  /* High-resolution screens */
+  @media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    .learn-portal__block {
+      box-shadow: 
+        0 4px 6px -1px rgba(0, 0, 0, 0.1),
+        0 2px 4px -2px rgba(0, 0, 0, 0.05),
+        0 0 0 0.5px rgba(0, 0, 0, 0.05);
+    }
   }
   
   

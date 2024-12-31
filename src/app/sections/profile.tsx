@@ -79,7 +79,7 @@ export default function ProfileSection() {
       value: userStats.tabsOpened,
       icon: <Layers size={20} />,
       hoverButtons: ['Add Tabs'],
-      onclick: showCourses
+
     },
     {
       id: 3,
@@ -88,7 +88,7 @@ export default function ProfileSection() {
       value: userStats.grantsApplied,
       icon: <GitBranch size={20} />,
       hoverButtons: ['View Grants'],
-      onclick: showCourses
+      
     },
     {
       id: 4,
@@ -97,7 +97,7 @@ export default function ProfileSection() {
       value: userStats.tasksCompleted,
       icon: <CheckCircle size={20} />,
       hoverButtons: ['View Tasks'],
-      onclick: showCourses
+     
     },
   ]
 
@@ -123,9 +123,7 @@ export default function ProfileSection() {
     }
   }
 
-  function showCourses() {
-    setCourses(true)
-  }
+ 
 
   function handleBack() {
     setCourses(false)
@@ -135,7 +133,7 @@ export default function ProfileSection() {
 
   if (courses) {
     return (
-      <div className="profile-section">
+      <div>
         <button className="back-button" onClick={() => setCourses(false)}>
           <ArrowLeft size={18} /> Back to Profile
         </button>
@@ -143,10 +141,6 @@ export default function ProfileSection() {
       </div>
     )
   }
-
-
-  
-
   return (
     <div className="profile-section">
       <div className="profile-header">
@@ -183,7 +177,7 @@ export default function ProfileSection() {
 
       <div className="action-list">
         {userActions.map((action) => (
-          <div key={action.id} className="action-item">
+          <div key={action.id} className="action-item" onClick={action.onclick} >
             <div className="action-icon">{action.icon}</div>
             <div className="action-content">
               <div className="action-title">{action.title}</div>
