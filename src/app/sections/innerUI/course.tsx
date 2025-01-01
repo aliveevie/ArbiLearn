@@ -1,7 +1,17 @@
+'use client'
+
+import { useState } from 'react'
 import { Book, FileText, Layers } from 'lucide-react'
+import { VerificationForm } from './VerificationForm'
+import { Button } from "@/components/ui/button"
+import { toast } from "@/hooks/use-toast"
+import { verifyForm } from '@/app/apis/verify-form/route'
 import '../../../styles/courses.css'
 
 const Courses = () => {
+  const [selectedResource, setSelectedResource] = useState<{ name: string; url: string } | null>(null)
+  const [showForm, setShowForm] = useState(false)
+
   const web3Resources = [
     { name: 'Ethereum.org', url: 'https://ethereum.org/en/learn/' },
     { name: 'CryptoZombies', url: 'https://cryptozombies.io/' },
@@ -34,65 +44,110 @@ const Courses = () => {
     { name: 'Metis Ranger Program', url: 'https://metisdao.notion.site/Metis-Ranger-Program-7e8c3ab360f1429d9f1b46a5c6e8f9e9' },
   ]
 
+  const handleResourceClick = (resource: { name: string; url: string }) => {
+    setSelectedResource(resource)
+    setShowForm(false)
+    window.open(resource.url, '_blank')
+  }
+
+  const handleVerificationSubmit = async (formData: FormData) => {
+    try {
+      const result = await verifyForm(formData)
+      if (result.success) {
+        toast({
+          title: "Verification Submitted",
+          description: "Your verification has been submitted successfully.",
+        })
+        setShowForm(false)
+        setSelectedResource(null)
+      } else {
+        throw new Error('Failed to submit verification')
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to submit verification. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const renderResourceList = (resources: { name: string; url: string }[], icon: React.ReactNode) => (
+    <ul className="learn-portal__list">
+      {resources.map((resource, index) => (
+        <li key={index} className="learn-portal__item">
+          <a
+            href={resource.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="learn-portal__link"
+            onClick={(e) => {
+              e.preventDefault()
+              handleResourceClick(resource)
+            }}
+          >
+            {icon}
+            <span className="learn-portal__text">{resource.name}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+  )
+
   return (
-    <div className="learn-portal">
-      <div className="learn-portal__block">
-        <h2 className="learn-portal__heading">Web3 Learning Resources</h2>
-        <ul className="learn-portal__list">
-          {web3Resources.map((resource, index) => (
-            <li key={index} className="learn-portal__item">
-              <a href={resource.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
-                <Book className="learn-portal__icon" size={18} />
-                <span className="learn-portal__text">{resource.name}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div className="learn-portal__block">
-        <h2 className="learn-portal__heading">Build on Metis</h2>
-        <div className="learn-portal__group">
-          <h3 className="learn-portal__subheading">Documentation</h3>
-          <ul className="learn-portal__list">
-            {metisDocs.map((doc, index) => (
-              <li key={index} className="learn-portal__item">
-                <a href={doc.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
-                  <FileText className="learn-portal__icon" size={18} />
-                  <span className="learn-portal__text">{doc.name}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+    <div className={`learn-portal ${showForm ? 'inactive' : ''}`}>
+      <div className="learn-portal__content">
+        <div className="learn-portal__block">
+          <h2 className="learn-portal__heading">Web3 Learning Resources</h2>
+          {renderResourceList(web3Resources, <Book className="learn-portal__icon" size={18} />)}
         </div>
-        <div className="learn-portal__group">
-          <h3 className="learn-portal__subheading">Courses</h3>
-          <ul className="learn-portal__list">
-            {metisCourses.map((course, index) => (
-              <li key={index} className="learn-portal__item">
-                <a href={course.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
-                  <Layers className="learn-portal__icon" size={18} />
-                  <span className="learn-portal__text">{course.name}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
+
+        <div className="learn-portal__block">
+          <h2 className="learn-portal__heading">Build on Metis</h2>
+          <div className="learn-portal__group">
+            <h3 className="learn-portal__subheading">Documentation</h3>
+            {renderResourceList(metisDocs, <FileText className="learn-portal__icon" size={18} />)}
+          </div>
+          <div className="learn-portal__group">
+            <h3 className="learn-portal__subheading">Courses</h3>
+            {renderResourceList(metisCourses, <Layers className="learn-portal__icon" size={18} />)}
+          </div>
+        </div>
+
+        <div className="learn-portal__block">
+          <h2 className="learn-portal__heading">Build on Arbitrum</h2>
+          {renderResourceList(arbitrumDocs, <FileText className="learn-portal__icon" size={18} />)}
         </div>
       </div>
 
-      <div className="learn-portal__block">
-        <h2 className="learn-portal__heading">Build on Arbitrum</h2>
-        <ul className="learn-portal__list">
-          {arbitrumDocs.map((doc, index) => (
-            <li key={index} className="learn-portal__item">
-              <a href={doc.url} target="_blank" rel="noopener noreferrer" className="learn-portal__link">
-                <FileText className="learn-portal__icon" size={18} />
-                <span className="learn-portal__text">{doc.name}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {selectedResource && !showForm && (
+        <div className="learn-portal__overlay">
+          <div className="learn-portal__modal">
+            <h3 className="text-lg font-semibold mb-4">
+              You clicked on: {selectedResource.name}
+            </h3>
+            <p className="mb-4">Did you complete, participate, or enroll in any of their programs?</p>
+            <div className="space-x-4">
+              <Button onClick={() => setShowForm(true)}>Yes</Button>
+              <Button variant="outline" onClick={() => {
+                setSelectedResource(null)
+                setShowForm(false)
+              }}>No</Button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {showForm && selectedResource && (
+        <div className="learn-portal__overlay">
+          <div className="learn-portal__modal">
+            <VerificationForm 
+              resourceName={selectedResource.name} 
+              // onSubmit={handleVerificationSubmit} 
+            />
+          </div>
+        </div>
+      )}
     </div>
   )
 }
