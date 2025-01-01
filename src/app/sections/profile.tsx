@@ -123,13 +123,6 @@ export default function ProfileSection() {
     }
   }
 
- 
-
-  function handleBack() {
-    setCourses(false)
-  }
-
-  console.log(courses)
 
   if (courses) {
     return (

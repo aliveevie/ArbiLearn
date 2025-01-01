@@ -9,7 +9,7 @@ interface PeepComponentProps {
   onClose: () => void;
 }
 
-export default function PeepComponent({ onClose }: PeepComponentProps) {
+export default function PeepComponent() {
   const [isMinimized, setIsMinimized] = useState(false)
   const [isExpanded, setIsExpanded] = useState(false)
   const [selectedOption, setSelectedOption] = useState<string | null>(null)
@@ -63,7 +63,7 @@ export default function PeepComponent({ onClose }: PeepComponentProps) {
           <div className="status-controls">
             <button 
               className="status-dot dot-close"
-              onClick={onClose}
+              // onClick={onClose}
               aria-label="Close"
             />
             <button 

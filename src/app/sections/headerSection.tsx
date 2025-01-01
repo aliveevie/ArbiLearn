@@ -42,16 +42,17 @@ const SectionHeader: React.FC = () => {
             <Link href="/join-program" className="nav-link" onClick={toggleMenu}>
               Join Program
             </Link>
-            <button className="nav-link cta-button" onClick={handleStartPeepsClick}>
+            <Link href="/pages/app" className="nav-link cta-button">
               Start Peeps
-            </button>
+            </Link>
           </nav>
           <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">
             {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+
         </div>
       </header>
-      {isPeepOpen && <PeepsComponent onClose={handleClosePeep} />}
+      {/* {isPeepOpen && <PeepsComponent onClose={handleClosePeep} />} */}
     </>
   )
 }
