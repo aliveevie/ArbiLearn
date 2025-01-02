@@ -1,12 +1,17 @@
 import React from 'react';
 import NFTGallery from './NFTGallery';
 import styles from '../../../styles/NFTPage.module.css';
+import Daisy from "../../../../public/Assets/Daisy.png"
+import Rose from "../../../../public/Assets/Rose.jpg"
+import Sunflower from "../../../../public/Assets/Sunflower.jpg"
+import Orchid from "../../../../public/Assets/Orchid.jpg"
+import Lily from "../../../../public/Assets/Lily.jpg"
 
 const freeNFTs = [
   {
     id: '1',
     name: 'ArbiLearn Daisy',
-    image: 'https://picsum.photos/seed/arbidaisy/300/300?flower',
+    image: Daisy,
     description: 'Join our community with this beautiful Daisy NFT.',
     price: '0',
     isFree: true,
@@ -14,16 +19,16 @@ const freeNFTs = [
   {
     id: '2',
     name: 'Metis Rose',
-    image: 'https://picsum.photos/seed/metisrose/300/300?flower',
+    image: Rose,
     description: 'A Rose NFT symbolizing growth in the Metis ecosystem.',
     price: '0',
     isFree: true,
   },
   {
     id: '3',
-    name: 'Arbitrum Sunflower',
-    image: 'https://picsum.photos/seed/arbitrumsunflower/300/300?flower',
-    description: 'Shine bright with this Arbitrum Sunflower NFT.',
+    name: 'Metis Sunflower',
+    image: Sunflower,
+    description: 'Shine bright with this Metis Sunflower NFT.',
     price: '0',
     isFree: true,
   },
@@ -33,7 +38,7 @@ const paidNFTs = [
   {
     id: '4',
     name: 'ArbiLearn Pro Orchid',
-    image: 'https://picsum.photos/seed/arbiorchid/300/300?flower',
+    image: Orchid,
     description: 'Show your expertise with this exclusive Orchid NFT.',
     price: '0.1',
     isFree: false,
@@ -41,17 +46,9 @@ const paidNFTs = [
   {
     id: '5',
     name: 'Metis Master Lily',
-    image: 'https://picsum.photos/seed/metislily/300/300?flower',
+    image: Lily,
     description: 'A Lily NFT for Metis ecosystem masters.',
     price: '0.15',
-    isFree: false,
-  },
-  {
-    id: '6',
-    name: 'Arbitrum Ace Tulip',
-    image: 'https://picsum.photos/seed/arbitrumtulip/300/300?flower',
-    description: 'Celebrate your Arbitrum proficiency with this Tulip NFT.',
-    price: '0.2',
     isFree: false,
   },
 ];

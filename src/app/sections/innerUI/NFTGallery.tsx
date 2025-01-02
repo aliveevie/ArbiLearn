@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from '../../../styles/NFTGallery.module.css';
 import NFTCard from './NFTCard';
+import { StaticImageData } from 'next/image';
 
 interface NFT {
   id: string;
   name: string;
-  image: string;
+  image: StaticImageData,
   description: string;
   price: string;
   isFree: boolean;
