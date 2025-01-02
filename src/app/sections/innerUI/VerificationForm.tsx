@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 // remove the Select imports since we won't need them anymore
 import { Textarea } from "@/components/ui/textarea"
-import { verifyForm } from '@/app/apis/verify-form/route'
+import { verifyForm } from '@/app/apis/verify-form/verify-form'
 import { X, Loader2 } from 'lucide-react'
 import { toast } from "@/hooks/use-toast"
 

@@ -59,10 +59,6 @@ const paidNFTs = [
 const ArbiLearnNFTS: React.FC = () => {
   return (
     <div className={styles.container}>
-      <h1 className={styles.heading}>ArbiLearn NFT Marketplace</h1>
-      <p className={styles.subheading}>
-        Get Your Free and Paid NFTs to Support ArbiLearn on Their Mission
-      </p>
       <NFTGallery title="Free Community NFTs" nfts={freeNFTs} />
       <NFTGallery title="Premium Support NFTs" nfts={paidNFTs} />
     </div>
