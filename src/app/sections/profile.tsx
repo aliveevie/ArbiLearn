@@ -4,6 +4,7 @@ import { useState } from 'react'
 import { Edit, Book, Award, Gift, CheckCircle, Layers, GitBranch, Upload, ArrowLeft } from 'lucide-react'
 import Courses from './innerUI/course'
 import '../../styles/profileSection.css'
+import ArbiLearnNFTS from './innerUI/ArbiLearnNFTS'
 
 interface UserStats {
   grantsApplied: number
@@ -49,6 +50,7 @@ export default function ProfileSection() {
   })
 
   const [courses, setCourses] = useState(false)
+  const [nfts, setNFTs] = useState(false)
 
   
   const userStats: UserStats = {
@@ -74,11 +76,12 @@ export default function ProfileSection() {
     },
     {
       id: 2,
-      title: 'Tabs Opened',
-      description: 'Recent learning materials',
+      title: 'Get NFTs',
+      description: 'Get your free and paid NFTs',
       value: userStats.tabsOpened,
       icon: <Layers size={20} />,
-      hoverButtons: ['Add Tabs'],
+      hoverButtons: ['Get NFTs'],
+      onclick: () => setNFTs(true)
 
     },
     {
@@ -134,6 +137,18 @@ export default function ProfileSection() {
       </div>
     )
   }
+
+  if(nfts) {
+    return (
+      <div>
+        <button className="back-button" onClick={() => setNFTs(false)}>
+          <ArrowLeft size={18} /> Back to Profile
+        </button>
+        <ArbiLearnNFTS />
+      </div>
+    )
+  }
+
   return (
     <div className="profile-section">
       <div className="profile-header">
