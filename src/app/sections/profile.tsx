@@ -1,10 +1,11 @@
 'use client'
 
 import { useState } from 'react'
-import { Edit, Book, Award, Gift, CheckCircle, Layers, GitBranch, Upload, ArrowLeft } from 'lucide-react'
+import { Edit, Book, Award, Gift, CheckCircle, Layers, Coins, Upload, ArrowLeft } from 'lucide-react'
 import Courses from './innerUI/course'
 import '../../styles/profileSection.css'
 import ArbiLearnNFTS from './innerUI/ArbiLearnNFTS'
+import ALearnTokenSale from './innerUI/tokenSale'
 
 interface UserStats {
   grantsApplied: number
@@ -51,6 +52,7 @@ export default function ProfileSection() {
 
   const [courses, setCourses] = useState(false)
   const [nfts, setNFTs] = useState(false)
+  const [tokenSale, setTokenSale] = useState(false)
 
   
   const userStats: UserStats = {
@@ -86,12 +88,12 @@ export default function ProfileSection() {
     },
     {
       id: 3,
-      title: 'Grants Applied',
-      description: 'Gitcoin, Giveth',
+      title: 'Token Sale',
+      description: 'Support ArbiLearn on their mission',
       value: userStats.grantsApplied,
-      icon: <GitBranch size={20} />,
-      hoverButtons: ['View Grants'],
-      
+      icon: <Coins size={20} />,
+      hoverButtons: ['Buy Tokens'],
+      onclick: () => setTokenSale(true)
     },
     {
       id: 4,
@@ -145,6 +147,17 @@ export default function ProfileSection() {
           <ArrowLeft size={18} /> Back to Profile
         </button>
         <ArbiLearnNFTS />
+      </div>
+    )
+  }
+
+  if(tokenSale) {
+    return (
+      <div>
+        <button className="back-button" onClick={() => setTokenSale(false)}>
+          <ArrowLeft size={18} /> Back to Profile
+        </button>
+        <ALearnTokenSale />
       </div>
     )
   }
