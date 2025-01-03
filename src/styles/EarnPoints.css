@@ -1,0 +1,87 @@
+.earn-points-container {
+    background: linear-gradient(to bottom right, #f0f4ff, #e6eeff);
+    border-radius: 1rem;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .earn-points-header {
+    text-align: center;
+    margin-bottom: 2rem;
+  }
+  
+  .earn-points-title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+  
+  .earn-points-subtitle {
+    font-size: 1.25rem;
+    color: #4a5568;
+  }
+  
+  .earn-points-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .earn-points-card {
+    background-color: white;
+    border-radius: 0.5rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  }
+  
+  .earn-points-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  }
+  
+  .card-icon {
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    color: #4f46e5;
+  }
+  
+  .card-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #2d3748;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-points {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #4f46e5;
+    margin-bottom: 0.5rem;
+  }
+  
+  .card-description {
+    font-size: 0.875rem;
+    color: #4a5568;
+    line-height: 1.5;
+  }
+  
+  .earn-points-footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 1rem;
+    color: #4a5568;
+  }
+  
+  .earn-points-link {
+    color: #4f46e5;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease-in-out;
+  }
+  
+  .earn-points-link:hover {
+    color: #3c3799;
+  }
+  
+  

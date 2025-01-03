@@ -6,6 +6,7 @@ import Courses from './innerUI/course'
 import '../../styles/profileSection.css'
 import ArbiLearnNFTS from './innerUI/ArbiLearnNFTS'
 import ALearnTokenSale from './innerUI/tokenSale'
+import EarnPoints from './innerUI/Points'
 
 interface UserStats {
   grantsApplied: number
@@ -53,6 +54,7 @@ export default function ProfileSection() {
   const [courses, setCourses] = useState(false)
   const [nfts, setNFTs] = useState(false)
   const [tokenSale, setTokenSale] = useState(false)
+  const [points, setPoints] = useState(false)
 
   
   const userStats: UserStats = {
@@ -97,12 +99,12 @@ export default function ProfileSection() {
     },
     {
       id: 4,
-      title: 'Tasks Completed',
-      description: 'Recent achievements',
+      title: 'Earn Points',
+      description: 'Complete actions to earn points and unlock valuable tokens and NFTs',
       value: userStats.tasksCompleted,
       icon: <CheckCircle size={20} />,
-      hoverButtons: ['View Tasks'],
-     
+      hoverButtons: ['Earn Points'],
+      onclick: () => setPoints(true)
     },
   ]
 
@@ -158,6 +160,17 @@ export default function ProfileSection() {
           <ArrowLeft size={18} /> Back to Profile
         </button>
         <ALearnTokenSale />
+      </div>
+    )
+  }
+
+  if(points) {
+    return (
+      <div>
+        <button className="back-button" onClick={() => setPoints(false)}>
+          <ArrowLeft size={18} /> Back to Profile
+        </button>
+        <EarnPoints />
       </div>
     )
   }
