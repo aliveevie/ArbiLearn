@@ -50,7 +50,7 @@
     "react-syntax-highlighter": "^15.5.0",
     "tailwind-merge": "^2.4.0",
     "tailwindcss-animate": "^1.0.7",
-    "thirdweb": "^5.64.5",
+    "thirdweb": "^5.81.0",
     "three": "^0.171.0",
     "vanta": "^0.5.24",
     "viem": "^2.17.4",
