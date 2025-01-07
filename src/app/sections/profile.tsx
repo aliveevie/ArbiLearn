@@ -10,6 +10,7 @@ import ALearnTokenSale from './innerUI/tokenSale'
 import EarnPoints from './innerUI/Points'
 import { createThirdwebClient } from 'thirdweb'
 import '../../styles/profileSection.css'
+import { client } from '@/thirdweb/thirdwebwallet'
 
 interface UserAction {
   id: number
@@ -20,7 +21,7 @@ interface UserAction {
   onclick?: () => void
 }
 
-export const client = createThirdwebClient({ clientId: "e4d51769fcc92b76042b7b13f041e01e" });
+
 
 export default function ProfileSection() {
   const account = useActiveAccount()
