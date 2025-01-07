@@ -6,7 +6,12 @@ export const client = createThirdwebClient({ clientId: "e4d51769fcc92b76042b7b13
 export function  ConnectThirdWebWallet() {
   return (
    
-      <ConnectButton client={client} />
+      <div  className="w-full" >
+         <ConnectButton client={client} />
+      </div>
+      
+     
+      
   
   );
 }

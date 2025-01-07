@@ -10,6 +10,7 @@ import { HeaderComponent } from './header';
 import { SignupFormComponent } from "@/components/components-signup-form-component";
 import BlockchainGame from "@/components/gaming-learning";
 import ProfileSection from "../app/sections/profile";
+import { ConnectThirdWebWallet } from "@/thirdweb/thirdwebwallet"
 
 export function LoginFormComponent() {
   const [username, setUsername] = useState('');
@@ -112,6 +113,7 @@ export function LoginFormComponent() {
             Google
           </Button>
           <Button variant="outline" className="w-full">
+          <Chrome className="mr-2 h-4 w-4" />
             Connect Wallet
           </Button>
         </div>

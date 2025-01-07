@@ -4,6 +4,8 @@ import { useState, useEffect } from 'react'
 import { LoginFormComponent } from "@/components/login-form"
 import '../../styles/peepComp.css'
 import AndroidBackgrond from './androidBack'
+import { ConnectThirdWebWallet } from '@/thirdweb/thirdwebwallet'
+import ProfileSection from "@/app/sections/profile";
 
 interface PeepComponentProps {
   onClose: () => void;
@@ -124,8 +126,7 @@ export default function PeepComponent() {
 
           {isRegistering && (
             <div className="profile-container">
-              <LoginFormComponent />
-      
+              <ProfileSection />
             </div>
           )}
         </div>
