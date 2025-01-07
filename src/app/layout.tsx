@@ -9,6 +9,7 @@ import { config } from '../../config'
 import Web3ModalProvider from '../../context'
 import { UserProvider } from '../components/userContext'
 import SectionHeader from './sections/headerSection';
+import { ThirdwebProvider } from 'thirdweb/react';
 
 
 export const metadata: Metadata = {
@@ -26,13 +27,13 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen flex flex-col"> 
         <UserProvider>
-          <Web3ModalProvider initialState={initialState}>
+          <ThirdwebProvider>
               <SectionHeader />            
               <main className="flex-grow">
               {children}
             </main>
             <FooterComponent />
-          </Web3ModalProvider>
+          </ThirdwebProvider>
         </UserProvider>
       </body>
     </html>

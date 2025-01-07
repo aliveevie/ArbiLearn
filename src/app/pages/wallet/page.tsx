@@ -1,9 +1,9 @@
 import { ConnectThirdWebWallet } from "@/thirdweb/thirdwebwallet";
 
-export default function WalletPage() {
+export default function Page() {
   return (
-    <div>
-      Hello! This is the Wallet Page. Please connect your wallet to continue.
-    </div>
-  );
+    <main className="min-h-screen">
+      <ConnectThirdWebWallet />
+    </main>
+  )
 }
