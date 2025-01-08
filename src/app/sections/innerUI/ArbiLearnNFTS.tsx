@@ -53,11 +53,11 @@ const paidNFTs = [
   },
 ];
 
-const ArbiLearnNFTS: React.FC = () => {
+const ArbiLearnNFTS: React.FC<{ address: string }> = ({ address }) => {
   return (
     <div className={styles.container}>
-      <NFTGallery title="Free Community NFTs" nfts={freeNFTs} />
-      <NFTGallery title="Premium Support NFTs" nfts={paidNFTs} />
+      <NFTGallery title="Free Community NFTs" nfts={freeNFTs} address={address} />
+      <NFTGallery title="Premium Support NFTs" nfts={paidNFTs} address={address} />
     </div>
   );
 };

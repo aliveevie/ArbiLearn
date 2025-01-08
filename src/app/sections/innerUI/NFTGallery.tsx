@@ -15,9 +15,10 @@ interface NFT {
 interface NFTGalleryProps {
   title: string;
   nfts: NFT[];
+  address: string;
 }
 
-const NFTGallery: React.FC<NFTGalleryProps> = ({ title, nfts }) => {
+const NFTGallery: React.FC<NFTGalleryProps> = ({ title, nfts, address }) => {
   return (
     <div className={styles.gallery}>
       <h2 className={styles.title}>{title}</h2>
@@ -30,6 +31,7 @@ const NFTGallery: React.FC<NFTGalleryProps> = ({ title, nfts }) => {
             description={nft.description}
             price={nft.price}
             isFree={nft.isFree}
+            address={address}
           />
         ))}
       </div>

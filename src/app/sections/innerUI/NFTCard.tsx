@@ -2,6 +2,12 @@ import React from 'react';
 import styles from '../../../styles/NFTCard.module.css';
 import { StaticImageData } from 'next/image';
 import Image from 'next/image';
+import { contract } from '@/thirdweb/contract';
+import { sendTransaction } from "thirdweb";
+import { claimTo } from "thirdweb/extensions/erc721";
+import { useSendTransaction } from 'thirdweb/react';
+import { useActiveAccount } from "thirdweb/react"
+
 
 interface NFTCardProps {
   name: string;
@@ -9,9 +15,44 @@ interface NFTCardProps {
   description: string;
   price: string;
   isFree: boolean;
+  address: string;
 }
 
-const NFTCard: React.FC<NFTCardProps> = ({ name, image, description, price, isFree }) => {
+const NFTCard: React.FC<NFTCardProps> = ({ name, image, description, price, isFree, address }) => {
+  const { mutate: sendTransaction } = useSendTransaction();
+
+  const account = useActiveAccount();
+
+  const handleMintOrBuy = async () => {
+    if (!address) {
+      alert("Please connect your wallet first");
+      return;
+    }
+
+    try {
+      if (isFree) {
+       
+        const transaction = claimTo({
+          contract, // Your thirdweb contract instance
+          to: address, // Wallet address of the receiver
+          quantity: 1n, // Quantity as BigInt
+          // Optionally specify `from` for allowlist drops
+          from: address, 
+        });
+
+        await sendTransaction({ transaction, account });
+
+       
+        // You can add a success message or modal here
+      } else {
+        // Handle paid NFTs logic here
+      }
+    } catch (error) {
+      console.error("Error minting NFT:", error);
+      // You can add an error message or modal here
+    }
+  };
+
   return (
     <div className={styles.card}>
       <div className={styles.imageContainer}>
@@ -22,7 +63,10 @@ const NFTCard: React.FC<NFTCardProps> = ({ name, image, description, price, isFr
         <p className={styles.description}>{description}</p>
         <div className={styles.footer}>
           <span className={styles.price}>{isFree ? 'Free' : `${price} METIS`}</span>
-          <button className={styles.button}>
+          <button 
+            className={styles.button}
+            onClick={handleMintOrBuy}
+          >
             {isFree ? 'Mint' : 'Buy'}
           </button>
         </div>
