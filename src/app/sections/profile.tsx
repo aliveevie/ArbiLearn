@@ -21,14 +21,12 @@ interface UserAction {
   onclick?: () => void
 }
 
-
-
 export default function ProfileSection() {
   const account = useActiveAccount()
+   // @ts-ignore
   const { data: balance } = useWalletBalance({
     address: account?.address,
-    client,
-    chain: 'metisepolia'
+    client
   })
 
   const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
