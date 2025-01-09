@@ -64,6 +64,10 @@ const NFTCard: React.FC<NFTCardProps> = ({ name, image, description, price, isFr
     }
   };
 
+  const handleClose = () => {
+    setMetisPopupOpen(false);
+  };
+
   return (
     <>
    
@@ -85,8 +89,17 @@ const NFTCard: React.FC<NFTCardProps> = ({ name, image, description, price, isFr
             </div>
           </div>
       </div>
-      <MetisPopup/>
-      </>
+      {metisPopupOpen && (
+        <MetisPopup
+        isOpen={metisPopupOpen}
+        onClose={handleClose}
+        onConfirmMint={() => {
+          setIsMinted(true);
+          setMetisPopupOpen(false);
+        }}
+        />
+      )}
+    </>
   );
 };
 

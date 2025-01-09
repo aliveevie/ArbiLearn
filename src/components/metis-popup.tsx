@@ -7,20 +7,27 @@ import './metisPopup.css'
 import metiNFT from '../../public/MetilNFT.png'
 import { Button } from './ui/button'
 
-const MetisPopup = () => {
-  const [isOpen, setIsOpen] = useState(false)
+interface MetisPopupProps {
+  isOpen: boolean;
+  onClose: () => void;
+  onConfirmMint: () => void;
+}
+
+const MetisPopup: React.FC<MetisPopupProps> = ({ 
+  isOpen, 
+  onClose, 
+  onConfirmMint 
+}) => {
   const [showMintInterface, setShowMintInterface] = useState(false)
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsOpen(true), 1000)
-    return () => clearTimeout(timer)
-  }, [])
+  // useEffect(() => {
+  //   const timer = setTimeout(() => setIsOpen(true), 1000)
+  //   return () => clearTimeout(timer)
+  // }, [])
 
-  const handleClose = () => setIsOpen(false)
   const handleMint = () => setShowMintInterface(true)
   const handleBack = () => setShowMintInterface(false)
 
-  if (!isOpen) return null
 
   return (
     <div className="fixed inset-0 bg-black/75 backdrop-blur-sm flex items-center justify-center z-50 p-4 bg-blue">
@@ -45,7 +52,7 @@ const MetisPopup = () => {
           </div>
         ) : (
           <div className="popup-content popup-container">
-          <button onClick={handleClose} className="popup-close">
+          <button onClick={onClose} className="popup-close">
             <X size={24} />
           </button>
 
@@ -72,7 +79,7 @@ const MetisPopup = () => {
 
           <div className="popup-buttons">
             <button
-              onClick={handleClose}
+              onClick={onClose}
               className="popup-button popup-button-secondary"
             >
               Maybe Later
