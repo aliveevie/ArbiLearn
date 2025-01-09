@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import { ArrowRight, AlertCircle, CheckCircle } from 'lucide-react'
-import './tokenSale.css'
-
+import '../../../styles/token-sale.css'
 
 export default function ALEARNTokenSale() {
   const [metisAmount, setMetisAmount] = useState('')
