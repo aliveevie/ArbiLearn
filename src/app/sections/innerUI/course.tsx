@@ -11,8 +11,14 @@ interface Resource {
   url: string;
 }
 
-const Courses = () => {
+interface CoursesProps { 
+  address: string | undefined;
+}
+
+const Courses: React.FC<CoursesProps> = ({address}) => {
   const [showForm, setShowForm] = useState(false)
+
+  console.log(address)
 
   const web3Resources: Resource[] = [
     { name: 'Ethereum.org', url: 'https://ethereum.org/en/learn/' },
@@ -110,6 +116,7 @@ const Courses = () => {
             <VerificationForm 
               resources={allResources}
               onClose={() => setShowForm(false)}
+              address={address}
             />
           </div>
         </div>

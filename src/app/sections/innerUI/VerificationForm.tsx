@@ -18,13 +18,15 @@ interface Resource {
 interface VerificationFormProps {
   resources: Resource[];
   onClose: () => void;
+  address: string | undefined;
 }
 
-export function VerificationForm({ resources, onClose }: VerificationFormProps) {
+export function VerificationForm({ resources, onClose, address }: VerificationFormProps) {
   const [file, setFile] = useState<File | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [selectedResource, setSelectedResource] = useState<string | null>(null)
 
+  console.log(address)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)

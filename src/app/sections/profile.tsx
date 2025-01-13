@@ -24,7 +24,7 @@ interface UserAction {
 export default function ProfileSection() {
   const account = useActiveAccount()
   const address = account?.address
-  console.log(address)
+
    // @ts-ignore
   const { data: balance } = useWalletBalance({
     address: account?.address,
@@ -77,7 +77,9 @@ export default function ProfileSection() {
             <button className="back-button" onClick={() => setActiveView('main')}>
               <ArrowLeft size={18} /> Back to Profile
             </button>
-            <Courses />
+            <Courses
+            address={address}
+            />
           </div>
         )
       case 'nfts':
