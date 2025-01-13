@@ -26,13 +26,15 @@ export function VerificationForm({ resources, onClose, address }: VerificationFo
   const [isLoading, setIsLoading] = useState(false)
   const [selectedResource, setSelectedResource] = useState<string | null>(null)
 
-  console.log(address)
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setIsLoading(true)
     const formData = new FormData(e.currentTarget)
     if (file) {
       formData.append('evidence', file)
+    }
+    if (address) {
+      formData.append('address', address)
     }
     try {
       const result = await verifyForm(formData)

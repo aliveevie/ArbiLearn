@@ -31,3 +31,40 @@ export async function createTestTable() {
   `;
   console.log("Test table created successfully");
 }
+export async function createVerificationsTable() {
+  // Create the table
+  await sql`
+    CREATE TABLE IF NOT EXISTS course_verification (
+      user_id VARCHAR(255) PRIMARY KEY,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      resource_name VARCHAR(255) NOT NULL,
+      resource_type VARCHAR(100) NOT NULL,
+      resource_size BIGINT NOT NULL,
+      resource_path TEXT NOT NULL,
+      completion_type VARCHAR(50) NOT NULL,
+      details TEXT NOT NULL,
+      evidence_url TEXT NOT NULL,
+      wallet_address VARCHAR(255) NOT NULL,
+      status VARCHAR(50) DEFAULT 'pending',
+      reviewed_at TIMESTAMP WITH TIME ZONE,
+      reviewed_by VARCHAR(255),
+      CONSTRAINT verifications_status_check 
+        CHECK (status IN ('pending', 'approved', 'rejected'))
+    )
+  `;
+
+  // Create wallet address index
+  // await sql`
+  //   CREATE INDEX IF NOT EXISTS idx_verifications_wallet_address 
+  //   ON verifications(wallet_address)
+  // `;
+
+  // // Create status index
+  // await sql`
+  //   CREATE INDEX IF NOT EXISTS idx_verifications_status 
+  //   ON verifications(status)
+  // `;
+
+  console.log("Verifications table created successfully");
+}
