@@ -9,8 +9,6 @@ import { useSendTransaction } from 'thirdweb/react';
 import { useActiveAccount } from "thirdweb/react"
 import MetisPopup from '@/components/metis-popup';
 
-
-
 interface NFTCardProps {
   name: string;
   image: StaticImageData;
