@@ -235,3 +235,95 @@
   background-color: #e5e7eb;
 }
 
+.no-membership {
+  text-align: center;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  margin: 2rem 0;
+}
+
+.no-membership h2 {
+  color: #ff4b4b;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.no-membership p {
+  color: #666;
+  margin-bottom: 1.5rem;
+  line-height: 1.5;
+}
+
+.mint-button {
+  background: linear-gradient(135deg, #3498db, #2980b9);
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.mint-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(52, 152, 219, 0.2);
+}
+
+.member-badge {
+  background: linear-gradient(135deg, #2ecc71, #27ae60);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-left: 1rem;
+  box-shadow: 0 2px 8px rgba(46, 204, 113, 0.2);
+}
+
+.minting-success {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(46, 204, 113, 0.1);
+  border-radius: 8px;
+  text-align: center;
+}
+
+.minting-success h2 {
+  color: #2ecc71;
+  margin-bottom: 0.5rem;
+}
+
+.minting-success p {
+  color: #27ae60;
+  margin-bottom: 1rem;
+}
+
+.transaction-link {
+  display: inline-block;
+  color: #3498db;
+  text-decoration: none;
+  padding: 0.5rem 1rem;
+  border: 1px solid #3498db;
+  border-radius: 20px;
+  transition: all 0.2s ease;
+}
+
+.transaction-link:hover {
+  background: #3498db;
+  color: white;
+}
+
+.minting-error {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(231, 76, 60, 0.1);
+  border-radius: 8px;
+  text-align: center;
+  color: #e74c3c;
+}
+
+.minting-error p {
+  margin: 0.25rem 0;
+}

@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import { useActiveAccount, useWalletBalance } from "thirdweb/react"
 import { Edit, Book, Award, Gift, CheckCircle, Layers, Coins, Upload, ArrowLeft } from 'lucide-react'
 import { ConnectThirdWebWallet } from '@/thirdweb/thirdwebwallet'
 import Courses from './innerUI/course'
@@ -10,7 +9,22 @@ import ALearnTokenSale from './innerUI/tokenSale'
 import EarnPoints from './innerUI/Points'
 import { createThirdwebClient } from 'thirdweb'
 import '../../styles/profileSection.css'
-import { client } from '@/thirdweb/thirdwebwallet'
+
+import type React from "react";
+import { claimTo, getNFT, getOwnedNFTs } from "thirdweb/extensions/erc1155";
+import {
+	MediaRenderer,
+	TransactionButton,
+	useActiveAccount,
+	useReadContract,
+  useWalletBalance
+} from "thirdweb/react";
+import {
+	accountAbstraction,
+	client,
+	editionDropContract,
+	editionDropTokenId,
+} from "@/thirdweb/constant";
 
 interface UserAction {
   id: number
@@ -22,17 +36,93 @@ interface UserAction {
 }
 
 export default function ProfileSection() {
-  const account = useActiveAccount()
-  const address = account?.address
+  const smartAccount = useActiveAccount()
+  const address = smartAccount?.address
+  const [mintingSuccess, setMintingSuccess] = useState(false)
+  const [transactionHash, setTransactionHash] = useState<string>('')
+  const [mintingError, setMintingError] = useState<string>('')
 
-   // @ts-ignore
+  const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
+    contract: editionDropContract,
+    address: smartAccount?.address!,
+    queryOptions: { enabled: !!smartAccount },
+  });
+
+  const isMember = ownedNfts && ownedNfts.length > 0;
+
+  // @ts-ignore
   const { data: balance } = useWalletBalance({
-    address: account?.address,
+    address: smartAccount?.address,
     client
   })
 
   const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
   const [isEditing, setIsEditing] = useState(false)
+
+  const renderMintingSuccess = () => {
+    return (
+      <div className="minting-success">
+        <h2>🎉 Congratulations!</h2>
+        <p>You are now an ArbiClub Member</p>
+        {transactionHash && (
+          <a 
+            href={`https://arbiscan.io/tx/${transactionHash}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transaction-link"
+          >
+            View Transaction
+          </a>
+        )}
+      </div>
+    );
+  };
+
+  const renderMintingError = () => {
+    return (
+      <div className="minting-error">
+        <p>Error minting: {mintingError}</p>
+        <p>Please try again</p>
+      </div>
+    );
+  };
+
+  const renderNoMembership = () => {
+    return (
+      <div className="no-membership">
+        <h2>No Membership NFT</h2>
+        <p>You need to mint an ArbiLearn Membership NFT to access the platform features.</p>
+        <TransactionButton
+          transaction={() =>
+            claimTo({
+              contract: editionDropContract,
+              tokenId: editionDropTokenId,
+              to: smartAccount?.address!,
+              // @ts-ignore
+              quantity: 1n,
+            })
+          }
+          onError={(error) => {
+            setMintingError(error.message);
+            setTimeout(() => setMintingError(''), 5000);
+          }}
+          onTransactionConfirmed={async (result) => {
+            setTransactionHash(result.transactionHash);
+            setMintingSuccess(true);
+            await refetchNfts();
+            setTimeout(() => {
+              setMintingSuccess(false);
+              setTransactionHash('');
+            }, 5000);
+          }}
+        >
+          Mint Membership NFT
+        </TransactionButton>
+        {mintingError && renderMintingError()}
+        {mintingSuccess && renderMintingSuccess()}
+      </div>
+    );
+  };
 
   const userActions: UserAction[] = [
     {
@@ -70,6 +160,10 @@ export default function ProfileSection() {
   ]
 
   const renderView = () => {
+    if (!isMember) {
+      return renderNoMembership();
+    }
+
     switch (activeView) {
       case 'courses':
         return (
@@ -119,14 +213,12 @@ export default function ProfileSection() {
         return (
           <div>
             <div className="profile-stats">
-              <div className="stat-item">
+             <div className="stat-item">
                 <div className="stat-value">0</div>
                 <div className="stat-label">NFTs Earned</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-value">
-                  {balance ? balance.displayValue : '0'}
-                </div>
+              <div className="stat-item"> 
+               
                 <div className="stat-label">Tokens Earned</div>
               </div>
               <div className="stat-item">
@@ -178,13 +270,13 @@ export default function ProfileSection() {
           <div className="profile-avatar">
             <ConnectThirdWebWallet />
           </div>
-          
+          {isMember && <div className="member-badge">ArbiClub Member</div>}
         </div>
         <button className="edit-button" onClick={() => setIsEditing(!isEditing)}>
           <Edit size={18} />
         </button>
       </div>
-      {account ? renderView() : (
+      {smartAccount? renderView() : (
         <div className="profile-stats">
           <div className="stat-item">
             <div className="stat-value">--</div>

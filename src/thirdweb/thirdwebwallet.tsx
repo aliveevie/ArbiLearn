@@ -1,13 +1,20 @@
-import { createThirdwebClient } from "thirdweb";
 import { ConnectButton } from "thirdweb/react";
-import ProfileSection from "@/app/sections/profile";
 
-export const client = createThirdwebClient({   clientId: "e4d51769fcc92b76042b7b13f041e01e"});
+import {
+	accountAbstraction,
+	client
+} from "./constant";
+
 
 export function  ConnectThirdWebWallet() {
   return (
       <div>
-         <ConnectButton client={client} />
+         <ConnectButton client={client}
+         	accountAbstraction={accountAbstraction}
+           connectModal={{
+             size: "compact",
+           }}
+         />
       </div>
   );
 }
