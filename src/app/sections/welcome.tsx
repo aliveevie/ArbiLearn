@@ -6,6 +6,7 @@ import './welcome.css';
 import { FaBrain, FaChartLine, FaRocket, FaGraduationCap } from 'react-icons/fa';
 import { BsLightningChargeFill } from 'react-icons/bs';
 import SectionHeader from './headerSection';
+import Link from 'next/link';
 
 export function WelcomeSection() {
   return (
@@ -59,10 +60,10 @@ export function WelcomeSection() {
             Play & Earn Rewards
           </p>
 
-          <button className="cta-button">
+          <Link href="/pages/app" className="cta-button">
             <FaRocket className="text-xl" />
             Start Now
-          </button>
+          </Link>
         </div>
       </div>
     </section>

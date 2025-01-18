@@ -4,6 +4,7 @@ import Image from 'next/image'
 import phone from '../../../public/Assets/Phone1.png'
 import world from '../../../public/Assets/BackgroundView2.png'
 import { VantaBackground } from './vanta'
+import Link from 'next/link';
 
 const HeroSectionTwo = () => {
   return (
@@ -22,37 +23,24 @@ const HeroSectionTwo = () => {
             className={styles.world}
             priority
           />
-          <div className={styles.textOverlay}>
-            <h1 className={styles.theText}>The</h1>
-            <div className={styles.worldTechGroup}>
-              <h2 className={styles.worldText}>Web3</h2>
-              <div className={styles.techContainer}>
-                <h2 className={styles.techText}>Tech</h2>
-                <span className={styles.handIcon}>👋</span>
-              </div>
-            </div>
-            <button className={styles.ctaButton}>
-              Get Started
-            </button>
-          </div>
+        
         </div>
-
         <div className={styles.phoneWrapper}>
-  <Image 
-    src={phone} 
-    alt="Phone Mockup" 
-    className={styles.phone}
-    priority
-  />
+            <Image 
+              src={phone} 
+              alt="Phone Mockup" 
+              className={styles.phone}
+              priority
+            />
       <div className={styles.phoneContent}>
         <h2 className={styles.phoneHeading}>ArbiLearn</h2>
         <p className={styles.phoneSubtext}>
-          Everything simplified on Telegram.<br/>
-          Learn Web3 the easy way.
+          Learn, Peep, and Get Rewarded.<br/>
+          Your Web3 Journey Made Simple.
         </p>
-        <button className={styles.phoneButton}>
-          Join Now
-        </button>
+        <Link href="/pages/app" className={styles.phoneButton}>
+          Get Started
+        </Link>
       </div>
     </div>
     </div>

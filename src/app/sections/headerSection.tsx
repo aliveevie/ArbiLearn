@@ -36,14 +36,14 @@ const SectionHeader: React.FC = () => {
             <Image src={arbilearn} alt="ArbiLearn Logo" width={50} height={50} />
           </Link>
           <nav className={`nav-menu ${isMenuOpen ? 'active' : ''}`}>
-            <Link href="/peeps" className="nav-link" onClick={toggleMenu}>
-              Peeps
+            <Link href="#peeps-protocols" className="nav-link" onClick={toggleMenu}>
+              Peeps Protocols
             </Link>
-            <Link href="/join-program" className="nav-link" onClick={toggleMenu}>
-              Join Program
-            </Link>
+            <a href="#peeps-grants" className="nav-link" onClick={toggleMenu}>
+              Peeps Grants
+            </a>
             <Link href="/pages/app" className="nav-link cta-button">
-              Start Peeps
+              Start Now
             </Link>
           </nav>
           <button className="menu-toggle" onClick={toggleMenu} aria-label="Toggle menu">

@@ -110,3 +110,22 @@ h1 {
         grid-template-columns: 1fr;
     }
 }
+
+.protocols-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    margin: 2rem 0;
+  }
+  
+  @media (max-width: 768px) {
+    .protocols-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .protocols-grid {
+      grid-template-columns: 1fr;
+    }
+  }
