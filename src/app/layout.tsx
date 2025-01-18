@@ -10,6 +10,8 @@ import Web3ModalProvider from '../../context'
 import { UserProvider } from '../components/userContext'
 import SectionHeader from './sections/headerSection';
 import { ThirdwebProvider } from 'thirdweb/react';
+import { Analytics } from "@vercel/analytics/react"
+
 
 
 export const metadata: Metadata = {
@@ -26,6 +28,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="min-h-screen flex flex-col"> 
+        <Analytics />
         <UserProvider>
           <ThirdwebProvider>
               <SectionHeader />            

@@ -9,7 +9,6 @@ import HeroSection3 from "./sections/sectionthree"
 import MobilePopup from "./sections/popupBox"
 import SectionFour from "./sections/sectionFour"
 import SectionFive from "./sections/sectionFive"
-import  GaslessHome  from "@/thirdweb/minting_test"
 
 
 export default function Home() {
@@ -21,7 +20,6 @@ export default function Home() {
        <HeroSection3 />
        <SectionFour />
        <SectionFive />
-       <GaslessHome />
     </main>
   )
 }
