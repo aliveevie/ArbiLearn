@@ -1,4 +1,5 @@
 "use client";
+
 import type React from "react";
 import { claimTo, getNFT, getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import {
@@ -14,6 +15,8 @@ import {
 	editionDropContract,
 	editionDropTokenId,
 } from "./constant";
+
+
 import Link from "next/link";
 
 const GaslessHome: React.FC = () => {

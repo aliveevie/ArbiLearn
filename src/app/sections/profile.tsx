@@ -9,6 +9,8 @@ import ALearnTokenSale from './innerUI/tokenSale'
 import EarnPoints from './innerUI/Points'
 import { createThirdwebClient } from 'thirdweb'
 import '../../styles/profileSection.css'
+import Image from 'next/image'
+
 
 import type React from "react";
 import { claimTo, getNFT, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -41,6 +43,7 @@ export default function ProfileSection() {
   const [mintingSuccess, setMintingSuccess] = useState(false)
   const [transactionHash, setTransactionHash] = useState<string>('')
   const [mintingError, setMintingError] = useState<string>('')
+  const [showNFTDetails, setShowNFTDetails] = useState(false)
 
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
@@ -49,6 +52,8 @@ export default function ProfileSection() {
   });
 
   const isMember = ownedNfts && ownedNfts.length > 0;
+
+  console.log(ownedNfts)
 
   // @ts-ignore
   const { data: balance } = useWalletBalance({
@@ -59,6 +64,39 @@ export default function ProfileSection() {
   const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
   const [isEditing, setIsEditing] = useState(false)
 
+  const handleNFTClick = () => {
+    setShowNFTDetails(!showNFTDetails)
+  }
+
+  const renderNFTDetails = () => {
+    if (!showNFTDetails || !ownedNfts) return null;
+
+    return (
+      <div className="nft-details-modal">
+        <div className="nft-details-content">
+          <button className="close-button" onClick={() => setShowNFTDetails(false)}>×</button>
+          <h3>ArbiClub Membership NFT</h3>
+          <div className="nft-image">
+            <img
+              src={ownedNfts[0].metadata.image}
+              alt="Membership NFT"
+            />
+          </div>
+        
+            <a 
+              href={`https://andromeda-explorer.metis.io/tx/${transactionHash}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="transaction-link"
+            >
+              View Mint Transaction
+            </a>
+          
+        </div>
+      </div>
+    );
+  };
+
   const renderMintingSuccess = () => {
     return (
       <div className="minting-success">
@@ -66,7 +104,7 @@ export default function ProfileSection() {
         <p>You are now an ArbiClub Member</p>
         {transactionHash && (
           <a 
-            href={`https://arbiscan.io/tx/${transactionHash}`}
+            href={`https://andromeda-explorer.metis.io/tx${transactionHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"
@@ -107,12 +145,13 @@ export default function ProfileSection() {
             setTimeout(() => setMintingError(''), 5000);
           }}
           onTransactionConfirmed={async (result) => {
+            console.log(result)
             setTransactionHash(result.transactionHash);
             setMintingSuccess(true);
             await refetchNfts();
             setTimeout(() => {
               setMintingSuccess(false);
-              setTransactionHash('');
+             // setTransactionHash('');
             }, 5000);
           }}
         >
@@ -213,13 +252,16 @@ export default function ProfileSection() {
         return (
           <div>
             <div className="profile-stats">
-             <div className="stat-item">
-                <div className="stat-value">0</div>
-                <div className="stat-label">NFTs Earned</div>
-              </div>
-              <div className="stat-item"> 
-               
-                <div className="stat-label">Tokens Earned</div>
+              <div 
+                className="stat-item clickable"
+                onClick={handleNFTClick}
+                title="Click to view NFT details"
+              >
+                <div className="stat-value">
+                  {ownedNfts?.length || 0}
+                  {isMember && <span className="member-indicator">✓</span>}
+                </div>
+                <div className="stat-label">Membership NFT</div>
               </div>
               <div className="stat-item">
                 <div className="stat-value">0</div>
@@ -270,13 +312,9 @@ export default function ProfileSection() {
           <div className="profile-avatar">
             <ConnectThirdWebWallet />
           </div>
-          {isMember && <div className="member-badge">ArbiClub Member</div>}
         </div>
-        <button className="edit-button" onClick={() => setIsEditing(!isEditing)}>
-          <Edit size={18} />
-        </button>
       </div>
-      {smartAccount? renderView() : (
+      {smartAccount ? renderView() : (
         <div className="profile-stats">
           <div className="stat-item">
             <div className="stat-value">--</div>
@@ -296,6 +334,7 @@ export default function ProfileSection() {
           </div>
         </div>
       )}
+      {renderNFTDetails()}
     </div>
   )
 }
