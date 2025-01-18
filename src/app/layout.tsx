@@ -11,7 +11,7 @@ import { UserProvider } from '../components/userContext'
 import SectionHeader from './sections/headerSection';
 import { ThirdwebProvider } from 'thirdweb/react';
 import { Analytics } from "@vercel/analytics/react"
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 
 export const metadata: Metadata = {
@@ -29,6 +29,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="min-h-screen flex flex-col"> 
         <Analytics />
+        <SpeedInsights />
         <UserProvider>
           <ThirdwebProvider>
               <SectionHeader />            
