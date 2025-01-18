@@ -3,6 +3,7 @@
 import React from 'react';
 import { MessageCircle, MessageSquare, Twitter } from 'lucide-react';
 import '../../styles/SectionFive.css';
+import Link from 'next/link';
 
 const SocialMediaLink: React.FC<{ icon: React.ReactNode; name: string; url: string }> = ({ icon, name, url }) => (
   <a href={url} target="_blank" rel="noopener noreferrer" className="social-media-link">
@@ -39,7 +40,7 @@ const SectionFive: React.FC = () => {
         <div className="community-cta">
           <h3>Be Part of Our Growing Community</h3>
           <p>Join discussions, get updates, and connect with like-minded individuals in the ArbiLearn ecosystem.</p>
-          <button className="join-button">Join Now</button>
+          <Link href="/pages/app" className="join-button">Join Now</Link>
         </div>
       </div>
     </section>
