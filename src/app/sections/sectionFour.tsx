@@ -4,6 +4,12 @@ import React, { useState } from 'react';
 import { Gift, ArrowRight, Coins, Zap, Heart, Star } from 'lucide-react';
 import MobilePopup from './popupBox';
 import '../../styles/SectionFour.css';
+import Image from 'next/image';
+import giveth from "../../../public/Ecosystems/giveth.jpg";
+import gitcoin from "../../../public/Ecosystems/gitcoin.jpg";
+import octant from "../../../public/Ecosystems/octant.png";
+import karma from "../../../public/Ecosystems/Karma.jpg";
+import Link from 'next/link';
 
 const SectionFour: React.FC = () => {
   const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -19,6 +25,7 @@ const SectionFour: React.FC = () => {
 
   const handleMintNFT = () => {
     console.log('Minting NFT');
+    window.location.href = '/pages/app';
   };
 
   const openPopup = (url: string, header: string) => {
@@ -27,10 +34,10 @@ const SectionFour: React.FC = () => {
   };
 
   const grantProviders = [
-    { name: 'Gitcoin', icon: Coins, url: 'https://www.gitcoin.co/' },
-    { name: 'Octant', icon: Zap, url: 'https://octant.build/' },
-    { name: 'Giveth', icon: Heart, url: 'https://giveth.io/' },
-    { name: 'Karma', icon: Star, url: 'https://www.karmaprotocol.xyz/' }
+    { name: 'Gitcoin', icon: Image, iconSrc: gitcoin, url: 'https://www.gitcoin.co/' },
+    { name: 'Octant', icon: Image, iconSrc: octant, url: 'https://octant.build/' },
+    { name: 'Giveth', icon: Image, iconSrc: giveth, url: 'https://giveth.io/' },
+    { name: 'Karma', icon: Image, iconSrc: karma, url: 'https://www.karmaprotocol.xyz/' }
   ];
 
   return (
@@ -41,7 +48,7 @@ const SectionFour: React.FC = () => {
         
         <div className="grants-intro">
           <Gift size={48} className="grants-icon" />
-          <h3 className="grants-heading">ArbiLearn Grants</h3>
+          <h3 className="grants-heading">Explore Grants</h3>
           <p className="grants-description">
             Peep into the future of project development. ArbiLearn offers you the opportunity to secure grants and bring your ideas to life!
           </p>
@@ -50,7 +57,13 @@ const SectionFour: React.FC = () => {
         <div className="grant-providers">
           {grantProviders.map((provider, index) => (
             <div key={index} className="grant-provider-card">
-              <provider.icon size={36} className="provider-icon" />
+              <provider.icon 
+                src={provider.iconSrc}
+                width={36}
+                height={36}
+                alt={`${provider.name} icon`}
+                className="provider-icon"
+              />
               <h4>{provider.name}</h4>
               <button className="cta-button" onClick={() => openPopup(provider.url, provider.name)}>
                 Apply for Grant <ArrowRight size={16} />
@@ -64,9 +77,9 @@ const SectionFour: React.FC = () => {
           <p className="apply-description">
             Don't miss out on this opportunity to fund your project and contribute to the ecosystem.
           </p>
-          <button className="main-cta-button">
-            Start Your Grant Journey <ArrowRight size={20} />
-          </button>
+          <Link href="/pages/app" className="main-cta-button">
+            Start Your Journey <ArrowRight size={20} />
+          </Link>
         </div>
       </div>
 
