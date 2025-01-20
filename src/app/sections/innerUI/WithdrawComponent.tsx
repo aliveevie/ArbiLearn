@@ -10,7 +10,7 @@ interface WithdrawComponentProps {
 
 const WithdrawComponent: React.FC<WithdrawComponentProps> = ({ onClose }) => {
   // Mock data - replace with actual data from your state management
-  const totalPoints = 500 // Example points
+  const totalPoints = 50 // Example points
   const totalEarnings = 5.00
   const minimumPoints = 1000
 
