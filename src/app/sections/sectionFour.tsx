@@ -41,7 +41,7 @@ const SectionFour: React.FC = () => {
   ];
 
   return (
-    <section className="section-four">
+    <section className="section-four" id="peeps-grants">
       <div className="container">
         <h2 className="section-title">Get Grants</h2>
         <p className="section-subtitle">Welcome to the world of decentralized funding!</p>

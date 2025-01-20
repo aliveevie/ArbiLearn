@@ -21,10 +21,12 @@ import Link from "next/link";
 
 const GaslessHome: React.FC = () => {
 	const smartAccount = useActiveAccount();
+	
 	const { data: nft, isLoading: isNftLoading } = useReadContract(getNFT, {
 		contract: editionDropContract,
 		tokenId: editionDropTokenId,
 	});
+
 	const { data: ownedNfts } = useReadContract(getOwnedNFTs, {
 		contract: editionDropContract,
 		address: smartAccount?.address!,

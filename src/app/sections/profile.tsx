@@ -145,7 +145,6 @@ export default function ProfileSection() {
             setTimeout(() => setMintingError(''), 5000);
           }}
           onTransactionConfirmed={async (result) => {
-            console.log(result)
             setTransactionHash(result.transactionHash);
             setMintingSuccess(true);
             await refetchNfts();

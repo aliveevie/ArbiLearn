@@ -57,7 +57,6 @@ const HeroSection3: React.FC = () => {
         <div className="container">
           <h1>Peeps Ecosystem</h1>
           <p className="subtitle">Explore and master the leading blockchain ecosystems with ArbiLearn</p>
-
           <div className="protocols-grid">
             {ecosystems.map((ecosystem, index) => (
               <div className="protocol-card" key={index}>
