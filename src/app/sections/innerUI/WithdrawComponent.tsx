@@ -2,7 +2,7 @@
 
 import React from 'react'
 import { X } from 'lucide-react'
-import '../../../styles/withdraw.css'
+import '../../../styles/WithDraw.css'
 
 interface WithdrawComponentProps {
   onClose: () => void
