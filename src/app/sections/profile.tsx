@@ -10,7 +10,7 @@ import EarnPoints from './innerUI/Points'
 import { createThirdwebClient } from 'thirdweb'
 import '../../styles/profileSection.css'
 import Image from 'next/image'
-
+import WithdrawComponent from './innerUI/WithdrawComponent'
 
 import type React from "react";
 import { claimTo, getNFT, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -53,7 +53,6 @@ export default function ProfileSection() {
 
   const isMember = ownedNfts && ownedNfts.length > 0;
 
-  console.log(ownedNfts)
 
   // @ts-ignore
   const { data: balance } = useWalletBalance({
@@ -63,6 +62,7 @@ export default function ProfileSection() {
 
   const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
   const [isEditing, setIsEditing] = useState(false)
+  const [showWithdraw, setShowWithdraw] = useState(false)
 
   const handleNFTClick = () => {
     setShowNFTDetails(!showNFTDetails)
@@ -248,6 +248,7 @@ export default function ProfileSection() {
           </div>
         )
       default:
+
         return (
           <div>
             <div className="profile-stats">
@@ -270,6 +271,16 @@ export default function ProfileSection() {
                 <div className="stat-value">0</div>
                 <div className="stat-label">Courses Completed</div>
               </div>
+              <div 
+                  className="stat-item clickable"
+                  onClick={() => setShowWithdraw(true)}
+                  title="Click to withdraw earnings"
+                >
+                  <div className="stat-value">$5.00</div>
+                  <div className="stat-label">Rewards</div>
+                </div>
+                {showWithdraw && <WithdrawComponent onClose={() => setShowWithdraw(false)} />}
+
             </div>
 
             <div className="action-list">
