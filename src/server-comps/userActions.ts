@@ -21,7 +21,8 @@ export async function generateReferralLink() {
   // In a real application, you would save this code to the database
   console.log("Generated referral code:", referralCode)
 
-  return `http://localhost:3000/refer/${referralCode}`
+  const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
+  return `${baseUrl}/pages/app?ref=${referralCode}`
 }
 
 export async function processReferral(referralCode: string) {
