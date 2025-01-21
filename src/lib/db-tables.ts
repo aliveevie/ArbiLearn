@@ -31,6 +31,7 @@ export async function createTestTable() {
   `;
   console.log("Test table created successfully");
 }
+
 export async function createVerificationsTable() {
   // Create the table
   await sql`
@@ -67,4 +68,35 @@ export async function createVerificationsTable() {
   // `;
 
   console.log("Verifications table created successfully");
+}
+
+export async function createWalletsTable() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS wallets (
+      user_id SERIAL PRIMARY KEY,
+      wallet_address VARCHAR(255) NOT NULL,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+    )
+  `;
+  console.log("Wallets table created successfully");
+}
+
+export async function createProfileTable() {
+  await sql`
+    CREATE TABLE IF NOT EXISTS profiles (
+      profile_id SERIAL PRIMARY KEY,
+      user_id INTEGER NOT NULL,
+      name VARCHAR(255),
+      email VARCHAR(255),
+      x_handle VARCHAR(255),
+      discord VARCHAR(255), 
+      telegram VARCHAR(255),
+      bio TEXT,
+      created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+      FOREIGN KEY (user_id) REFERENCES wallets(user_id)
+    )
+  `;
+  console.log("Profiles table created successfully");
 }

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Edit, Book, Award, Gift, CheckCircle, Layers, Coins, Upload, ArrowLeft } from 'lucide-react'
 import { ConnectThirdWebWallet } from '@/thirdweb/thirdwebwallet'
 import Courses from './innerUI/course'
@@ -13,20 +13,20 @@ import Image from 'next/image'
 import WithdrawComponent from './innerUI/WithdrawComponent'
 
 import type React from "react";
-import { claimTo, getNFT, getOwnedNFTs } from "thirdweb/extensions/erc1155";
+import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import {
-	MediaRenderer,
 	TransactionButton,
 	useActiveAccount,
 	useReadContract,
   useWalletBalance
 } from "thirdweb/react";
 import {
-	accountAbstraction,
 	client,
 	editionDropContract,
 	editionDropTokenId,
 } from "@/thirdweb/constant";
+
+import { getWalletAddress } from '@/server-comps/wallet'
 
 interface UserAction {
   id: number
@@ -53,7 +53,6 @@ export default function ProfileSection() {
 
   const isMember = ownedNfts && ownedNfts.length > 0;
 
-
   // @ts-ignore
   const { data: balance } = useWalletBalance({
     address: smartAccount?.address,
@@ -63,6 +62,9 @@ export default function ProfileSection() {
   const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
   const [isEditing, setIsEditing] = useState(false)
   const [showWithdraw, setShowWithdraw] = useState(false)
+
+  //@ts-ignore
+  getWalletAddress(smartAccount?.address)
 
   const handleNFTClick = () => {
     setShowNFTDetails(!showNFTDetails)
@@ -90,8 +92,7 @@ export default function ProfileSection() {
               className="transaction-link"
             >
               View Mint Transaction
-            </a>
-          
+            </a>   
         </div>
       </div>
     );
@@ -104,7 +105,7 @@ export default function ProfileSection() {
         <p>You are now an ArbiClub Member</p>
         {transactionHash && (
           <a 
-            href={`https://andromeda-explorer.metis.io/tx${transactionHash}`}
+            href={`https://andromeda-explorer.metis.io/tx/${transactionHash}`}
             target="_blank"
             rel="noopener noreferrer"
             className="transaction-link"
