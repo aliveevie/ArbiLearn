@@ -4,7 +4,7 @@ import { SetStateAction, JSX, SVGProps, useState } from "react"
 import { Progress } from "@/components/ui/progress"
 import { Button } from "@/components/ui/button"
 import { useRouter } from "next/navigation";
-import { useAccount } from "wagmi";
+// import { useAccount } from "wagmi";
 import Chapter1 from "./chapters/chapter";
 import Chapter2 from "./chapters/chapter2";
 import Chapter3 from "./chapters/chapter3";
@@ -23,13 +23,13 @@ export function Dashboard() {
     setActiveSection(section)
   }
 
-  const { isDisconnected } = useAccount();
+  // const { isDisconnected } = useAccount();
 
   const router = useRouter();
 
-  if(isDisconnected){
-    router.push('/') 
-  }
+  // if(isDisconnected){
+  //   router.push('/') 
+  // }
 
   return (
     <div className="flex w-full min-h-screen">
