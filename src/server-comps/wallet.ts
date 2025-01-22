@@ -7,9 +7,8 @@ export async function getWalletAddress(wallet: string) {
     try {
         // Create wallets table if it doesn't exist
        // await createWalletsTable();
-
-        // Check if wallet address already exists
-        const existingWallet = await sql`
+        if(wallet){
+            const existingWallet = await sql`
             SELECT wallet_address FROM wallets 
             WHERE wallet_address = ${wallet}
         `;
@@ -27,6 +26,12 @@ export async function getWalletAddress(wallet: string) {
 
         console.log("Wallet created successfully");
         return { wallet: wallet, success: true, exists: false };
+        }else{
+            console.log("Wallet is coming stay patiently!");
+           
+        }
+        // Check if wallet address already exists
+       
     } catch (error) {
         console.error("Error handling wallet:", error);
         return { error: "Failed to handle wallet", success: false };
