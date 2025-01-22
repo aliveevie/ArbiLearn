@@ -3,6 +3,8 @@
 import { revalidatePath } from "next/cache"
 import { createProfileTable, createReferralTable, updateReferralPoints } from "@/lib/db-tables"
 import { sql } from "@vercel/postgres";
+import { getWalletID } from "./getWalletId";
+const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 
 
 export async function submitProfile(profileData: any) {
@@ -84,19 +86,74 @@ export async function submitProfile(profileData: any) {
   }
 }
 
-export async function generateReferralLink(wallet: string | undefined) {
+//  const referralCode = Math.random().toString(36).substring(7)
 
-  // Generate a unique referral code
-  await createReferralTable();
-  const referralCode = Math.random().toString(36).substring(7)
-  console.log("Wallet address:", wallet)
+export async function generateReferralLink(wallet: string) {
+  try {
+      // Ensure referral table exists
+     
+      // Get user_id from wallet
+      const walletResult = await getWalletID(wallet);
+      if (!walletResult.success) {
+          console.log("Wallet not found");
+          return
+      }
 
-  // In a real application, you would save this code to the database
-  console.log("Generated referral code:", referralCode)
+      const userId = walletResult.user_id;
 
-  const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
-  return `${baseUrl}/pages/app?ref=${referralCode}`
+      // Check if user already has a referral code
+      const existingReferral = await sql`
+          SELECT referall_code
+          FROM referrals 
+          WHERE user_id = ${userId}
+      `;
+
+    
+      if (existingReferral.rows.length > 0) {
+          // Return existing referral code
+       let referralCode = existingReferral.rows[0].referall_code;
+          console.log("Existing referral code retrieved");
+          console.log(referralCode)
+          return {
+            success: true,
+            exists: false,
+            referralCode: referralCode,
+            referralLink: `${baseUrl}/pages/app?ref=${referralCode}`
+        };
+      }
+
+      // Generate new unique referral code
+    let  referralCode = Math.random().toString(36).substring(7);
+      // Save new referral code
+      await sql`
+          INSERT INTO referrals (
+              user_id, 
+              referall_code, 
+              referral_wallet,
+              points
+          ) VALUES (
+              ${userId}, 
+              ${referralCode}, 
+              ${wallet},
+              0
+          )
+      `;
+
+      console.log("New referral code generated and saved");
+      return {
+        success: true,
+        exists: false,
+        referralCode: referralCode,
+        referralLink: `${baseUrl}/pages/app?ref=${referralCode}`
+    };
+
+  } catch (error) {
+      console.error("Error generating referral link:", error);
+      return 
+        "Failed to generate referral link" 
+  }
 }
+
 
 export async function processReferral(referralCode: string) {
   // In a real application, you would validate the referral code and update the database

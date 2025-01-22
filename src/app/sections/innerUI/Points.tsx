@@ -42,7 +42,8 @@ export default function EarnPoints({smartAccount}: EarnPointsProps) {
       setEarnedPoints(100)
     }
     // Use the imported generateReferralLink function
-    generateReferralLink(smartAccount).then(link => setReferralLink(link))
+    //@ts-ignore
+    generateReferralLink(smartAccount).then(link => setReferralLink(link?.referralLink))
     console.log("Referral link generated:", referralLink)
   }, [])
 
