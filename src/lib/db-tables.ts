@@ -100,3 +100,44 @@ export async function createProfileTable() {
   `;
   console.log("Profiles table created successfully");
 }
+
+
+export async function createReferralTable() {
+    try {
+        await sql`
+            CREATE TABLE IF NOT EXISTS referrals (
+                referral_id SERIAL PRIMARY KEY,
+                user_id INTEGER NOT NULL,
+                referall_code VARCHAR(255) NOT NULL,
+                referral_wallet VARCHAR(255),
+                points INTEGER DEFAULT 0,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES wallets(user_id),
+                UNIQUE(referral_wallet)
+            )
+        `;
+        console.log("Referrals table created successfully");
+    } catch (error) {
+        console.error("Error creating referrals table:", error);
+        throw error;
+    }
+}
+
+// Helper function to update points for a referral
+export async function updateReferralPoints(userId: number, referralWallet: string) {
+    try {
+        await sql`
+            INSERT INTO referrals (user_id, referral_wallet, points)
+            VALUES (${userId}, ${referralWallet}, 10)
+            ON CONFLICT (referral_wallet)
+            DO UPDATE SET 
+                points = referrals.points + 10,
+                updated_at = CURRENT_TIMESTAMP
+        `;
+        console.log("Referral points updated successfully");
+    } catch (error) {
+        console.error("Error updating referral points:", error);
+        throw error;
+    }
+}

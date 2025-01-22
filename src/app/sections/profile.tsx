@@ -245,7 +245,9 @@ export default function ProfileSection() {
             <button className="back-button" onClick={() => setActiveView('main')}>
               <ArrowLeft size={18} /> Back to Profile
             </button>
-            <EarnPoints />
+            <EarnPoints 
+            smartAccount={smartAccount?.address}
+            />
           </div>
         )
       default:

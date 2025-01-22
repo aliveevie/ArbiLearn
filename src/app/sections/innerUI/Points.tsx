@@ -21,7 +21,11 @@ interface UserProfile {
   bio: string
 }
 
-export default function EarnPoints() {
+interface EarnPointsProps {
+  smartAccount: string | undefined;
+}
+
+export default function EarnPoints({smartAccount}: EarnPointsProps) {
   const [isProfileComplete, setIsProfileComplete] = useState(false)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [earnedPoints, setEarnedPoints] = useState(0)
@@ -38,11 +42,12 @@ export default function EarnPoints() {
       setEarnedPoints(100)
     }
     // Use the imported generateReferralLink function
-    generateReferralLink().then(link => setReferralLink(link))
+    generateReferralLink(smartAccount).then(link => setReferralLink(link))
     console.log("Referral link generated:", referralLink)
   }, [])
 
   const handleProfileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    
     e.preventDefault()
     const formData = new FormData(e.currentTarget)
     const profileData = {
@@ -52,6 +57,7 @@ export default function EarnPoints() {
       discord: formData.get("discord") as string,
       telegram: formData.get("telegram") as string,
       bio: formData.get("bio") as string,
+      wallet: smartAccount
     }
 
     try {
