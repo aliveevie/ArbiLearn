@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createProfileTable, createReferralTable, updateReferralPoints, createPointsTable } from "@/lib/db-tables"
+import { createProfileTable, createReferralTable, updateReferralPoints, createPointsTable,updateReferralTable } from "@/lib/db-tables"
 import { sql } from "@vercel/postgres";
 import { getWalletID } from "./getWalletId";
 const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
@@ -153,21 +153,75 @@ export async function generateReferralLink(wallet: string) {
   }
 }
 
-
 export async function processReferral(referralCode: string, refWallet: string) {
-  // In a real application, you would validate the referral code and update the database
-  
-  console.log("Processing referral code:", referralCode)
-  if(referralCode){
-    console.log("The Referall Code... ", referralCode)
+  try {
+      // Get referral details from the referrals table
+      const referralResult = await sql`
+          SELECT user_id, referral_wallet 
+          FROM referrals 
+          WHERE referall_code = ${referralCode}
+      `;
+
+      if (referralResult.rows.length === 0) {
+          return { 
+              success: false, 
+              message: "Invalid referral code" 
+          };
+      }
+
+      const referrer = referralResult.rows[0];
+
+      // Check if referrer's wallet matches the referred wallet (prevent self-referral)
+      if (referrer.referral_wallet.toLowerCase() === refWallet.toLowerCase()) {
+          return { 
+              success: false, 
+              message: "Cannot refer yourself" 
+          };
+      }
+
+      // Check if this wallet has already been referred
+      const existingReferralCheck = await sql`
+          SELECT referred_wallet 
+          FROM referrals 
+          WHERE referred_wallet = ${refWallet}
+      `;
+
+      if (existingReferralCheck.rows.length > 0) {
+          return { 
+              success: false, 
+              message: "Wallet has already been referred" 
+          };
+      }
+
+      // Update referrals table with the referred wallet
+      await sql`
+          UPDATE referrals 
+          SET 
+              referred_wallet = ${refWallet},
+              updated_at = CURRENT_TIMESTAMP
+          WHERE referall_code = ${referralCode}
+      `;
+
+      // Update points for the referrer
+      await sql`
+          INSERT INTO points (user_id, points)
+          VALUES (${referrer.user_id}, 10)
+          ON CONFLICT (user_id) 
+          DO UPDATE SET 
+              points = points.points + 10,
+              updated_at = CURRENT_TIMESTAMP
+      `;
+      console.log("Referral processed successfully");
+      return { 
+          success: true, 
+          message: "Referral processed successfully" 
+      };
+
+  } catch (error) {
+      console.error("Error processing referral:", error);
+      return { 
+          success: false, 
+          message: "Failed to process referral" 
+      };
   }
-
-  // Simulate a delay
-  await new Promise((resolve) => setTimeout(resolve, 1000))
-
-  // Revalidate the path to update the UI
-  revalidatePath("/earn-points")
-
-  return { success: true, message: "Referral processed successfully" }
 }
-

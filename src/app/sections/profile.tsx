@@ -68,11 +68,13 @@ export default function ProfileSection() {
   getWalletAddress(smartAccount?.address)
 
   const searchParams = new URLSearchParams(window.location.search)
-  if (searchParams.get('ref')) {
-    // Move referral processing to an effect or event handler
-    // since we can't use await directly here
-    processReferral(searchParams.get('ref')!, smartAccount?.address!)
-  }
+  
+  useEffect(() => {
+    if (searchParams.get('ref') && smartAccount?.address) {
+      processReferral(searchParams.get('ref')!, smartAccount.address);
+    }
+  }, [searchParams, smartAccount?.address]);
+
 
   const handleNFTClick = () => {
     setShowNFTDetails(!showNFTDetails)
