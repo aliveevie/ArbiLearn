@@ -129,13 +129,12 @@ export async function generateReferralLink(wallet: string) {
           INSERT INTO referrals (
               user_id, 
               referall_code, 
-              referral_wallet,
-              points
+              referral_wallet
           ) VALUES (
               ${userId}, 
               ${referralCode}, 
-              ${wallet},
-              0
+              ${wallet}
+             
           )
       `;
 
@@ -153,7 +152,10 @@ export async function generateReferralLink(wallet: string) {
   }
 }
 
+
+
 export async function processReferral(referralCode: string, refWallet: string) {
+
   try {
       // Get referral details from the referrals table
       const referralResult = await sql`
@@ -163,6 +165,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
       `;
 
       if (referralResult.rows.length === 0) {
+        console.log("Invalid referral code")
           return { 
               success: false, 
               message: "Invalid referral code" 
@@ -173,6 +176,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
 
       // Check if referrer's wallet matches the referred wallet (prevent self-referral)
       if (referrer.referral_wallet.toLowerCase() === refWallet.toLowerCase()) {
+        console.log("Cannot refer yourself")
           return { 
               success: false, 
               message: "Cannot refer yourself" 
@@ -187,6 +191,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
       `;
 
       if (existingReferralCheck.rows.length > 0) {
+        console.log("Wallet has already been referred")
           return { 
               success: false, 
               message: "Wallet has already been referred" 
@@ -201,7 +206,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
               updated_at = CURRENT_TIMESTAMP
           WHERE referall_code = ${referralCode}
       `;
-
+      console.log("Referral updated successfully");
       // Update points for the referrer
       await sql`
           INSERT INTO points (user_id, points)
@@ -211,7 +216,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
               points = points.points + 10,
               updated_at = CURRENT_TIMESTAMP
       `;
-      console.log("Referral processed successfully");
+      console.log("Points updated successfully");
       return { 
           success: true, 
           message: "Referral processed successfully" 
@@ -225,3 +230,16 @@ export async function processReferral(referralCode: string, refWallet: string) {
       };
   }
 }
+
+// async function checkPointsRelation(){
+//   try {
+//     // Create points table if it doesn't exist
+//     await createPointsTable();
+//     console.log("Points table created successfully");
+//   } catch (error) {
+//     console.error("Error creating points table:", error);
+//     throw error;
+//   }
+// }
+
+// checkPointsRelation()
