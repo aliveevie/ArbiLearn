@@ -26,7 +26,8 @@ import {
 	editionDropTokenId,
 } from "@/thirdweb/constant";
 
-import { getWalletAddress } from '@/server-comps/wallet'
+import { getWalletAddress, } from '@/server-comps/wallet'
+import { processReferral } from '@/server-comps/userActions'
 
 interface UserAction {
   id: number
@@ -65,6 +66,13 @@ export default function ProfileSection() {
 
   //@ts-ignore
   getWalletAddress(smartAccount?.address)
+
+  const searchParams = new URLSearchParams(window.location.search)
+  if (searchParams.get('ref')) {
+    // Move referral processing to an effect or event handler
+    // since we can't use await directly here
+    processReferral(searchParams.get('ref')!, smartAccount?.address!)
+  }
 
   const handleNFTClick = () => {
     setShowNFTDetails(!showNFTDetails)

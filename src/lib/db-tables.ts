@@ -159,3 +159,36 @@ export async function createPointsTable() {
         console.error("Error creating points table:", error);
     }
 }
+
+export async function updateReferralTable() {
+  try {
+      // Remove points column if it exists
+      await sql`
+          ALTER TABLE referrals 
+          DROP COLUMN IF EXISTS points;
+      `;
+
+      // Add referred_wallet column if it doesn't exist
+      await sql`
+          DO $$ 
+          BEGIN 
+              IF NOT EXISTS (
+                  SELECT 1 
+                  FROM information_schema.columns 
+                  WHERE table_name = 'referrals' 
+                  AND column_name = 'referred_wallet'
+              ) THEN 
+                  ALTER TABLE referrals 
+                  ADD COLUMN referred_wallet VARCHAR(255);
+              END IF;
+          END $$;
+      `;
+
+      console.log("Referrals table updated successfully");
+  } catch (error) {
+      console.error("Error updating referrals table:", error);
+      throw error;
+  }
+}
+
+

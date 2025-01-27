@@ -156,6 +156,7 @@ export async function generateReferralLink(wallet: string) {
 
 export async function processReferral(referralCode: string, refWallet: string) {
   // In a real application, you would validate the referral code and update the database
+  
   console.log("Processing referral code:", referralCode)
   if(referralCode){
     console.log("The Referall Code... ", referralCode)
