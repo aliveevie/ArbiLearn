@@ -25,8 +25,9 @@ export async function getWalletAddress(wallet: string) {
         `;
 
         console.log("Wallet created successfully");
-        return { wallet: wallet, success: true, exists: false };
+            return { wallet: wallet, success: true, exists: false };
         }else{
+
             console.log("Wallet is coming stay patiently!");
            
         }

@@ -1,7 +1,7 @@
 "use server"
 
 import { revalidatePath } from "next/cache"
-import { createProfileTable, createReferralTable, updateReferralPoints } from "@/lib/db-tables"
+import { createProfileTable, createReferralTable, updateReferralPoints, createPointsTable } from "@/lib/db-tables"
 import { sql } from "@vercel/postgres";
 import { getWalletID } from "./getWalletId";
 const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
@@ -149,15 +149,17 @@ export async function generateReferralLink(wallet: string) {
 
   } catch (error) {
       console.error("Error generating referral link:", error);
-      return 
-        "Failed to generate referral link" 
+      return "Failed to generate referral link" 
   }
 }
 
 
-export async function processReferral(referralCode: string) {
+export async function processReferral(referralCode: string, refWallet: string) {
   // In a real application, you would validate the referral code and update the database
   console.log("Processing referral code:", referralCode)
+  if(referralCode){
+    console.log("The Referall Code... ", referralCode)
+  }
 
   // Simulate a delay
   await new Promise((resolve) => setTimeout(resolve, 1000))

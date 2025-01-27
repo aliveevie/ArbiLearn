@@ -141,3 +141,21 @@ export async function updateReferralPoints(userId: number, referralWallet: strin
         throw error;
     }
 }
+
+export async function createPointsTable() {
+    try {
+        await sql`
+            CREATE TABLE IF NOT EXISTS points (
+                point_id SERIAL PRIMARY KEY,
+                user_id INTEGER NOT NULL UNIQUE,
+                points INTEGER DEFAULT 0,
+                created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (user_id) REFERENCES wallets(user_id)
+            )
+        `;
+        console.log("Points table created successfully");
+    } catch (error) {
+        console.error("Error creating points table:", error);
+    }
+}
