@@ -69,12 +69,7 @@ const ShowPointsComponent: React.FC<ShowPointsComponentProps> = ({
             <span className="total-points-label">Total Points:</span>
             <span className="total-points-value">{totalPoints}</span>
           </div>
-          <div className="address-display">
-            <span className="address-label">Address:</span>
-            <span className="address-value">
-              {address.slice(0, 6)}...{address.slice(-4)}
-            </span>
-          </div>
+          
         </div>
 
         <div className="points-list">
