@@ -11,6 +11,7 @@ import { createThirdwebClient } from 'thirdweb'
 import '../../styles/profileSection.css'
 import Image from 'next/image'
 import WithdrawComponent from './innerUI/WithdrawComponent'
+import ShowPointsComponent from './innerUI/ShowPoints'
 
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -45,6 +46,7 @@ export default function ProfileSection() {
   const [transactionHash, setTransactionHash] = useState<string>('')
   const [mintingError, setMintingError] = useState<string>('')
   const [showNFTDetails, setShowNFTDetails] = useState(false)
+  const [showPointsModal, setShowPointsModal] = useState(false)
 
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
@@ -63,6 +65,7 @@ export default function ProfileSection() {
   const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
   const [isEditing, setIsEditing] = useState(false)
   const [showWithdraw, setShowWithdraw] = useState(false)
+  const [showPoints, setShowPoints] = useState(false)
 
   //@ts-ignore
   getWalletAddress(smartAccount?.address)
@@ -78,6 +81,10 @@ export default function ProfileSection() {
 
   const handleNFTClick = () => {
     setShowNFTDetails(!showNFTDetails)
+  }
+
+  const handlePointsClick = () => {
+    setShowPointsModal(true)
   }
 
   const renderNFTDetails = () => {
@@ -261,7 +268,6 @@ export default function ProfileSection() {
           </div>
         )
       default:
-
         return (
           <div>
             <div className="profile-stats">
@@ -276,8 +282,14 @@ export default function ProfileSection() {
                 </div>
                 <div className="stat-label">Membership NFT</div>
               </div>
-              <div className="stat-item">
-                <div className="stat-value">0</div>
+              <div 
+                className="stat-item clickable"
+                onClick={handlePointsClick}
+                title="Click to view points details"
+              >
+                <div className="stat-value">
+                  50
+                </div>
                 <div className="stat-label">Points Earned</div>
               </div>
               <div className="stat-item">
@@ -285,15 +297,14 @@ export default function ProfileSection() {
                 <div className="stat-label">Courses Completed</div>
               </div>
               <div 
-                  className="stat-item clickable"
-                  onClick={() => setShowWithdraw(true)}
-                  title="Click to withdraw earnings"
-                >
-                  <div className="stat-value">$5.00</div>
-                  <div className="stat-label">Rewards</div>
-                </div>
-                {showWithdraw && <WithdrawComponent onClose={() => setShowWithdraw(false)} />}
-
+                className="stat-item clickable"
+                onClick={() => setShowWithdraw(true)}
+                title="Click to withdraw earnings"
+              >
+                <div className="stat-value">$5.00</div>
+                <div className="stat-label">Rewards</div>
+              </div>
+              {showWithdraw && <WithdrawComponent onClose={() => setShowWithdraw(false)} />}
             </div>
 
             <div className="action-list">
@@ -358,6 +369,20 @@ export default function ProfileSection() {
         </div>
       )}
       {renderNFTDetails()}
+      {showPointsModal && (
+        <ShowPointsComponent 
+          address={smartAccount?.address}
+          show={showPointsModal}
+          onClose={() => setShowPointsModal(false)}
+          points={{
+            courseCompletion: 0,
+            nftMint: 0,
+            tokenPurchase: 0,
+            referral: 0,
+            communityActivity: 0
+          }}
+        />
+      )}
     </div>
   )
 }
