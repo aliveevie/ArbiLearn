@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/showCourseModal.css';
+import styles from '../Innercss/ShowCourseModal.module.css';
 
 interface CourseStats {
   enrolled: number;
@@ -31,36 +31,36 @@ const ShowCoursesComponent: React.FC<ShowCoursesComponentProps> = ({
   if (!show) return null;
 
   return (
-    <div className="modal-overlay">
-      <div className="modal-content course-modal-content">
-        <button className="close-button" onClick={onClose}>×</button>
+    <div className={styles.modalOverlay}>
+      <div className={`${styles.modalContent} ${styles.courseModalContent}`}>
+        <button className={styles.closeButton} onClick={onClose}>×</button>
         <h2>Course Progress</h2>
-        <div className="course-stats-container">
-          <div className="course-stat-item">
-            <div className="stat-label">Enrolled Courses</div>
-            <div className="stat-value">{courseStats.enrolled}</div>
+        <div className={styles.courseStatsContainer}>
+          <div className={styles.courseStatItem}>
+            <div className={styles.statLabel}>Enrolled Courses</div>
+            <div className={styles.statValue}>{courseStats.enrolled}</div>
           </div>
-          <div className="course-stat-item">
-            <div className="stat-label">Completed</div>
-            <div className="stat-value">{courseStats.completed}</div>
+          <div className={styles.courseStatItem}>
+            <div className={styles.statLabel}>Completed</div>
+            <div className={styles.statValue}>{courseStats.completed}</div>
           </div>
-          <div className="course-stat-item">
-            <div className="stat-label">In Progress</div>
-            <div className="stat-value">{courseStats.inProgress}</div>
+          <div className={styles.courseStatItem}>
+            <div className={styles.statLabel}>In Progress</div>
+            <div className={styles.statValue}>{courseStats.inProgress}</div>
           </div>
-          <div className="course-stat-item">
-            <div className="stat-label">Points Earned</div>
-            <div className="stat-value">{courseStats.totalPoints}</div>
+          <div className={styles.courseStatItem}>
+            <div className={styles.statLabel}>Points Earned</div>
+            <div className={styles.statValue}>{courseStats.totalPoints}</div>
           </div>
-          <div className="course-stat-item">
-            <div className="stat-label">Rewards Earned</div>
-            <div className="stat-value">${courseStats.earnedRewards.toFixed(2)}</div>
+          <div className={styles.courseStatItem}>
+            <div className={styles.statLabel}>Rewards Earned</div>
+            <div className={styles.statValue}>${courseStats.earnedRewards.toFixed(2)}</div>
           </div>
         </div>
         {!address ? (
-          <p className="no-data-message">Please connect your wallet to view course progress.</p>
+          <p className={styles.noDataMessage}>Please connect your wallet to view course progress.</p>
         ) : courseStats.enrolled === 0 ? (
-          <p className="no-data-message">No courses enrolled yet. Start learning today!</p>
+          <p className={styles.noDataMessage}>No courses enrolled yet. Start learning today!</p>
         ) : null}
       </div>
     </div>
