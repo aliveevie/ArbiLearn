@@ -12,6 +12,7 @@ import '../../styles/profileSection.css'
 import Image from 'next/image'
 import WithdrawComponent from './innerUI/WithdrawComponent'
 import ShowPointsComponent from './innerUI/ShowPoints'
+import ShowCoursesComponent from './innerUI/showCourseModal'
 
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -47,6 +48,7 @@ export default function ProfileSection() {
   const [mintingError, setMintingError] = useState<string>('')
   const [showNFTDetails, setShowNFTDetails] = useState(false)
   const [showPointsModal, setShowPointsModal] = useState(false)
+  const [showCoursesModal, setShowCoursesModal] = useState(false)
 
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
@@ -87,6 +89,10 @@ export default function ProfileSection() {
     setShowPointsModal(true)
   }
 
+  const handleCoursesClick = () => {
+    setShowCoursesModal(true)
+  }
+
   const renderNFTDetails = () => {
     if (!showNFTDetails || !ownedNfts) return null;
 
@@ -101,7 +107,6 @@ export default function ProfileSection() {
               alt="Membership NFT"
             />
           </div>
-        
             <a 
               href={`https://andromeda-explorer.metis.io/tx/${transactionHash}`}
               target="_blank"
@@ -292,7 +297,11 @@ export default function ProfileSection() {
                 </div>
                 <div className="stat-label">Points Earned</div>
               </div>
-              <div className="stat-item">
+              <div 
+                className="stat-item clickable"
+                onClick={handleCoursesClick}
+                title="Click to view course details"
+              >
                 <div className="stat-value">0</div>
                 <div className="stat-label">Courses Completed</div>
               </div>
@@ -305,6 +314,20 @@ export default function ProfileSection() {
                 <div className="stat-label">Rewards</div>
               </div>
               {showWithdraw && <WithdrawComponent onClose={() => setShowWithdraw(false)} />}
+              {showCoursesModal && (
+                <ShowCoursesComponent 
+                  address={smartAccount?.address}
+                  show={showCoursesModal}
+                  onClose={() => setShowCoursesModal(false)}
+                  courseStats={{
+                    enrolled: 0,
+                    completed: 0,
+                    inProgress: 0,
+                    totalPoints: 0,
+                    earnedRewards: 0
+                  }}
+                />
+              )}
             </div>
 
             <div className="action-list">
