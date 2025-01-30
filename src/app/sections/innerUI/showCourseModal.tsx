@@ -1,5 +1,5 @@
 import React from 'react';
-import '../../../styles/ShowCourseModal.css';
+import '../../../styles/showCourseModal.css';
 
 interface CourseStats {
   enrolled: number;
