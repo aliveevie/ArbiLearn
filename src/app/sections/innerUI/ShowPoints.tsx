@@ -69,7 +69,6 @@ const ShowPointsComponent: React.FC<ShowPointsComponentProps> = ({
             <span className="total-points-label">Total Points:</span>
             <span className="total-points-value">{totalPoints}</span>
           </div>
-          
         </div>
 
         <div className="points-list">

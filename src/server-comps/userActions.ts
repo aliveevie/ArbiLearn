@@ -230,16 +230,3 @@ export async function processReferral(referralCode: string, refWallet: string) {
       };
   }
 }
-
-// async function checkPointsRelation(){
-//   try {
-//     // Create points table if it doesn't exist
-//     await createPointsTable();
-//     console.log("Points table created successfully");
-//   } catch (error) {
-//     console.error("Error creating points table:", error);
-//     throw error;
-//   }
-// }
-
-// checkPointsRelation()
