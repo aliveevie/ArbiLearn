@@ -188,7 +188,7 @@ export default function ProfileSection() {
   const userActions: UserAction[] = [
     {
       id: 1,
-      title: 'Courses Enrolled',
+      title: 'Learn Web3',
       description: 'Web3 fundamentals, Smart Contracts',
       icon: <Book size={20} />,
       hoverButtons: ['Browse Courses'],
