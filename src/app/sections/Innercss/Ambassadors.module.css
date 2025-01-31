@@ -1,107 +1,183 @@
 .ambassadorsContainer {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  color: auto;
+}
+
+.title {
+  font-size: 2rem;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin-bottom: 2rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
 .referralSection {
   background: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
   margin-bottom: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .inputGroup {
   display: flex;
-  gap: 1rem;
+  gap: 0.75rem;
   margin-bottom: 1rem;
+  align-items: center;
+  width: 100%;
+  max-width: 400px; /* Slightly smaller than parent's 600px */
 }
 
 .nameInput {
   flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
+  height: 40px;
+  padding: 0 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  transition: border-color 0.2s;
+  width: 100%;
+}
+
+.nameInput:focus {
+  outline: none;
+  border-color: #2563eb;
 }
 
 .generateBtn {
-  padding: 0.75rem 1.5rem;
-  background-color: #007bff;
+  height: 40px;
+  padding: 0.5rem;
+  background-color: #2563eb;
   color: white;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .generateBtn:hover {
-  background-color: #0056b3;
-}
-
-.referralLink {
-  margin-top: 1.5rem;
+  background-color: #1d4ed8;
 }
 
 .linkDisplay {
   display: flex;
-  gap: 1rem;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 1rem;
 }
 
 .linkInput {
   flex: 1;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #f8f9fa;
+  height: 40px;
+  padding: 0 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  background-color: #f8fafc;
   font-size: 0.9rem;
+  color: #64748b;
+  width: 100%;
 }
 
 .copyBtn {
-  padding: 0.75rem 1.5rem;
-  background-color: #6c757d;
-  color: white;
-  border: none;
-  border-radius: 4px;
+  height: 40px;
+  padding: 0 1rem;
+  background-color: #f8fafc;
+  color: #2563eb;
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: all 0.2s;
 }
 
 .copyBtn:hover {
-  background-color: #5a6268;
+  background-color: #2563eb;
+  color: white;
+  border-color: #2563eb;
 }
 
 .statsDashboard {
-  background: #ffffff;
-  padding: 2rem;
-  border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 
 .statsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 1.5rem;
-  margin-top: 1.5rem;
 }
 
 .statCard {
-  background: #f8f9fa;
-  padding: 1.5rem;
-  border-radius: 6px;
-  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1.25rem;
+  background-color: #f8fafc;
+  border-radius: 8px;
+  transition: transform 0.2s;
 }
 
-.statCard h3 {
-  color: #6c757d;
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+.statLabel {
+  font-size: 0.875rem;
+  color: #64748b;
 }
 
-.statCard p {
-  color: #212529;
-  font-size: 2rem;
-  font-weight: bold;
-  margin: 0;
+.statValue {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: #1a1a1a;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .ambassadorsContainer {
+    padding: 1rem;
+    display: block;
+  }
+
+  .inputGroup {
+    flex-direction: column;
+  }
+
+  .generateBtn {
+    width: 100%;
+  }
+
+  .linkDisplay {
+    flex-direction: column;
+  }
+
+  .copyBtn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .subtitle {
+    font-size: 1.125rem;
+  }
+
+  .statsGrid {
+    grid-template-columns: 1fr;
+  }
 }

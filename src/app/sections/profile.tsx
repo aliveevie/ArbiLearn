@@ -13,6 +13,8 @@ import Image from 'next/image'
 import WithdrawComponent from './innerUI/WithdrawComponent'
 import ShowPointsComponent from './innerUI/ShowPoints'
 import ShowCoursesComponent from './innerUI/showCourseModal'
+import Ambassadors from './innerUI/Ambassadors'
+
 
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -64,7 +66,7 @@ export default function ProfileSection() {
     client
   })
 
-  const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points'>('main')
+  const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points' | 'ambassadors'>('main')
   const [isEditing, setIsEditing] = useState(false)
   const [showWithdraw, setShowWithdraw] = useState(false)
   const [showPoints, setShowPoints] = useState(false)
@@ -218,6 +220,15 @@ export default function ProfileSection() {
       hoverButtons: ['Earn Points'],
       onclick: () => setActiveView('points')
     },
+    {
+      id: 5,
+      title: 'Ambassadors',
+      description: 'Refer friends and earn rewards',
+      icon: <Award size={20} />,
+      hoverButtons: ['Refer Friends'],
+      onclick: () => setActiveView('ambassadors')
+    }
+   
   ]
 
   const renderView = () => {
@@ -272,6 +283,16 @@ export default function ProfileSection() {
             />
           </div>
         )
+      case 'ambassadors':
+        return (
+          <div>
+            <button className="back-button" onClick={() => setActiveView('main')}>
+              <ArrowLeft size={18} /> Back to Profile
+            </button>
+            <Ambassadors />
+          </div>
+        )
+
       default:
         return (
           <div>
