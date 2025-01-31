@@ -2,7 +2,7 @@
 
 import { createAmbassadorTable } from "@/lib/db-tables";
 import { getWalletID } from "./getWalletId";
-import { sql } from "@vercel/postgres";
+import { sql } from "./neon";
 
 const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 
@@ -30,9 +30,9 @@ export async function genAmbsRef(wallet: string | undefined) {
             WHERE user_id = ${userId}
         `;
 
-        if (existingAmbassador.rows.length > 0) {
+        if (existingAmbassador.length > 0) {
             console.log("Debug: Returning existing ambassador code");
-            const referralLink = `${baseUrl}/pages/app?amb=${existingAmbassador.rows[0].referral_code}`;
+            const referralLink = `${baseUrl}/pages/app?amb=${existingAmbassador[0].referral_code}`;
             return { success: true, referralLink };
         }
 

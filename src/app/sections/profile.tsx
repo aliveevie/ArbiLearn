@@ -14,6 +14,7 @@ import WithdrawComponent from './innerUI/WithdrawComponent'
 import ShowPointsComponent from './innerUI/ShowPoints'
 import ShowCoursesComponent from './innerUI/showCourseModal'
 import Ambassadors from './innerUI/Ambassadors'
+import { initializeTables } from '@/server-comps/createTable'
 
 
 import type React from "react";
@@ -43,6 +44,7 @@ interface UserAction {
 }
 
 export default function ProfileSection() {
+  
   const smartAccount = useActiveAccount()
   const address = smartAccount?.address
   const [mintingSuccess, setMintingSuccess] = useState(false)

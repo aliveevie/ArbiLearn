@@ -1,4 +1,6 @@
-import { sql } from "@vercel/postgres";
+"use server";
+
+import { sql } from "./neon";
 
 export async function getWalletID(address: string) {
     try {
@@ -8,7 +10,7 @@ export async function getWalletID(address: string) {
             WHERE wallet_address = ${address}
         `;
 
-        if (result.rows.length === 0) {
+        if (result.length === 0) {
             return {
                 success: false,
                 error: "Wallet address not found"
@@ -17,7 +19,7 @@ export async function getWalletID(address: string) {
 
         return {
             success: true,
-            user_id: result.rows[0].user_id
+            user_id: result[0].user_id
         };
     } catch (error) {
         console.error("Error fetching wallet ID:", error);

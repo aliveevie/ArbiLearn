@@ -2,7 +2,7 @@
 
 import { revalidatePath } from "next/cache"
 import { createProfileTable, createReferralTable, updateReferralPoints, createPointsTable,updateReferralTable } from "@/lib/db-tables"
-import { sql } from "@vercel/postgres";
+import { sql } from "./neon";
 import { getWalletID } from "./getWalletId";
 const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 
@@ -18,12 +18,12 @@ export async function submitProfile(profileData: any) {
       WHERE wallet_address = ${profileData.wallet}
     `;
 
-    if (userResult.rows.length === 0) {
+    if (userResult.length === 0) {
         console.log("Wallet NOT found")
         return;
     }
 
-    const userId = userResult.rows[0].user_id;
+    const userId = userResult[0].user_id;
 
     // Check if profile already exists for this user
     const existingProfile = await sql`
@@ -31,7 +31,7 @@ export async function submitProfile(profileData: any) {
       WHERE user_id = ${userId}
     `;
 
-    if (existingProfile.rows.length > 0) {
+    if (existingProfile.length > 0) {
       // Update existing profile
       await sql`
         UPDATE profiles 
@@ -74,7 +74,7 @@ export async function submitProfile(profileData: any) {
    // revalidatePath("/earn-points");
     return { 
       success: true, 
-      message: existingProfile.rows.length > 0 ? "Profile updated" : "Profile created" 
+      message: existingProfile.length > 0 ? "Profile updated" : "Profile created" 
     };
 
   } catch (error) {
@@ -109,9 +109,9 @@ export async function generateReferralLink(wallet: string) {
       `;
 
     
-      if (existingReferral.rows.length > 0) {
+      if (existingReferral.length > 0) {
           // Return existing referral code
-       let referralCode = existingReferral.rows[0].referall_code;
+       let referralCode = existingReferral[0].referall_code;
           console.log("Existing referral code retrieved");
           console.log(referralCode)
           return {
@@ -164,7 +164,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
           WHERE referall_code = ${referralCode}
       `;
 
-      if (referralResult.rows.length === 0) {
+      if (referralResult.length === 0) {
         console.log("Invalid referral code")
           return { 
               success: false, 
@@ -172,7 +172,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
           };
       }
 
-      const referrer = referralResult.rows[0];
+      const referrer = referralResult[0];
 
       // Check if referrer's wallet matches the referred wallet (prevent self-referral)
       if (referrer.referral_wallet.toLowerCase() === refWallet.toLowerCase()) {
@@ -190,7 +190,7 @@ export async function processReferral(referralCode: string, refWallet: string) {
           WHERE referred_wallet = ${refWallet}
       `;
 
-      if (existingReferralCheck.rows.length > 0) {
+      if (existingReferralCheck.length > 0) {
         console.log("Wallet has already been referred")
           return { 
               success: false, 

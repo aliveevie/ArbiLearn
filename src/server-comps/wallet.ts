@@ -1,9 +1,9 @@
 'use server'
-import { revalidatePath } from "next/cache"
-import { createWalletsTable } from "@/lib/db-tables"
-// import { sql } from "@vercel/postgres";
-import { neon } from '@neondatabase/serverless';
-const sql = neon(`${process.env.DATABASE_URL}`);
+import { revalidatePath } from "next/cache";
+import { createWalletsTable } from "@/lib/db-tables";
+import { sql } from "./neon";
+// import { neon } from '@neondatabase/serverless';
+// const sql = neon(`${process.env.DATABASE_URL}`);
 
 export async function getWalletAddress(wallet: string) {
     try {
