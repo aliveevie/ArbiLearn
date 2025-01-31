@@ -289,7 +289,9 @@ export default function ProfileSection() {
             <button className="back-button" onClick={() => setActiveView('main')}>
               <ArrowLeft size={18} /> Back to Profile
             </button>
-            <Ambassadors />
+            <Ambassadors 
+              wallet={smartAccount?.address}
+            />
           </div>
         )
 

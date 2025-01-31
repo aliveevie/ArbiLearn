@@ -1,33 +1,30 @@
 import React, { useState } from 'react';
 import styles from '../Innercss/Ambassadors.module.css';
+import { genAmbsRef } from '@/server-comps/Abs-server';
 
-const Ambassadors: React.FC = () => {
-  const [name, setName] = useState<string>('');
+const Ambassadors = ({ wallet } : {wallet : string | undefined}) => {
   const [referralLink, setReferralLink] = useState<string>('');
 
-  const generateReferralLink = () => {
-    if (!name.trim()) {
-      alert('Please enter your name to generate a referral link');
-      return;
+  const generateReferralLink = async () => {
+    
+    
+    try {
+      const result = await genAmbsRef(wallet);
+      if (result.success) {
+        setReferralLink(result.referralLink);
+      }
+    } catch (error) {
+      console.error('Error generating referral link:', error);
+      alert('Failed to generate referral link');
     }
-    const baseUrl = window.location.origin;
-    setReferralLink(`${baseUrl}/amb?=${encodeURIComponent(name.trim())}`);
   };
 
   return (
     <div className={styles.ambassadorsContainer}>
-      <h1 className={styles.title}>Ambassador Dashboard</h1>
-      
+      <h1 className={styles.title}>Your works</h1>
       <div className={styles.referralSection}>
         <h2 className={styles.subtitle}>Generate Your Referral Link</h2>
         <div className={styles.inputGroup}>
-          <input
-            type="text"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            placeholder="Enter your name"
-            className={styles.nameInput}
-          />
           <button onClick={generateReferralLink} className={styles.generateBtn}>
             Generate
           </button>
