@@ -1,4 +1,6 @@
-import { sql } from "@vercel/postgres";
+// import { sql } from "@vercel/postgres";
+import { neon } from '@neondatabase/serverless';
+const sql = neon(`${process.env.DATABASE_URL}`);
 
 /**
  * Creates a users table in the database if it doesn't exist.
@@ -190,8 +192,6 @@ export async function updateReferralTable() {
       throw error;
   }
 }
-
-
 
 export async function createAmbassadorTable() {
   try {
