@@ -18,7 +18,7 @@ const Ambassadors = ({ wallet } : {wallet : string | undefined}) => {
       alert('Failed to generate referral link');
     }
   };
-//
+
   return (
     <div className={styles.ambassadorsContainer}>
       <h1 className={styles.title}>Your works</h1>
