@@ -2,7 +2,7 @@
 
 import { sql } from "./neon";
 
-export async function getWalletID(address: string) {
+export async function getWalletID(address: string | undefined) {
     try {
         const result = await sql`
             SELECT user_id 
