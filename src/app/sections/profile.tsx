@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
-import { Edit, Book, Award, Gift, CheckCircle, Layers, Coins, Upload, ArrowLeft } from 'lucide-react'
+import { Edit, Book, Award, Gift, CheckCircle, Layers, Coins, Upload, ArrowLeft, Flower2 } from 'lucide-react'
 import { ConnectThirdWebWallet } from '@/thirdweb/thirdwebwallet'
 import Courses from './innerUI/course'
 import ArbiLearnNFTS from './innerUI/ArbiLearnNFTS'
@@ -15,6 +15,7 @@ import ShowPointsComponent from './innerUI/ShowPoints'
 import ShowCoursesComponent from './innerUI/showCourseModal'
 import Ambassadors from './innerUI/Ambassadors'
 import { initializeTables } from '@/server-comps/createTable'
+import FeedbackForm from './innerUI/feedback'
 
 
 import type React from "react";
@@ -44,7 +45,6 @@ interface UserAction {
 }
 
 export default function ProfileSection() {
-  
   const smartAccount = useActiveAccount()
   const address = smartAccount?.address
   const [mintingSuccess, setMintingSuccess] = useState(false)
@@ -68,7 +68,7 @@ export default function ProfileSection() {
     client
   })
 
-  const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points' | 'ambassadors'>('main')
+  const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points' | 'ambassadors' | 'feedback'>('main')
   const [isEditing, setIsEditing] = useState(false)
   const [showWithdraw, setShowWithdraw] = useState(false)
   const [showPoints, setShowPoints] = useState(false)
@@ -229,6 +229,14 @@ export default function ProfileSection() {
       icon: <Award size={20} />,
       hoverButtons: ['Refer Friends'],
       onclick: () => setActiveView('ambassadors')
+    },
+    {
+      id: 6,
+      title: 'Feedbacks',
+      description: 'Give Us Feedbacks to Improve',
+      icon: <Flower2 size={20} />,
+      hoverButtons: ['Share your Taught'],
+      onclick: () => setActiveView('feedback')
     }
    
   ]
@@ -296,6 +304,18 @@ export default function ProfileSection() {
             />
           </div>
         )
+        case 'feedback':
+        return (
+          <div>
+            <button className="back-button" onClick={() => setActiveView('main')}>
+              <ArrowLeft size={18} /> Back to Profile
+            </button>
+            <FeedbackForm
+              wallet={smartAccount?.address}
+              />
+          </div>
+        )
+
 
       default:
         return (
