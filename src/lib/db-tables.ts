@@ -235,3 +235,40 @@ export async function createAmbassadorsEarnings() {
       throw error;
   }
 }
+
+export async function createFeedbackForm() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS feedback (
+        feedback_id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        name VARCHAR(255) NOT NULL,
+        twitter VARCHAR(255),
+        general_feedback TEXT,
+        satisfaction VARCHAR(50) CHECK (
+          satisfaction IN (
+            'very_satisfied',
+            'satisfied',
+            'neutral',
+            'dissatisfied',
+            'very_dissatisfied'
+          )
+        ),
+        rating INTEGER CHECK (rating >= 0 AND rating <= 5),
+        smart_account_experience TEXT,
+        testimony TEXT,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES wallets(user_id),
+        CONSTRAINT valid_rating CHECK (rating >= 0 AND rating <= 5)
+      )
+    `;
+
+    // Create an index on user_id for faster lookups
+
+    console.log("Feedback table created successfully");
+  } catch (error) {
+    console.error("Error creating feedback table:", error);
+    throw error;
+  }
+}

@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Star } from 'lucide-react';
 import styles from '../Innercss/feedback.module.css';
+import { submitFeedback } from '@/server-comps/feedback-server';
 
 const FeedbackForm = ({wallet} : { wallet: string | undefined }) => {
   const [formData, setFormData] = useState({
     name: '',
-    twitter: '',
+    twitter: 'n/a',
     generalFeedback: '',
     satisfaction: 'satisfied',
     rating: 0,
@@ -29,12 +30,33 @@ const FeedbackForm = ({wallet} : { wallet: string | undefined }) => {
       rating
     }));
   };
+// ... existing code ...
 
-  const handleSubmit = async (e: React.FormEvent) => {
+const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Implement submission logic to your backend
-    console.log('Feedback submitted:', formData);
-    setSubmitted(true);
+    try {
+      const success = await submitFeedback({
+        userId: wallet ? parseInt(wallet) : 0, // Convert wallet to userId or use 0 if undefined
+        name: formData.name,
+        twitter: formData.twitter || 'n/a',
+        generalFeedback: formData.generalFeedback,
+        satisfaction: formData.satisfaction as 'very_satisfied' | 'satisfied' | 'neutral' | 'dissatisfied' | 'very_dissatisfied',
+        rating: formData.rating,
+        smartAccountExperience: formData.smartAccountExperience,
+        testimony: formData.testimony
+      });
+  
+      if (success) {
+        console.log('Feedback submitted successfully');
+        setSubmitted(true);
+      } else {
+        console.error('Failed to submit feedback');
+        alert('Failed to submit feedback. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error submitting feedback:', error);
+      alert('An error occurred while submitting feedback.');
+    }
   };
 
   return (
