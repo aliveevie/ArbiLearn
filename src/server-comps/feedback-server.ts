@@ -1,10 +1,10 @@
 "use server"
 
 import { sql } from './neon';
-import { createFeedbackForm } from '@/lib/db-tables';
+import { getWalletID } from './getWalletId';
 
 export type FeedbackData = {
-  userId: number;
+  wallet: string | undefined;
   name: string;
   twitter: string;
   generalFeedback: string;
@@ -17,14 +17,14 @@ export type FeedbackData = {
 export async function submitFeedback(data: FeedbackData): Promise<boolean> {
   try {
     // For now, just logging the received data
-    await createFeedbackForm();
-    console.log('Received feedback data on server:', {
-      timestamp: new Date().toISOString(),
-      ...data
-    });
+    
+    const userId = await getWalletID(data.wallet)
+    const user_id = userId.user_id
 
     // TODO: Uncomment and use this when ready to save to database
-    /*
+    
+    console.log("Inserting Data...")
+
     await sql`
       INSERT INTO feedback (
         user_id,
@@ -36,7 +36,7 @@ export async function submitFeedback(data: FeedbackData): Promise<boolean> {
         smart_account_experience,
         testimony
       ) VALUES (
-        ${data.userId},
+        ${user_id},
         ${data.name},
         ${data.twitter},
         ${data.generalFeedback},
@@ -46,7 +46,8 @@ export async function submitFeedback(data: FeedbackData): Promise<boolean> {
         ${data.testimony}
       )
     `;
-    */
+
+    console.log("Data Inserted Successfully!")
 
     return true;
   } catch (error) {
@@ -55,25 +56,3 @@ export async function submitFeedback(data: FeedbackData): Promise<boolean> {
   }
 }
 
-// Optional: Helper function to get feedback by user ID
-export async function getFeedbackByUserId(userId: number) {
-  try {
-    // For now, just logging the request
-    console.log('Attempting to fetch feedback for user:', userId);
-
-    // TODO: Uncomment and use this when ready to fetch from database
-    /*
-    const feedback = await sql`
-      SELECT * FROM feedback 
-      WHERE user_id = ${userId} 
-      ORDER BY created_at DESC
-    `;
-    return feedback.rows;
-    */
-
-    return null;
-  } catch (error) {
-    console.error('Error fetching feedback:', error);
-    return null;
-  }
-}

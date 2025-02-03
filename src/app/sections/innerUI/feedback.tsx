@@ -6,7 +6,7 @@ import { submitFeedback } from '@/server-comps/feedback-server';
 const FeedbackForm = ({wallet} : { wallet: string | undefined }) => {
   const [formData, setFormData] = useState({
     name: '',
-    twitter: 'n/a',
+    twitter: '',
     generalFeedback: '',
     satisfaction: 'satisfied',
     rating: 0,
@@ -36,7 +36,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       const success = await submitFeedback({
-        userId: wallet ? parseInt(wallet) : 0, // Convert wallet to userId or use 0 if undefined
+        wallet: wallet, // Convert wallet to userId or use 0 if undefined
         name: formData.name,
         twitter: formData.twitter || 'n/a',
         generalFeedback: formData.generalFeedback,
@@ -99,6 +99,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               className={styles.input}
               value={formData.twitter}
               onChange={handleInputChange}
+              required
               placeholder="@username"
             />
           </div>
@@ -116,6 +117,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               placeholder="Share your suggestions..."
               value={formData.generalFeedback}
               onChange={handleInputChange}
+              required
             />
           </div>
 
@@ -130,6 +132,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               className={styles.select}
               value={formData.satisfaction}
               onChange={handleInputChange}
+              required
             >
               <option value="very_satisfied">Very Satisfied</option>
               <option value="satisfied">Satisfied</option>
@@ -176,7 +179,7 @@ const handleSubmit = async (e: React.FormEvent) => {
           {/* Testimony */}
           <div className={styles.formGroup}>
             <label htmlFor="testimony" className={styles.label}>
-              Would you like to share a testimony?
+              Share Your Testimoney for interacting with our app
             </label>
             <textarea
               id="testimony"
@@ -186,6 +189,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               placeholder="Share your success story or experience..."
               value={formData.testimony}
               onChange={handleInputChange}
+              required
             />
           </div>
 
