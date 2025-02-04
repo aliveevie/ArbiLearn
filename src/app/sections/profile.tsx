@@ -53,6 +53,8 @@ export default function ProfileSection() {
   const [showNFTDetails, setShowNFTDetails] = useState(false)
   const [showPointsModal, setShowPointsModal] = useState(false)
   const [showCoursesModal, setShowCoursesModal] = useState(false)
+  const [nftTransactionHash, setNftTransactionHash] = useState<string>('')
+
 
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
@@ -61,6 +63,46 @@ export default function ProfileSection() {
   });
 
   const isMember = ownedNfts && ownedNfts.length > 0;
+
+  useEffect(() => {
+    const fetchNFTTransaction = async () => {
+      if (!smartAccount?.address || !ownedNfts?.length) return;
+      
+      try {
+        const response = await fetch(
+          `https://andromeda-explorer.metis.io/api?module=account&action=txlist&address=${smartAccount.address}&page=1&offset=10&sort=desc`,
+          {
+            mode: 'no-cors',
+            headers: {
+              'Accept': 'application/json'
+            }
+          }
+        );
+        
+        // Due to CORS restrictions, we might not be able to read the response
+        // You might want to consider these alternatives:
+        // 1. Create a backend proxy endpoint
+        // 2. Use the Metis RPC endpoint directly
+        // 3. Store the transaction hash during minting
+
+        const data = await response.json();
+        
+        console.log('NFT Transaction Response:', data);
+          
+        if (data.result && data.result.length > 0) {
+          // Get the first transaction hash as it's the most recent one
+          setNftTransactionHash(data.result[0].hash);
+        }
+        
+      } catch (error) {
+        console.error('Error fetching NFT transaction:', error);
+      }
+    };
+  
+    fetchNFTTransaction();
+  }, [smartAccount?.address, ownedNfts]);
+  
+  
 
   // @ts-ignore
   const { data: balance } = useWalletBalance({
