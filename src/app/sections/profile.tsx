@@ -17,7 +17,6 @@ import Ambassadors from './innerUI/Ambassadors'
 import { initializeTables } from '@/server-comps/createTable'
 import FeedbackForm from './innerUI/feedback'
 
-
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import {
@@ -70,27 +69,13 @@ export default function ProfileSection() {
       
       try {
         const response = await fetch(
-          `https://andromeda-explorer.metis.io/api?module=account&action=txlist&address=${smartAccount.address}&page=1&offset=10&sort=desc`,
-          {
-            mode: 'no-cors',
-            headers: {
-              'Accept': 'application/json'
-            }
-          }
+          `/apis/transactions?address=${smartAccount.address}`
         );
         
-        // Due to CORS restrictions, we might not be able to read the response
-        // You might want to consider these alternatives:
-        // 1. Create a backend proxy endpoint
-        // 2. Use the Metis RPC endpoint directly
-        // 3. Store the transaction hash during minting
-
         const data = await response.json();
-        
         console.log('NFT Transaction Response:', data);
-          
+        
         if (data.result && data.result.length > 0) {
-          // Get the first transaction hash as it's the most recent one
           setNftTransactionHash(data.result[0].hash);
         }
         
