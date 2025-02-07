@@ -13,7 +13,6 @@ export async function getAllDatabaseData() {
         ambassadors: await sql`SELECT * FROM ambassadors ORDER BY created_at DESC`,
         ambassadorEarnings: await sql`SELECT * FROM ambassador_earnings ORDER BY created_at DESC`,
         feedback: await sql`SELECT * FROM feedback ORDER BY created_at DESC`,
-        
       }
   
       return {

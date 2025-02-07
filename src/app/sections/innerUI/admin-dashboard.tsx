@@ -6,7 +6,7 @@ import { Download, X, RefreshCw, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import styles from "@/styles/AdminDashboard.module.css"
 
-type DataType = "wallets" | "profiles" | "feedback" | "ambassadors" | null
+type DataType = "wallets" | "profiles" | "feedback" | "ambassadors" | "courseVerification" | null
 
 type DataFormatter = {
   [key: string]: {
@@ -50,6 +50,30 @@ const dataFormatters: { [key: string]: DataFormatter } = {
       label: 'Created At',
       format: (value) => new Date(value).toLocaleDateString()
     }
+  },
+  courseVerification: {
+    resource_name: { label: 'Resource Name' },
+    resource_type: { label: 'Resource Type' },
+    resource_size: { label: 'Resource Size' },
+    completion_type: { label: 'Completion Type' },
+    details: { label: 'Details' },
+    evidence_url: { 
+      label: 'Evidence',
+      format: (value) => <img src={value} alt="Evidence" className={styles.evidenceImage} style={{maxWidth: '200px'}} />
+    },
+    wallet_address: { label: 'Wallet Address' },
+    status: { 
+      label: 'Status',
+      format: (value) => (
+        <span className={`${styles.status} ${styles[value]}`}>
+          {value.charAt(0).toUpperCase() + value.slice(1)}
+        </span>
+      )
+    },
+    created_at: { 
+      label: 'Submitted At',
+      format: (value) => new Date(value).toLocaleDateString()
+    }
   }
 };
 
@@ -70,6 +94,7 @@ const AdminDashboard = () => {
     setLoading(true)
     try {
       const result = await getAllDatabaseData()
+      console.log(result)
       if (result.success) {
         setData(result.data)
       }
@@ -104,9 +129,10 @@ const AdminDashboard = () => {
 
   const stats = [
     { title: "Total Wallets", value: data?.wallets?.length || 0, type: "wallets" },
-    { title: "Total Profiles", value: data?.profiles?.length || 0, type: "profiles" },
+    { title: "Pending Verifications", value: data?.courseVerification?.filter((v: any) => v.status === 'pending').length || 0, type: "courseVerification" },
     { title: "Total Feedback", value: data?.feedback?.length || 0, type: "feedback" },
     { title: "Total Ambassadors", value: data?.ambassadors?.length || 0, type: "ambassadors" },
+    { title: "Total Profiles", value: data?.profiles?.length || 0, type: "profiles" },
     {
       title: "Total Earnings",
       value: `$${data?.ambassadorEarnings?.reduce((acc: number, curr: any) => acc + Number(curr.earnings), 0).toFixed(2)}`,
@@ -121,6 +147,34 @@ const AdminDashboard = () => {
       setSortDirection("asc")
     }
   }
+
+  const renderVerificationActions = (item: any) => {
+    if (activeView !== 'courseVerification') return null;
+  
+    return (
+      <div className={styles.verificationActions}>
+        <Button 
+          onClick={(e) => {
+            e.stopPropagation();
+            // Add approve handler
+          }}
+          disabled={item.status !== 'pending'}
+        >
+          Approve
+        </Button>
+        <Button 
+          onClick={(e) => {
+            e.stopPropagation();
+            // Add reject handler
+          }}
+          variant="destructive"
+          disabled={item.status !== 'pending'}
+        >
+          Reject
+        </Button>
+      </div>
+    );
+  };
 
   const renderDataTable = () => {
     if (!activeView || !data?.[activeView]) return null
@@ -189,14 +243,24 @@ const AdminDashboard = () => {
                     )}
                   </th>
                 ))}
+                {activeView === 'courseVerification' && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
               {items.map((item: any, index: number) => (
                 <tr key={index} onClick={() => setSelectedItem(item)} className={styles.tableRow}>
                   {headers.map((header) => (
-                    <td key={header}>{item[header]?.toString() || ""}</td>
+                    <td key={header}>
+                      {activeView === 'courseVerification' && header === 'evidence_url' ? (
+                        <img src={item[header]} alt="Evidence" style={{maxWidth: '50px'}} />
+                      ) : (
+                        item[header]?.toString() || ""
+                      )}
+                    </td>
                   ))}
+                  {activeView === 'courseVerification' && (
+                    <td>{renderVerificationActions(item)}</td>
+                  )}
                 </tr>
               ))}
             </tbody>
