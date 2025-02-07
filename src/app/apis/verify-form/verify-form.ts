@@ -5,7 +5,7 @@ import { sql } from "@vercel/postgres";
 import { writeFile, mkdir } from 'fs/promises';
 import path from 'path';
 
-const MAX_FILE_SIZE = 500 * 1024; // 100kb in bytes
+const MAX_FILE_SIZE = 1024 * 1024; // 1MB in bytes
 const UPLOAD_DIR = 'public/courses_files';
 
 export async function verifyForm(formData: FormData) {

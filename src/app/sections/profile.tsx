@@ -303,15 +303,15 @@ export default function ProfileSection() {
             )}
           </div>
         )
-      case 'tokens':
-        return (
-          <div>
-            <button className="back-button" onClick={() => setActiveView('main')}>
-              <ArrowLeft size={18} /> Back to Profile
-            </button>
-            <ALearnTokenSale />
-          </div>
-        )
+      // case 'tokens':
+      //   return (
+      //     <div>
+      //       <button className="back-button" onClick={() => setActiveView('main')}>
+      //         <ArrowLeft size={18} /> Back to Profile
+      //       </button>
+      //       <ALearnTokenSale />
+      //     </div>
+      //   )
       case 'points':
         return (
           <div>
