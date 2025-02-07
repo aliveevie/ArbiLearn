@@ -85,6 +85,10 @@ const AdminDashboard = () => {
   const [searchTerm, setSearchTerm] = useState("")
   const [sortColumn, setSortColumn] = useState("")
   const [sortDirection, setSortDirection] = useState<"asc" | "desc">("asc")
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
+  const [username, setUsername] = useState("")
+  const [password, setPassword] = useState("")
+
 
   useEffect(() => {
     fetchData()
@@ -104,6 +108,52 @@ const AdminDashboard = () => {
       setLoading(false)
     }
   }
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (
+      username === process.env.NEXT_PUBLIC_ADMIN_USER &&
+      password === process.env.NEXT_PUBLIC_ADMIN_PASSWORD
+    ) {
+      setIsAuthenticated(true)
+    } else {
+      alert("Invalid credentials")
+    }
+  }
+
+  if (!isAuthenticated) {
+    return (
+      <div className={styles.container}>
+        <div className={styles.loginForm}>
+          <h1>Admin Login</h1>
+          <form onSubmit={handleLogin}>
+            <div className={styles.formGroup}>
+              <label htmlFor="username">Username</label>
+              <input
+                type="text"
+                id="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                required
+              />
+            </div>
+            <div className={styles.formGroup}>
+              <label htmlFor="password">Password</label>
+              <input
+                type="password"
+                id="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+              />
+            </div>
+            <Button type="submit">Login</Button>
+          </form>
+        </div>
+      </div>
+    )
+  }
+
 
   const downloadCSV = (type: DataType) => {
     if (!data || !type || !data[type]) return
@@ -133,10 +183,6 @@ const AdminDashboard = () => {
     { title: "Total Feedback", value: data?.feedback?.length || 0, type: "feedback" },
     { title: "Total Ambassadors", value: data?.ambassadors?.length || 0, type: "ambassadors" },
     { title: "Total Profiles", value: data?.profiles?.length || 0, type: "profiles" },
-    {
-      title: "Total Earnings",
-      value: `$${data?.ambassadorEarnings?.reduce((acc: number, curr: any) => acc + Number(curr.earnings), 0).toFixed(2)}`,
-    },
   ]
 
   const handleSort = (column: string) => {
