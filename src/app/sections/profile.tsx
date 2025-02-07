@@ -33,6 +33,7 @@ import {
 
 import { getWalletAddress, } from '@/server-comps/wallet'
 import { processReferral } from '@/server-comps/userActions'
+import { getOldWallets } from '@/server-comps/getOldWallets'
 
 interface UserAction {
   id: number
@@ -78,12 +79,14 @@ export default function ProfileSection() {
         if (data.result && data.result.length > 0) {
           setNftTransactionHash(data.result[0].hash);
         }
+        const oldWallets = await getOldWallets();
+        console.log(oldWallets);
         
       } catch (error) {
         console.error('Error fetching NFT transaction:', error);
       }
     };
-  
+   
     fetchNFTTransaction();
   }, [smartAccount?.address, ownedNfts]);
   
