@@ -30,3 +30,42 @@ export async function getAllDatabaseData() {
       };
     }
   }
+  export async function approveVerification(wallet: string | undefined) {
+    try {
+      console.log("Approving")
+        await sql`
+            UPDATE course_verification 
+            SET 
+                status = 'approved',
+                reviewed_at = CURRENT_TIMESTAMP,
+                reviewed_by = 'admin',
+                updated_at = CURRENT_TIMESTAMP
+            WHERE wallet_address = ${wallet}
+        `;
+        console.log("Approving done!")
+        return { success: true, message: 'Approved' };
+    } catch (error) {
+        console.error('Error approving verification:', error);
+        return { success: false, message: 'Failed' };
+    }
+}
+
+export async function rejectVerification(wallet: string | undefined) {
+    try {
+      console.log("Working on it to reject")
+        await sql`
+            UPDATE course_verification 
+            SET 
+                status = 'rejected',
+                reviewed_at = CURRENT_TIMESTAMP,
+                reviewed_by = 'admin',
+                updated_at = CURRENT_TIMESTAMP
+            WHERE wallet_address = ${wallet}
+        `;
+        console.log("Rejected!")
+        return { success: true, message: 'Verification rejected successfully' };
+    } catch (error) {
+        console.error('Error rejecting verification:', error);
+        return { success: false, message: 'Failed to reject verification' };
+    }
+}

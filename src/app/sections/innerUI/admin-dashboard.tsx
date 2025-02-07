@@ -1,12 +1,12 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { getAllDatabaseData } from "@/server-comps/getData"
+import { getAllDatabaseData, approveVerification, rejectVerification } from "@/server-comps/getData"
 import { Download, X, RefreshCw, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import styles from "@/styles/AdminDashboard.module.css"
 
-type DataType = "wallets" | "profiles" | "feedback" | "ambassadors" | "courseVerification" | null
+type DataType = "wallets" | "profiles" | "feedback" | "ambassadors" | "courseVerifications" | null
 
 type DataFormatter = {
   [key: string]: {
@@ -51,7 +51,7 @@ const dataFormatters: { [key: string]: DataFormatter } = {
       format: (value) => new Date(value).toLocaleDateString()
     }
   },
-  courseVerification: {
+  courseVerifications: {
     resource_name: { label: 'Resource Name' },
     resource_type: { label: 'Resource Type' },
     resource_size: { label: 'Resource Size' },
@@ -129,7 +129,7 @@ const AdminDashboard = () => {
 
   const stats = [
     { title: "Total Wallets", value: data?.wallets?.length || 0, type: "wallets" },
-    { title: "Pending Verifications", value: data?.courseVerification?.filter((v: any) => v.status === 'pending').length || 0, type: "courseVerification" },
+    { title: "Pending Verifications", value: data?.courseVerifications?.filter((v: any) => v.status === 'pending').length || 0, type: "courseVerifications" },
     { title: "Total Feedback", value: data?.feedback?.length || 0, type: "feedback" },
     { title: "Total Ambassadors", value: data?.ambassadors?.length || 0, type: "ambassadors" },
     { title: "Total Profiles", value: data?.profiles?.length || 0, type: "profiles" },
@@ -149,32 +149,58 @@ const AdminDashboard = () => {
   }
 
   const renderVerificationActions = (item: any) => {
-    if (activeView !== 'courseVerification') return null;
+    if (activeView !== 'courseVerifications') return null;
+  
+    const handleApprove = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        try {
+            const result = await approveVerification(item.wallet_address);
+            if (result.success) {
+                fetchData();
+                alert('Verification approved successfully');
+            } else {
+                alert('Failed to approve verification');
+            }
+        } catch (error) {
+            console.error('Error approving verification:', error);
+            alert('Error approving verification');
+        }
+    };
+
+    const handleReject = async (e: React.MouseEvent) => {
+        e.stopPropagation();
+        try {
+            const result = await rejectVerification(item.wallet_address);
+            if (result.success) {
+                fetchData();
+                alert('Verification rejected successfully');
+            } else {
+                alert('Failed to reject verification');
+            }
+        } catch (error) {
+            console.error('Error rejecting verification:', error);
+            alert('Error rejecting verification');
+        }
+    };
   
     return (
-      <div className={styles.verificationActions}>
-        <Button 
-          onClick={(e) => {
-            e.stopPropagation();
-            // Add approve handler
-          }}
-          disabled={item.status !== 'pending'}
-        >
-          Approve
-        </Button>
-        <Button 
-          onClick={(e) => {
-            e.stopPropagation();
-            // Add reject handler
-          }}
-          variant="destructive"
-          disabled={item.status !== 'pending'}
-        >
-          Reject
-        </Button>
-      </div>
+        <div className={styles.verificationActions}>
+            <Button 
+                onClick={handleApprove}
+                disabled={item.status !== 'pending'}
+            >
+                Approve
+            </Button>
+            <Button 
+                onClick={handleReject}
+                variant="destructive"
+                disabled={item.status !== 'pending'}
+            >
+                Reject
+            </Button>
+        </div>
     );
-  };
+};
 
   const renderDataTable = () => {
     if (!activeView || !data?.[activeView]) return null
@@ -243,7 +269,7 @@ const AdminDashboard = () => {
                     )}
                   </th>
                 ))}
-                {activeView === 'courseVerification' && <th>Actions</th>}
+                {activeView === 'courseVerifications' && <th>Actions</th>}
               </tr>
             </thead>
             <tbody>
@@ -251,14 +277,14 @@ const AdminDashboard = () => {
                 <tr key={index} onClick={() => setSelectedItem(item)} className={styles.tableRow}>
                   {headers.map((header) => (
                     <td key={header}>
-                      {activeView === 'courseVerification' && header === 'evidence_url' ? (
+                      {activeView === 'courseVerifications' && header === 'evidence_url' ? (
                         <img src={item[header]} alt="Evidence" style={{maxWidth: '50px'}} />
                       ) : (
                         item[header]?.toString() || ""
                       )}
                     </td>
                   ))}
-                  {activeView === 'courseVerification' && (
+                  {activeView === 'courseVerifications' && (
                     <td>{renderVerificationActions(item)}</td>
                   )}
                 </tr>
