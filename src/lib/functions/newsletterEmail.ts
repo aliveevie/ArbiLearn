@@ -16,7 +16,7 @@ export async function sendWelcomeEmail(email: string): Promise<{ success: boolea
             
             <p>Dear Subscriber,</p>
             
-            <p>Welcome to <strong>ArbiLearn</strong>! We're thrilled to have you on board as part of our growing community of learners, developers, and blockchain enthusiasts. By subscribing to our newsletter, you've taken a big step toward mastering Web3, blockchain development, and decentralized applications.</p>
+            <p>Welcome to <strong>ArbiLearn</strong>! We're thrilled to have you onboard as part of our growing community of learners, developers, and blockchain enthusiasts. By subscribing to our newsletter, you've taken a big step toward mastering Web3, blockchain development, and decentralized applications.</p>
             
             <p><strong>Here's what you can expect from us:</strong></p>
             
