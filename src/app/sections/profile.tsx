@@ -33,7 +33,7 @@ import {
 
 import { getWalletAddress, } from '@/server-comps/wallet'
 import { processReferral } from '@/server-comps/userActions'
-import { getOldWallets } from '@/server-comps/getOldWallets'
+// import { getOldWallets } from '@/server-comps/getOldWallets'
 
 interface UserAction {
   id: number
@@ -64,31 +64,31 @@ export default function ProfileSection() {
 
   const isMember = ownedNfts && ownedNfts.length > 0;
 
-  useEffect(() => {
-    const fetchNFTTransaction = async () => {
-      if (!smartAccount?.address || !ownedNfts?.length) return;
+  // useEffect(() => {
+  //   const fetchNFTTransaction = async () => {
+  //     if (!smartAccount?.address || !ownedNfts?.length) return;
       
-      try {
-        const response = await fetch(
-          `/apis/transactions?address=${smartAccount.address}`
-        );
+  //     try {
+  //       const response = await fetch(
+  //         `/apis/transactions?address=${smartAccount.address}`
+  //       );
         
-        const data = await response.json();
-        console.log('NFT Transaction Response:', data);
+  //       const data = await response.json();
+  //       console.log('NFT Transaction Response:', data);
         
-        if (data.result && data.result.length > 0) {
-          setNftTransactionHash(data.result[0].hash);
-        }
-        const oldWallets = await getOldWallets();
-        console.log(oldWallets);
+  //       if (data.result && data.result.length > 0) {
+  //         setNftTransactionHash(data.result[0].hash);
+  //       }
+  //       // const oldWallets = await getOldWallets();
+  //       // console.log(oldWallets);
         
-      } catch (error) {
-        console.error('Error fetching NFT transaction:', error);
-      }
-    };
+  //     } catch (error) {
+  //       console.error('Error fetching NFT transaction:', error);
+  //     }
+  //   };
    
-    fetchNFTTransaction();
-  }, [smartAccount?.address, ownedNfts]);
+  //   fetchNFTTransaction();
+  // }, [smartAccount?.address, ownedNfts]);
   
   
 

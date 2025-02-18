@@ -2,8 +2,8 @@
 
 import { sql } from "@vercel/postgres";
 import { neon } from '@neondatabase/serverless';
+// import { sql2 } from './superbase'
 export const sql2 = neon(`${process.env.DATABASE_URL}`);
-// ... existing code ...
 
 export async function getOldWallets() {
     try {
