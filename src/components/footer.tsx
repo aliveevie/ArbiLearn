@@ -4,8 +4,31 @@ import Link from 'next/link'
 import { Globe, MessageSquare, Twitter, Send } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { useState } from 'react'
+import { newsletters } from '@/server-comps/newsletter'
 
 export function FooterComponent() {
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsLoading(true)
+    
+    try {
+      const response = await newsletters(email)
+      setMessage(response.message)
+      if (response.status === 'success' || response.status === 'subscribed') {
+        setEmail('')
+      }
+    } catch (error) {
+      setMessage('Something went wrong. Please try again.')
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
   return (
     <footer className="bg-gray-100 text-gray-600 py-8">
       <div className="container mx-auto px-4">
@@ -13,15 +36,28 @@ export function FooterComponent() {
           {/* Newsletter Subscription */}
           <div className="w-full max-w-md space-y-4">
             <h3 className="text-lg font-semibold text-gray-800 text-center">Subscribe to Newsletter</h3>
-            <form className="space-y-2">
+            <form className="space-y-2" onSubmit={handleSubmit}>
               <Input
                 type="email"
                 placeholder="Enter your email"
                 className="w-full"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
+                required
               />
-              <Button type="submit" className="w-full">
-                Subscribe
+              <Button type="submit" className="w-full" disabled={isLoading}>
+                {isLoading ? 'Subscribing...' : 'Subscribe'}
               </Button>
+              {message && (
+                <p className={`text-sm text-center ${
+                  message.includes('success') || message.includes('subscribed') 
+                    ? 'text-green-600' 
+                    : 'text-red-600'
+                }`}>
+                  {message}
+                </p>
+              )}
             </form>
           </div>
 

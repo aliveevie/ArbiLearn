@@ -272,3 +272,19 @@ export async function createFeedbackForm() {
     throw error;
   }
 }
+
+export async function createNewsletterTable() { 
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS newsletters (
+        newsletter_id SERIAL PRIMARY KEY,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    console.log("Newsletters table created successfully");
+  } catch (error) {
+    console.error("Error creating newsletters table:", error);
+    throw error;
+  }
+}
