@@ -288,3 +288,31 @@ export async function createNewsletterTable() {
     throw error;
   }
 }
+
+export async function createLearnethonTable() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS learnethon_participants (
+        participant_id SERIAL PRIMARY KEY,
+        name VARCHAR(255) NOT NULL,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        wallet_id INTEGER,
+        x_username VARCHAR(255),
+        telegram_username VARCHAR(255),
+        discord_username VARCHAR(255),
+        membership_status VARCHAR(50) CHECK (
+          membership_status IN ('Already minted', 'Newly minted', 'Never Minted')
+        ),
+        source_referral VARCHAR(100),
+        wallet_address VARCHAR(255),
+        registration_date TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    
+    console.log("Learnethon participants table created successfully");
+  } catch (error) {
+    console.error("Error creating learnethon participants table:", error);
+    throw error;
+  }
+}
