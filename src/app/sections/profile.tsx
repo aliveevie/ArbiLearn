@@ -17,6 +17,7 @@ import Ambassadors from './innerUI/Ambassadors'
 import { initializeTables } from '@/server-comps/createTable'
 import FeedbackForm from './innerUI/feedback'
 import LearnethonProfile from './innerUI/LearnerThon'
+import { getGoogleFormData } from '@/server-comps/googleForm'
 
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -56,6 +57,7 @@ export default function ProfileSection() {
   const [showCoursesModal, setShowCoursesModal] = useState(false)
   const [nftTransactionHash, setNftTransactionHash] = useState<string>('')
 
+  getGoogleFormData()
 
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
