@@ -17,9 +17,6 @@ interface CoursesProps {
 
 const Courses: React.FC<CoursesProps> = ({address}) => {
   const [showForm, setShowForm] = useState(false)
-
-  console.log(address)
-
   const web3Resources: Resource[] = [
     { name: 'Ethereum.org', url: 'https://ethereum.org/en/learn/' },
     { name: 'CryptoZombies', url: 'https://cryptozombies.io/' },
@@ -105,6 +102,10 @@ const Courses: React.FC<CoursesProps> = ({address}) => {
           {renderResourceList(arbitrumDocs, <FileText className="learn-portal__icon" size={18} />)}
         </div>
       </div>
+
+      <Button onClick={() => setShowForm(true)} className="fixed bottom-4 left-4">
+        LearnerThon Competition
+      </Button>
 
       <Button onClick={() => setShowForm(true)} className="fixed bottom-4 right-4">
         Verify Completion

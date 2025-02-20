@@ -1,0 +1,155 @@
+.profileContainer {
+    color: var(--foreground);
+  }
+  
+  .header {
+    text-align: center;
+    margin-bottom: 3rem;
+  }
+  
+  .title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  .subtitle {
+    font-size: 1.2rem;
+    color: #666;
+    margin-bottom: 1rem;
+  }
+  
+  .walletAddress {
+    font-family: monospace;
+    color: #666;
+    background: #f3f4f6;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+    word-break: break-all;
+    max-width: 100%;
+    margin: 1rem 0;
+  }
+  
+  .sectionTitle {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+    text-align: center;
+  }
+  
+  .resourceGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    margin-bottom: 3rem;
+  }
+  
+  .resourceCard {
+    background: white;
+    border-radius: 1rem;
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+  }
+  
+  .resourceCard:hover {
+    transform: translateY(-5px);
+  }
+  
+  .resourceHeader {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #4f46e5;
+  }
+  
+  .resourceHeader h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+  }
+  
+  .resourceList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .resourceLink {
+    display: block;
+    padding: 0.75rem;
+    color: #4b5563;
+    text-decoration: none;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s ease;
+  }
+  
+  .resourceLink:hover {
+    background-color: #f3f4f6;
+    color: #4f46e5;
+  }
+  
+  .examSection {
+    margin-top: 3rem;
+  }
+  
+  .examCard {
+    background: white;
+    border-radius: 1rem;
+    padding: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+  
+  .examHeader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    color: #4f46e5;
+  }
+  
+  .examHeader h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+  }
+  
+  .examDescription {
+    color: #666;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+  
+  .examButton {
+    background: linear-gradient(45deg, #3b82f6, #8b5cf6);
+    color: white;
+    padding: 0.75rem 2rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+  }
+  
+  .examButton:hover {
+    opacity: 0.9;
+  }
+  
+  @media (max-width: 768px) {
+    .profileContainer {
+      padding: 1rem;
+    }
+  
+    .title {
+      font-size: 2rem;
+    }
+  
+    .resourceGrid {
+      grid-template-columns: 1fr;
+    }
+  }

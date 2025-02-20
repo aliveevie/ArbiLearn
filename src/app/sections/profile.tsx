@@ -16,6 +16,7 @@ import ShowCoursesComponent from './innerUI/showCourseModal'
 import Ambassadors from './innerUI/Ambassadors'
 import { initializeTables } from '@/server-comps/createTable'
 import FeedbackForm from './innerUI/feedback'
+import LearnethonProfile from './innerUI/LearnerThon'
 
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
@@ -98,7 +99,7 @@ export default function ProfileSection() {
     client
   })
 
-  const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points' | 'ambassadors' | 'feedback'>('main')
+  const [activeView, setActiveView] = useState<'main' | 'courses' | 'nfts' | 'tokens' | 'points' | 'ambassadors' | 'feedback' | 'learnethon'>('main')
   const [isEditing, setIsEditing] = useState(false)
   const [showWithdraw, setShowWithdraw] = useState(false)
   const [showPoints, setShowPoints] = useState(false)
@@ -236,14 +237,14 @@ export default function ProfileSection() {
       hoverButtons: ['Get NFTs'],
       onclick: () => setActiveView('nfts')
     },
-    {
-      id: 3,
-      title: 'Token Sale',
-      description: 'Support ArbiLearn on their mission',
-      icon: <Coins size={20} />,
-      hoverButtons: ['Buy Tokens'],
-      onclick: () => setActiveView('tokens')
-    },
+    // {
+    //   id: 3,
+    //   title: 'Token Sale',
+    //   description: 'Support ArbiLearn on their mission',
+    //   icon: <Coins size={20} />,
+    //   hoverButtons: ['Buy Tokens'],
+    //   onclick: () => setActiveView('tokens')
+    // },
     {
       id: 4,
       title: 'Earn Points',
@@ -267,10 +268,16 @@ export default function ProfileSection() {
       icon: <Flower2 size={20} />,
       hoverButtons: ['Share your Taught'],
       onclick: () => setActiveView('feedback')
-    }
-   
-  ]
-
+    },
+    // {
+    //   id: 7,
+    //   title: 'Learnethon',
+    //   description: 'Learn and Earn',
+    //   icon: <Coins size={20} />,
+    //   hoverButtons: ['Learn and Earn'],
+    //   onclick: () => setActiveView('learnethon')
+    // }
+]
   const renderView = () => {
     if (!isMember) {
       return renderNoMembership();
@@ -346,7 +353,17 @@ export default function ProfileSection() {
           </div>
         )
 
-
+        case 'learnethon':
+        return (
+          <div>
+            <button className="back-button" onClick={() => setActiveView('main')}>
+              <ArrowLeft size={18} /> Back to Profile
+            </button>
+            <LearnethonProfile 
+            wallet={smartAccount?.address}
+             />
+          </div>  
+          )
       default:
         return (
           <div>
