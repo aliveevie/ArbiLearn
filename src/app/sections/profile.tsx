@@ -18,7 +18,7 @@ import { initializeTables } from '@/server-comps/createTable'
 import FeedbackForm from './innerUI/feedback'
 import LearnethonProfile from './innerUI/LearnerThon'
 import { getGoogleFormData } from '@/server-comps/googleForm'
-
+import { getProfile } from '@/server-comps/getProfile'
 import type React from "react";
 import { claimTo, getOwnedNFTs } from "thirdweb/extensions/erc1155";
 import {
@@ -35,6 +35,7 @@ import {
 
 import { getWalletAddress, } from '@/server-comps/wallet'
 import { processReferral } from '@/server-comps/userActions'
+import { getUserEmail } from 'thirdweb/wallets/in-app'
 // import { getOldWallets } from '@/server-comps/getOldWallets'
 
 interface UserAction {
@@ -58,14 +59,22 @@ export default function ProfileSection() {
   const [nftTransactionHash, setNftTransactionHash] = useState<string>('')
 
   getGoogleFormData()
-
+  
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
     address: smartAccount?.address!,
     queryOptions: { enabled: !!smartAccount },
   });
 
-  const isMember = ownedNfts && ownedNfts.length > 0;
+  async function getEmail(){
+    const email = await getUserEmail({ client });
+    console.log(email);
+  }
+
+  getEmail()
+
+
+const isMember = ownedNfts && ownedNfts.length > 0;
 
   // useEffect(() => {
   //   const fetchNFTTransaction = async () => {
