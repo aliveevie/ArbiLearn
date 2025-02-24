@@ -57,6 +57,8 @@ export default function ProfileSection() {
   const [showPointsModal, setShowPointsModal] = useState(false)
   const [showCoursesModal, setShowCoursesModal] = useState(false)
   const [nftTransactionHash, setNftTransactionHash] = useState<string>('')
+  const [email, setEmail] = useState<string>('')
+  const [profile, setProfile] = useState<any>({})
 
   getGoogleFormData()
   
@@ -66,15 +68,25 @@ export default function ProfileSection() {
     queryOptions: { enabled: !!smartAccount },
   });
 
-  async function getEmail(){
-    const email = await getUserEmail({ client });
-    console.log(email);
-  }
-
-  getEmail()
-
-
-const isMember = ownedNfts && ownedNfts.length > 0;
+  useEffect(() => {
+    async function fetchUserDetails() {
+      try {
+        const email = await getUserEmail({ client });
+        if(email) setEmail(email);
+        const profile = await getProfile(address, email);
+        if(profile) setProfile(profile);
+        console.log(profile);
+      } catch (error) {
+        console.error('Error fetching user details:', error);
+      }
+    }
+  
+    if (address) {
+      fetchUserDetails();
+    }
+  }, [address]);
+ 
+ const isMember = ownedNfts && ownedNfts.length > 0;
 
   // useEffect(() => {
   //   const fetchNFTTransaction = async () => {
