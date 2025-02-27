@@ -1,0 +1,56 @@
+.modalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+  }
+  
+  .modalContent {
+    background-color: #1e3a8a;
+    color: white;
+    padding: 1.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+    max-width: 90%;
+    width: 400px;
+  }
+  
+  .button {
+    padding: 0.5rem 1rem;
+    border-radius: 0.25rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.2s;
+  }
+  
+  .buttonPrimary {
+    background-color: #3b82f6;
+    color: white;
+  }
+  
+  .buttonPrimary:hover {
+    background-color: #2563eb;
+  }
+  
+  .buttonSecondary {
+    background-color: #4b5563;
+    color: white;
+  }
+  
+  .buttonSecondary:hover {
+    background-color: #374151;
+  }
+  
+  .buttonDestructive {
+    background-color: #ef4444;
+    color: white;
+  }
+  
+  .buttonDestructive:hover {
+    background-color: #dc2626;
+  }
+  
+  
