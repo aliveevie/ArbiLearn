@@ -292,14 +292,14 @@ export default function ProfileSection() {
       hoverButtons: ['Share your Taught'],
       onclick: () => setActiveView('feedback')
     },
-    {
-      id: 7,
-      title: 'Learnethon',
-      description: 'Learn and Earn',
-      icon: <Coins size={20} />,
-      hoverButtons: ['Learn and Earn'],
-      onclick: () => setActiveView('learnethon')
-    }
+    // {
+    //   id: 7,
+    //   title: 'Learnethon',
+    //   description: 'Learn and Earn',
+    //   icon: <Coins size={20} />,
+    //   hoverButtons: ['Learn and Earn'],
+    //   onclick: () => setActiveView('learnethon')
+    // }
 ]
   const renderView = () => {
     if (!isMember) {
@@ -375,18 +375,17 @@ export default function ProfileSection() {
               />
           </div>
         )
-
-        case 'learnethon':
-        return (
-          <div>
-            <button className="back-button" onClick={() => setActiveView('main')}>
-              <ArrowLeft size={18} /> Back to Profile
-            </button>
-            <LearnethonProfile 
-            wallet={smartAccount?.address}
-             />
-          </div>  
-          )
+        // case 'learnethon':
+        // return (
+        //   <div>
+        //     <button className="back-button" onClick={() => setActiveView('main')}>
+        //       <ArrowLeft size={18} /> Back to Profile
+        //     </button>
+        //     <LearnethonProfile 
+        //     wallet={smartAccount?.address}
+        //      />
+        //   </div>  
+        //   )
       default:
         return (
           <div>
