@@ -79,6 +79,7 @@ const LearnethonProfile = ({ wallet, onClose }: { wallet: string | undefined; on
         <ExamSummary
           score={examResults.score}
           totalQuestions={examResults.questions.length}
+          // @ts-expect-error
           answeredQuestions={examResults.userAnswers.length}
           attempts={attempts}
           newPosition={newPosition}
