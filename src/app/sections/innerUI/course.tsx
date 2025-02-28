@@ -5,6 +5,7 @@ import { Book, FileText, Layers } from 'lucide-react'
 import { VerificationForm } from './VerificationForm'
 import { Button } from "@/components/ui/button"
 import '../../../styles/courses.css'
+import LearnethonProfile from '../leanerthon/Dashboard'
 
 interface Resource {
   name: string;
@@ -15,8 +16,9 @@ interface CoursesProps {
   address: string | undefined;
 }
 
-const Courses: React.FC<CoursesProps> = ({address}) => {
+const Courses: React.FC<CoursesProps> = ({ address }) => {
   const [showForm, setShowForm] = useState(false)
+  const [showExam, setShowExam] = useState(false)
   const web3Resources: Resource[] = [
     { name: 'Ethereum.org', url: 'https://ethereum.org/en/learn/' },
     { name: 'CryptoZombies', url: 'https://cryptozombies.io/' },
@@ -103,7 +105,7 @@ const Courses: React.FC<CoursesProps> = ({address}) => {
         </div>
       </div>
 
-      <Button onClick={() => setShowForm(true)} className="fixed bottom-4 left-4">
+      <Button onClick={() => setShowExam(true)} className="fixed bottom-4 left-4">
         LearnerThon Competition
       </Button>
 
@@ -122,6 +124,16 @@ const Courses: React.FC<CoursesProps> = ({address}) => {
           </div>
         </div>
       )}
+       {showExam && (
+        <div className="learn-portal__overlay">
+          <div className="learn-portal__modal">
+            <LearnethonProfile 
+            wallet={address}
+            onClose={() => setShowExam(false)}
+            />
+          </div>
+          </div>
+          )}
     </div>
   )
 }

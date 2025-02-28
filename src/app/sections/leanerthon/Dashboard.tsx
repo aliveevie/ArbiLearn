@@ -6,6 +6,7 @@ import Leaderboard from "./_components/Leaderboad"
 import StartExamButton from "./_components/StartExamButton"
 import StartExam from "./_components/StartExam"
 import ExamSummary from "./_components/ExamSummary"
+import { Button } from "@/components/ui/button"
 
 const initialLeaderboard = [
   { username: "Winner123", points: 500 },
@@ -17,7 +18,7 @@ const initialLeaderboard = [
 
 const MAX_ATTEMPTS = 3
 
-const LearnethonProfile  = ({ wallet } : {wallet : string | undefined }) => {
+const LearnethonProfile = ({ wallet, onClose }: { wallet: string | undefined; onClose: () => void }) => {
   const [isExamStarted, setIsExamStarted] = useState(false)
   const [isExamCompleted, setIsExamCompleted] = useState(false)
   const [attempts, setAttempts] = useState(0)
@@ -68,6 +69,9 @@ const LearnethonProfile  = ({ wallet } : {wallet : string | undefined }) => {
         <>
           <Leaderboard leaderboard={leaderboard} />
           <StartExamButton onStart={startExam} attempts={attempts} maxAttempts={MAX_ATTEMPTS} />
+          <Button onClick={onClose} className="mt-4">
+            Close
+          </Button>
         </>
       )}
       {isExamStarted && <StartExam onEnd={endExam} attempts={attempts} />}
@@ -87,4 +91,3 @@ const LearnethonProfile  = ({ wallet } : {wallet : string | undefined }) => {
 }
 
 export default LearnethonProfile
-
