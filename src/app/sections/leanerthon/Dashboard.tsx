@@ -17,7 +17,7 @@ const initialLeaderboard = [
 
 const MAX_ATTEMPTS = 3
 
-const ExamDashboard = () => {
+const LearnethonProfile  = ({ wallet } : {wallet : string | undefined }) => {
   const [isExamStarted, setIsExamStarted] = useState(false)
   const [isExamCompleted, setIsExamCompleted] = useState(false)
   const [attempts, setAttempts] = useState(0)
@@ -86,5 +86,5 @@ const ExamDashboard = () => {
   )
 }
 
-export default Dashboard
+export default LearnethonProfile
 

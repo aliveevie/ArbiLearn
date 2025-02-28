@@ -16,7 +16,7 @@ import ShowCoursesComponent from './innerUI/showCourseModal'
 import Ambassadors from './innerUI/Ambassadors'
 import { initializeTables } from '@/server-comps/createTable'
 import FeedbackForm from './innerUI/feedback'
-import LearnethonProfile from './innerUI/LearnerThon'
+import LearnethonProfile from './leanerthon/Dashboard'
 import { getGoogleFormData } from '@/server-comps/googleForm'
 import { getProfile } from '@/server-comps/getProfile'
 import type React from "react";
@@ -292,14 +292,14 @@ export default function ProfileSection() {
       hoverButtons: ['Share your Taught'],
       onclick: () => setActiveView('feedback')
     },
-    // {
-    //   id: 7,
-    //   title: 'Learnethon',
-    //   description: 'Learn and Earn',
-    //   icon: <Coins size={20} />,
-    //   hoverButtons: ['Learn and Earn'],
-    //   onclick: () => setActiveView('learnethon')
-    // }
+    {
+      id: 7,
+      title: 'Learnethon',
+      description: 'Learn and Earn',
+      icon: <Coins size={20} />,
+      hoverButtons: ['Learn and Earn'],
+      onclick: () => setActiveView('learnethon')
+    }
 ]
   const renderView = () => {
     if (!isMember) {
