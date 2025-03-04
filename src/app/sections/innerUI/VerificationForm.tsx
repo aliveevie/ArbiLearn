@@ -68,9 +68,7 @@ export function VerificationForm({ resources, onClose, address }: VerificationFo
       >
         <X size={24} />
       </button>
-
       <h3 className="text-lg font-semibold">Verify Completion</h3>
-      
       <div>
         <Label htmlFor="resource">Resource</Label>
         <select 

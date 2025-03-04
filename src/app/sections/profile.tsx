@@ -75,7 +75,6 @@ export default function ProfileSection() {
         if(email) setEmail(email);
         const profile = await getProfile(address, email);
         if(profile) setProfile(profile);
-        console.log(profile);
       } catch (error) {
         console.error('Error fetching user details:', error);
       }
@@ -85,8 +84,8 @@ export default function ProfileSection() {
       fetchUserDetails();
     }
   }, [address]);
- 
- const isMember = ownedNfts && ownedNfts.length > 0;
+
+  const isMember = ownedNfts && ownedNfts.length > 0;
 
   // useEffect(() => {
   //   const fetchNFTTransaction = async () => {
@@ -114,8 +113,6 @@ export default function ProfileSection() {
   //   fetchNFTTransaction();
   // }, [smartAccount?.address, ownedNfts]);
   
-  
-
   // @ts-ignore
   const { data: balance } = useWalletBalance({
     address: smartAccount?.address,
@@ -315,6 +312,7 @@ export default function ProfileSection() {
             </button>
             <Courses
             address={address}
+            profile={profile}
             />
           </div>
         )

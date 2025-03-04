@@ -14,9 +14,10 @@ interface Resource {
 
 interface CoursesProps { 
   address: string | undefined;
+  profile: { success: boolean, message: string }
 }
 
-const Courses: React.FC<CoursesProps> = ({ address }) => {
+const Courses: React.FC<CoursesProps> = ({ address, profile }) => {
   const [showForm, setShowForm] = useState(false)
   const [showExam, setShowExam] = useState(false)
   const web3Resources: Resource[] = [
@@ -130,10 +131,11 @@ const Courses: React.FC<CoursesProps> = ({ address }) => {
             <LearnethonProfile 
             wallet={address}
             onClose={() => setShowExam(false)}
+            profile={profile}
             />
           </div>
-          </div>
-          )}
+        </div>
+      )}
     </div>
   )
 }

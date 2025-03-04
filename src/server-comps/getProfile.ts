@@ -1,6 +1,7 @@
 "use server"
 import { sql } from "./neon";
 import { getWalletID } from "./getWalletId";
+
 export async function getProfile(wallet: string | undefined, email: string | undefined) {
     if (!wallet) {
         console.log("No wallet address provided");
@@ -18,7 +19,10 @@ export async function getProfile(wallet: string | undefined, email: string | und
         if (profileResult.length > 0) {
             const profile = profileResult[0];
             console.log("Profile found in profiles table:", profile);
-            return profile.name;
+            return {
+                success: true,
+                message: profile.name
+            }
         } else {
             const learnethonResult = await sql`
                 SELECT * FROM learnethon_participants WHERE email = ${email}
@@ -34,12 +38,18 @@ export async function getProfile(wallet: string | undefined, email: string | und
                 `;
 
                 // Return the name and email from the newly created profile
-                return learnethonProfile.name
+                return {
+                    success: true,
+                    message: learnethonProfile.name
+                }
+                
             }
         }
-
         console.log("No profile found in profiles table for this wallet");
-        return "Create a profile or apply via the learnethon form.";
+        return {
+            success: false,
+            message: "Create a profile or apply via the learnethon form."
+        }
     } catch (error) {
         console.error("Error fetching profile:", error);
         return "An error occurred while fetching the profile.";
