@@ -1,6 +1,6 @@
 "use client"
 
-import { useState, useEffect } from "react"
+import { useState, useEffect, type JSX } from "react";
 import { getAllDatabaseData, approveVerification, rejectVerification } from "@/server-comps/getData"
 import { Download, X, RefreshCw, ChevronDown } from "lucide-react"
 import { Button } from "@/components/ui/button"

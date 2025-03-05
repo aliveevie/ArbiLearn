@@ -348,6 +348,7 @@ export default function ProfileSection() {
             </button>
             <EarnPoints 
             smartAccount={smartAccount?.address}
+            username={profile}
             />
           </div>
         )

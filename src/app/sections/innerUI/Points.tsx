@@ -23,21 +23,29 @@ interface UserProfile {
 
 interface EarnPointsProps {
   smartAccount: string | undefined;
+  username: { success: boolean, message: string };
 }
 
-export default function EarnPoints({smartAccount}: EarnPointsProps) {
+export default function EarnPoints({smartAccount, username}: EarnPointsProps) {
   const [isProfileComplete, setIsProfileComplete] = useState(false)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [earnedPoints, setEarnedPoints] = useState(0)
   const [activeSection, setActiveSection] = useState<string | null>(null)
   const [referralLink, setReferralLink] = useState("")
   const [copied, setCopied] = useState(false)
+  const [name, setName] = useState("")
+  
 
   useEffect(() => {
-    const storedProfile = localStorage.getItem("userProfile")
-    if (storedProfile) {
-      const parsedProfile = JSON.parse(storedProfile)
-      setProfile(parsedProfile)
+    // const storedProfile = localStorage.getItem("userProfile")
+    // if (storedProfile) {
+    //   const parsedProfile = JSON.parse(storedProfile)
+    //   setProfile(parsedProfile)
+    //   setIsProfileComplete(true)
+    //   setEarnedPoints(100)
+    // }
+    if(username.success) { 
+      setName(username.message)
       setIsProfileComplete(true)
       setEarnedPoints(100)
     }
@@ -130,7 +138,7 @@ export default function EarnPoints({smartAccount}: EarnPointsProps) {
         <header className={styles.header}>
           <h1 className={styles.title}>Earn Points</h1>
           <p className={styles.subtitle}>Complete actions to earn points and unlock valuable tokens and NFTs</p>
-          {isProfileComplete && <p className={styles.welcomeMessage}>Welcome, {profile?.name}!</p>}
+          {isProfileComplete && <p className={styles.welcomeMessage}>Welcome, {name}!</p>}
         </header>
 
         {activeSection === "profile" && (
