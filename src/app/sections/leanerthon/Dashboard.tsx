@@ -8,14 +8,10 @@ import StartExamButton from "./_components/StartExamButton"
 import StartExam from "./_components/StartExam"
 import ExamSummary from "./_components/ExamSummary"
 import { Button } from "@/components/ui/button"
-import { getProfile } from "@/server-comps/getProfile"
+import { leaderboardData } from "./_server/queries"
 
 const initialLeaderboard = [
-  { username: "Winner123", points: 500 },
-  { username: "Runner456", points: 450 },
-  { username: "ThirdPlace789", points: 400 },
-  { username: "FourthUser", points: 350 },
-  { username: "FifthPlayer", points: 300 },
+  { username: "Winner123", points: 0 },
 ]
 
 const MAX_ATTEMPTS = 3
@@ -35,6 +31,12 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
       if (profile.success) {
         const firstName = profile.message.split(' ')[0]
         setUsername(firstName)
+        async function getData() {
+          const leaders = await leaderboardData()
+          setLeaderboard(leaders)
+          console.log(leaders)
+        }
+        getData()
       } else {
         setShowProfileModal(true)
       }
@@ -42,6 +44,8 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
       setShowProfileModal(true)
     }
   }, [profile])
+
+  console.log(leaderboard)
 
   const startExam = () => {
     if (attempts < MAX_ATTEMPTS) { 

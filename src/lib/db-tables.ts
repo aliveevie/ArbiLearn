@@ -316,3 +316,26 @@ export async function createLearnethonTable() {
     throw error;
   }
 }
+
+export async function createLeaderBoadTable() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS leaderboard (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        points INTEGER DEFAULT 0,
+        rank INTEGER,
+        username VARCHAR(255),
+        wallet_address VARCHAR(255),
+        attempts INTEGER DEFAULT 3,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES wallets(user_id)
+      )
+    `;
+    console.log("Leaderboard table created successfully");
+  } catch (error) {
+    console.error("Error creating leaderboard table:", error);
+    throw error;
+  }
+}
