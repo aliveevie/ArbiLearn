@@ -28,7 +28,7 @@ export const RankView: React.FC<{ user: User; leaderboard: LeaderboardEntry[] }>
         <p>Points: {user.points}</p>
       </div>
       <ul className="space-y-2">
-        {leaderboard.map((entry: { id: React.Key | null | undefined; name: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; points: string | number | bigint | boolean | React.ReactElement<any, string | React.JSXElementConstructor<any>> | Iterable<React.ReactNode> | React.ReactPortal | Promise<React.AwaitedReactNode> | null | undefined; }, index: number) => (
+        {leaderboard.map((entry, index) => (
           <li key={entry.id} className={`p-2 ${entry.name === user.name ? 'bg-blue-100 font-semibold' : 'bg-gray-50'} rounded-lg`}>
             <span className="mr-2">{index + 1}.</span>
             <span>{entry.name}</span>
