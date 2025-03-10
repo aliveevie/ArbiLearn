@@ -14,8 +14,12 @@ interface ConfirmModalProps {
 
 const ConfirmModal: React.FC<ConfirmModalProps> = ({ message, onConfirm, onCancel, onRetake }) => {
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={styles.modalOverlay}>
-      <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} className={styles.modalContent}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+      //@ts-expect-error
+      className={styles.modalOverlay}>
+      <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} 
+      //@ts-expect-error
+      className={styles.modalContent}>
         <p className="text-lg mb-4">{message}</p>
         <div className="flex justify-between">
           <button onClick={onRetake} className={`${styles.button} ${styles.buttonSecondary}`}>

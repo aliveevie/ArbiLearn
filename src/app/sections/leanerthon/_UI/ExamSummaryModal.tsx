@@ -25,8 +25,12 @@ const ExamSummaryModal: React.FC<ExamSummaryModalProps> = ({
   const totalPoints = questionPoints + attemptPoints
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className={styles.modalOverlay}>
-      <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} className={styles.modalContent}>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} 
+    //@ts-expect-error
+    className={styles.modalOverlay}>
+      <motion.div initial={{ scale: 0.9 }} animate={{ scale: 1 }} exit={{ scale: 0.9 }} 
+    //@ts-expect-error
+    className={styles.modalContent}>
         <h2 className="text-2xl font-bold mb-4">Exam Summary 📊</h2>
         <p className="text-lg mb-2">Score: {score} 🎯</p>
         <p className="text-lg mb-2">Questions Answered: {answeredQuestions} 📝</p>

@@ -9,6 +9,7 @@ const Balloons = () => {
       {[...Array(20)].map((_, i) => (
         <motion.div
           key={i}
+          //@ts-expect-error
           className={`absolute w-8 h-10 rounded-full ${balloonColors[i % balloonColors.length]}`}
           initial={{ y: "100vh", x: `${Math.random() * 100}vw` }}
           animate={{

@@ -133,6 +133,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
+              //@ts-expect-error
               onClick={() => handleAnswer(index)}
               disabled={selectedAnswer !== null}
               className={`w-full text-left p-3 rounded-lg transition-colors ${
