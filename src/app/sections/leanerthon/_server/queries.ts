@@ -7,7 +7,19 @@ type LeaderboardEntry = {
     username: string;
     points: number;
     attempts: number;
-    wallet_address: string;
+    wallet_address: string | undefined;
+}
+
+type ExamResult = {
+  username: string
+  walletAddress: string
+  score: number
+  questionsAnswered: number
+  questionPoints: number
+  attemptPoints: number
+  totalPoints: number
+  position: number
+  attemptsLeft: number
 }
 
 export async function leaderboardData(): Promise<LeaderboardEntry[]> {
@@ -22,4 +34,20 @@ export async function leaderboardData(): Promise<LeaderboardEntry[]> {
         console.error("Error fetching leaderboard data:", error)
         throw error
     }
+}
+
+export async function logExamResults(data: ExamResult) {
+  console.log("Exam Results:", {
+    username: data.username,
+    walletAddress: data.walletAddress,
+    stats: {
+      score: data.score,
+      questionsAnswered: data.questionsAnswered,
+      questionPoints: data.questionPoints,
+      attemptPoints: data.attemptPoints,
+      totalPoints: data.totalPoints,
+      position: data.position,
+      attemptsLeft: data.attemptsLeft
+    }
+  })
 }

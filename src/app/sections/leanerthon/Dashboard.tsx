@@ -118,13 +118,16 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
           {isExamCompleted && examResults && (
             <ExamSummary
               score={examResults.score}
-              totalQuestions={examResults.questions.length}
-              // @ts-expect-error
-              answeredQuestions={examResults.userAnswers.length}
-              attempts={attempts}
+              questionsAnswered={examResults.userAnswers?.length || 0}
+              questionPoints={examResults.score * 10}
+              attemptPoints={attempts * 5}
+              totalPoints={examResults.score * 10 + attempts * 5}
               newPosition={newPosition}
+              attemptsLeft={MAX_ATTEMPTS - attempts}
               onBack={backToDashboard}
               onRetake={retakeExam}
+              username={username}
+              walletAddress={wallet}
             />
           )}
         </>
