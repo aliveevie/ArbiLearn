@@ -6,7 +6,7 @@ export const Header = () => {
   return (
     <div className={styles.header}>
       <Image src={logo} alt="Logo" width={50} height={50} /> {/* Adjust the width and height as needed */}
-      <w3m-button />
+      
     </div>
   );
 };

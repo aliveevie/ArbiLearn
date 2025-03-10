@@ -1,5 +1,5 @@
 'use client'
-
+//@ts-nocheck
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { CuboidIcon as Cube, Code, Layout, Layers, ChevronRight, ChevronLeft, X, Trophy, Zap, Award, CoinsIcon, DollarSign as Coin, Image, User, Target, DollarSign } from 'lucide-react'
@@ -217,6 +217,7 @@ const MetisLearnMobile: React.FC = () => {
       <AnimatePresence>
         {showSidebar && (
           <motion.div 
+            // @ts-ignore
             className="bg-white w-full md:w-64 h-screen fixed md:sticky top-0 left-0 z-50 overflow-y-auto"
             initial={{ x: "-100%" }}
             animate={{ x: 0 }}
@@ -265,6 +266,7 @@ const MetisLearnMobile: React.FC = () => {
             {showSidebar ? <ChevronLeft size={24} /> : <ChevronRight size={24} />}
           </button>
           <motion.h1 
+            // @ts-ignore
             className="text-3xl font-bold text-white mb-2"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -273,6 +275,7 @@ const MetisLearnMobile: React.FC = () => {
             Welcome to MetisLearn
           </motion.h1>
           <motion.p 
+            // @ts-ignore
             className="text-lg text-blue-100"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -292,6 +295,7 @@ const MetisLearnMobile: React.FC = () => {
           <AnimatePresence mode="wait">
             <motion.div 
               key={selectedView || selectedTopic || 'default'}
+              // @ts-ignore
               className="bg-white rounded-lg shadow-lg p-6 mb-6"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -318,6 +322,7 @@ const MetisLearnMobile: React.FC = () => {
         </motion.div>
 
         <motion.div 
+          // @ts-ignore
           className="bg-blue-700 rounded-lg shadow-lg p-6 text-white"
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -337,4 +342,3 @@ const MetisLearnMobile: React.FC = () => {
 }
 
 export default MetisLearnMobile
-

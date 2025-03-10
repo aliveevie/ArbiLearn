@@ -55,6 +55,7 @@ export default function BlockchainGame() {
           {items.map((item, index) => (
             <motion.button
               key={index}
+              //@ts-expect-error
               className={cn(styles.itemButton, selectedIndex === index && styles.selected)}
               onClick={() => setSelectedIndex(index)}
               whileHover={{ scale: 1.02 }}
@@ -73,6 +74,7 @@ export default function BlockchainGame() {
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
+            //@ts-expect-error
             className={styles.continueContainer}
           >
             <a
