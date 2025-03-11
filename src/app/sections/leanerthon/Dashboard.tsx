@@ -8,33 +8,53 @@ import StartExamButton from "./_components/StartExamButton"
 import StartExam from "./_components/StartExam"
 import ExamSummary from "./_components/ExamSummary"
 import { Button } from "@/components/ui/button"
-import { leaderboardData } from "./_server/queries"
+import { leaderboardData, getUserExamData } from "./_server/queries"
 
 const initialLeaderboard = [
-  { username: "Winner123", points: 0 },
+  { username: "Winner123", points: 0, wallet_address: "0x0" },
 ]
 
 const MAX_ATTEMPTS = 3
 
 const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | undefined; onClose: () => void; profile: { success: boolean, message: string } }) => {
+  const safeWalletAddress = wallet || "0x0"
   const [isExamStarted, setIsExamStarted] = useState(false)
   const [isExamCompleted, setIsExamCompleted] = useState(false)
   const [attempts, setAttempts] = useState(0)
   const [examResults, setExamResults] = useState<any>(null)
   const [leaderboard, setLeaderboard] = useState(initialLeaderboard)
-  const [userPoints, setUserPoints] = useState(250)
+  const [userPoints, setUserPoints] = useState(0)
   const [username, setUsername] = useState("")
   const [showProfileModal, setShowProfileModal] = useState(false)
+  const [attemptsLeft, setAttemptsLeft] = useState(3)
 
   useEffect(() => {
     try {
       if (profile.success) {
         const firstName = profile.message.split(' ')[0]
         setUsername(firstName)
+        
         async function getData() {
+          // Get leaderboard data
           const leaders = await leaderboardData()
-          setLeaderboard(leaders)
-          console.log(leaders)
+          
+          // Map the results to ensure wallet_address is always a string
+          const safeLeaders = leaders.map(leader => ({
+            ...leader,
+            wallet_address: leader.wallet_address || "0x0"
+          }))
+          
+          setLeaderboard(safeLeaders)
+          
+          // Get user-specific data
+          if (wallet) {
+            const userData = await getUserExamData(wallet)
+            if (userData) {
+              setUserPoints(userData.totalPoints)
+              setAttemptsLeft(userData.attemptsLeft)
+              setAttempts(3 - userData.attemptsLeft)
+            }
+          }
         }
         getData()
       } else {
@@ -43,14 +63,15 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
     } catch (error) {
       setShowProfileModal(true)
     }
-  }, [profile])
+  }, [profile, wallet])
 
   console.log(leaderboard)
 
   const startExam = () => {
-    if (attempts < MAX_ATTEMPTS) { 
+    if (attemptsLeft > 0) {
       setIsExamStarted(true)
       setAttempts(attempts + 1)
+      setAttemptsLeft(attemptsLeft - 1)
     }
   }
 
@@ -62,7 +83,8 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
     const newPoints = userPoints + results.score * 10 + attempts * 5
     setUserPoints(newPoints)
 
-    const newLeaderboard = [...leaderboard, { username, points: newPoints }]
+    const newLeaderboard = [...leaderboard.filter(item => item.wallet_address !== safeWalletAddress), 
+      { username, points: newPoints, wallet_address: safeWalletAddress }]
       .sort((a, b) => b.points - a.points)
       .slice(0, 5)
 
@@ -80,7 +102,7 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
     startExam()
   }
 
-  const newPosition = leaderboard.findIndex((player) => player.username === username) + 1
+  const newPosition = leaderboard.findIndex((player) => player.wallet_address === safeWalletAddress) + 1
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -123,11 +145,11 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
               attemptPoints={attempts * 5}
               totalPoints={examResults.score * 10 + attempts * 5}
               newPosition={newPosition}
-              attemptsLeft={MAX_ATTEMPTS - attempts}
+              attemptsLeft={attemptsLeft}
               onBack={backToDashboard}
               onRetake={retakeExam}
               username={username}
-              walletAddress={wallet}
+              walletAddress={safeWalletAddress}
             />
           )}
         </>

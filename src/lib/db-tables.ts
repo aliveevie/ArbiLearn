@@ -319,23 +319,59 @@ export async function createLearnethonTable() {
 
 export async function createLeaderBoadTable() {
   try {
+    // Drop the table if it exists
+    // await sql`
+    //   DROP TABLE IF EXISTS leaderboard CASCADE
+    // `;
+    
+    // Create the table
     await sql`
       CREATE TABLE IF NOT EXISTS leaderboard (
         id SERIAL PRIMARY KEY,
-        user_id INTEGER NOT NULL,
+        username VARCHAR(255) NOT NULL,
+        wallet_address VARCHAR(255) UNIQUE NOT NULL,
         points INTEGER DEFAULT 0,
-        rank INTEGER,
-        username VARCHAR(255),
-        wallet_address VARCHAR(255),
+        rank INTEGER DEFAULT 0,
         attempts INTEGER DEFAULT 3,
         created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
-        FOREIGN KEY (user_id) REFERENCES wallets(user_id)
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
       )
     `;
-    console.log("Leaderboard table created successfully");
+    console.log("Leaderboard table dropped and recreated successfully");
   } catch (error) {
-    console.error("Error creating leaderboard table:", error);
+    console.error("Error recreating leaderboard table:", error);
+    throw error;
+  }
+}
+
+export async function createLearnthonResultsTable() {
+  try {
+    // Drop the table if it exists
+    // await sql`
+    //   DROP TABLE IF EXISTS learnthon_results CASCADE
+    // `;
+    
+    // Create the table
+    await sql`
+      CREATE TABLE IF NOT EXISTS learnthon_results (
+        result_id SERIAL PRIMARY KEY,
+        username VARCHAR(255) NOT NULL,
+        wallet_address VARCHAR(255) UNIQUE NOT NULL,
+        score INTEGER DEFAULT 0,
+        questions_answered INTEGER DEFAULT 0,
+        question_points INTEGER DEFAULT 0,
+        attempt_points INTEGER DEFAULT 0,
+        total_points INTEGER DEFAULT 0,
+        position INTEGER DEFAULT 0,
+        total_attempts INTEGER DEFAULT 3,
+        attempts_left INTEGER DEFAULT 3,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    console.log("Learnthon results table dropped and recreated successfully");
+  } catch (error) {
+    console.error("Error recreating learnthon results table:", error);
     throw error;
   }
 }
