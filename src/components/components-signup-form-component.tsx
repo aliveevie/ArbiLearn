@@ -13,7 +13,6 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
 import { LoginFormComponent } from './login-form'
 import  BlockchainGame  from './gaming-learning'
 
-
 export function SignupFormComponent() {
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')

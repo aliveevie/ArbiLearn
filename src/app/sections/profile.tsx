@@ -68,6 +68,10 @@ export default function ProfileSection() {
     queryOptions: { enabled: !!smartAccount },
   });
 
+  const handleProfileUpdate = (updatedProfile: { success: boolean, message: string }) => {
+    setProfile(updatedProfile);
+  }
+
   useEffect(() => {
     async function fetchUserDetails() {
       try {
@@ -347,8 +351,9 @@ export default function ProfileSection() {
               <ArrowLeft size={18} /> Back to Profile
             </button>
             <EarnPoints 
-            smartAccount={smartAccount?.address}
-            username={profile}
+              smartAccount={smartAccount?.address}
+              username={profile}
+              onProfileUpdate={handleProfileUpdate}
             />
           </div>
         )
@@ -374,17 +379,19 @@ export default function ProfileSection() {
               />
           </div>
         )
-        // case 'learnethon':
-        // return (
-        //   <div>
-        //     <button className="back-button" onClick={() => setActiveView('main')}>
-        //       <ArrowLeft size={18} /> Back to Profile
-        //     </button>
-        //     <LearnethonProfile 
-        //     wallet={smartAccount?.address}
-        //      />
-        //   </div>  
-        //   )
+        case 'learnethon':
+        return (
+          <div>
+            <button className="back-button" onClick={() => setActiveView('main')}>
+              <ArrowLeft size={18} /> Back to Profile
+            </button>
+            <LearnethonProfile 
+              wallet={smartAccount?.address}
+              profile={profile}
+              onClose={() => setActiveView('main')}
+            />
+          </div>  
+        )
       default:
         return (
           <div>

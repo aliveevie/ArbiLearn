@@ -5,10 +5,12 @@ import styles from '../Innercss/LearnethonProfile.module.css';
 
 interface LearnethonProfileProps {
   wallet: string | undefined;
+  profile?: { success: boolean, message: string };
 }
 
-const LearnethonProfile: React.FC<LearnethonProfileProps> = ({ wallet }) => {
+const LearnethonProfile: React.FC<LearnethonProfileProps> = ({ wallet, profile }) => {
   const [activeSection, setActiveSection] = useState<string | null>(null);
+  const username = profile?.success ? profile.message : "User";
 
   const learningResources = [
     {
@@ -48,7 +50,7 @@ const LearnethonProfile: React.FC<LearnethonProfileProps> = ({ wallet }) => {
     <div className={styles.profileContainer}>
       <header className={styles.header}>
         <h1 className={styles.title}>Learnethon Profile</h1>
-        <p className={styles.subtitle}>Your Web3 Learning Journey</p>
+        <p className={styles.subtitle}>Welcome, {username}!</p>
       </header>
 
       <div className={styles.learningResources}>

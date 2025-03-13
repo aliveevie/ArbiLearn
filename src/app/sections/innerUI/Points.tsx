@@ -9,8 +9,7 @@ import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { toast } from "@/hooks/use-toast"
 import styles from "@/styles/EarnPoints.module.css"
-import { generateReferralLink } from "@/server-comps/userActions"
-import { submitProfile } from "@/server-comps/userActions"
+import { generateReferralLink, submitProfile } from "@/server-comps/userActions"
 
 interface UserProfile {
   name: string
@@ -24,9 +23,10 @@ interface UserProfile {
 interface EarnPointsProps {
   smartAccount: string | undefined;
   username: { success: boolean, message: string };
+  onProfileUpdate?: (updatedProfile: { success: boolean, message: string }) => void;
 }
 
-export default function EarnPoints({smartAccount, username}: EarnPointsProps) {
+export default function EarnPoints({smartAccount, username, onProfileUpdate}: EarnPointsProps) {
   const [isProfileComplete, setIsProfileComplete] = useState(false)
   const [profile, setProfile] = useState<UserProfile | null>(null)
   const [earnedPoints, setEarnedPoints] = useState(0)
@@ -37,13 +37,6 @@ export default function EarnPoints({smartAccount, username}: EarnPointsProps) {
   
 
   useEffect(() => {
-    // const storedProfile = localStorage.getItem("userProfile")
-    // if (storedProfile) {
-    //   const parsedProfile = JSON.parse(storedProfile)
-    //   setProfile(parsedProfile)
-    //   setIsProfileComplete(true)
-    //   setEarnedPoints(100)
-    // }
     if(username.success) { 
       setName(username.message)
       setIsProfileComplete(true)
@@ -53,7 +46,7 @@ export default function EarnPoints({smartAccount, username}: EarnPointsProps) {
     //@ts-ignore
     generateReferralLink(smartAccount).then(link => setReferralLink(link?.referralLink))
     console.log("Referral link generated:", referralLink)
-  }, [])
+  }, [username])
 
   const handleProfileSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     
@@ -75,6 +68,16 @@ export default function EarnPoints({smartAccount, username}: EarnPointsProps) {
       setIsProfileComplete(true)
       setActiveSection(null)
       setEarnedPoints(100)
+      setName(profileData.name)
+      
+      // Update the parent component's state
+      if (onProfileUpdate) {
+        onProfileUpdate({
+          success: true,
+          message: profileData.name
+        });
+      }
+      
       localStorage.setItem("userProfile", JSON.stringify(profileData))
       toast({
         title: "Profile Updated",
