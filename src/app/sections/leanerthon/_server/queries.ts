@@ -80,8 +80,6 @@ export async function logExamResults(data: ExamResult) {
   });
   
   // Create the tables if they don't exist
-  await createLearnthonResultsTable();
-  await ;
   
   // Get existing user data, if any
   const existingUser = await getUserExamData(data.walletAddress);
