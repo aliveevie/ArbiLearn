@@ -1,6 +1,6 @@
 "use server"
 
-import { createLeaderBoadTable, createLearnthonResultsTable } from "@/lib/db-tables"
+import { createLeaderBoadTable, createLearnthonResultsTable, createQuestionsTable, populateQuestionsTable } from "@/lib/db-tables"
 import { sql } from "@/server-comps/neon"
 
 type LeaderboardEntry = {
@@ -20,6 +20,12 @@ type ExamResult = {
   totalPoints: number
   position: number
   attemptsLeft: number
+}
+
+type Question = {
+  question: string;
+  options: string[];
+  correctAnswer: number;
 }
 
 export async function leaderboardData(): Promise<LeaderboardEntry[]> {
@@ -162,4 +168,75 @@ export async function logExamResults(data: ExamResult) {
   } catch (error) {
     console.error("Error saving exam results:", error);
   }
+}
+
+export async function getExamQuestions(walletAddress: string, attemptNumber: number): Promise<Question[]> {
+  try {
+    // Create and populate the questions table if needed
+    await createQuestionsTable();
+    await populateQuestionsTable();
+    
+    // Get all questions from the database
+    const allQuestions = await sql`
+      SELECT question_text as question, options, correct_answer as "correctAnswer", category
+      FROM exam_questions
+    `;
+    
+    // Convert from DB format to expected format
+    const questions = allQuestions.map(q => ({
+      question: q.question,
+      options: q.options,
+      correctAnswer: q.correctAnswer
+    }));
+    
+    // Shuffle questions based on attempt number
+    const shuffledQuestions = shuffleQuestions(questions, attemptNumber, walletAddress);
+    
+    return shuffledQuestions;
+  } catch (error) {
+    console.error("Error fetching exam questions:", error);
+    // Fallback to static questions if database fails
+    const { questions } = await import("@/app/sections/leanerthon/_UI/questions");
+    return shuffleQuestions(questions, attemptNumber, walletAddress);
+  }
+}
+
+// Function to shuffle questions based on attempt number and wallet address
+function shuffleQuestions(questions: Question[], attemptNumber: number, walletAddress: string): Question[] {
+  // Create a deterministic but different seed for each attempt and wallet
+  const seed = walletAddress.slice(-8) + attemptNumber.toString();
+  
+  // Create a copy of the questions array
+  const shuffled = [...questions];
+  
+  // Fisher-Yates shuffle with deterministic randomness based on seed
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    // Use a simple hash of the seed and current index for deterministic randomness
+    const hash = simpleHash(`${seed}-${i}`);
+    const j = hash % (i + 1);
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+  }
+  
+  // For different attempts, select different subsets or arrangements
+  if (attemptNumber === 1) {
+    // First attempt: use first 50 questions
+    return shuffled.slice(0, 50);
+  } else if (attemptNumber === 2) {
+    // Second attempt: use next 50 questions
+    return shuffled.slice(50, 100);
+  } else {
+    // Third attempt: use a mix of questions
+    return [...shuffled.slice(25, 50), ...shuffled.slice(75, 100)];
+  }
+}
+
+// Simple string hash function for deterministic randomness
+function simpleHash(str: string): number {
+  let hash = 0;
+  for (let i = 0; i < str.length; i++) {
+    const char = str.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  return Math.abs(hash);
 }

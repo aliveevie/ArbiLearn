@@ -136,7 +136,7 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
               </Button>
             </>
           )}
-          {isExamStarted && <StartExam onEnd={endExam} attempts={attempts} />}
+          {isExamStarted && <StartExam onEnd={endExam} attempts={attempts} wallet={safeWalletAddress} />}
           {isExamCompleted && examResults && (
             <ExamSummary
               score={examResults.score}

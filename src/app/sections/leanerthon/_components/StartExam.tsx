@@ -4,19 +4,30 @@ import type React from "react"
 import { useState, useEffect, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Clock, StopCircle } from "lucide-react"
-import questions from "../_UI/questions"
 import { playSound } from "../_utils/sound"
 import ConfirmModal from "../_UI/ConfirmModal"
 import ExamSummaryModal from "../_UI/ExamSummaryModal"
 import MilestoneAlert from "../_UI/MilestoneAlert"
 import Balloons from "../_UI/Ballons"
+import { getExamQuestions } from "../_server/queries"
+import { Loader2 } from "lucide-react"
 
 interface StartExamProps {
   onEnd: (results: any) => void
   attempts: number
+  wallet: string
 }
 
-const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
+// Define a proper interface for the question type
+interface ExamQuestion {
+  question: string;
+  options: string[];
+  correctAnswer: number;
+}
+
+const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts, wallet }) => {
+  const [questions, setQuestions] = useState<ExamQuestion[]>([])
+  const [loading, setLoading] = useState(true)
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
@@ -26,6 +37,26 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
   const [showSummaryModal, setShowSummaryModal] = useState(false)
   const [examFinished, setExamFinished] = useState(false)
   const [showMilestoneAlert, setShowMilestoneAlert] = useState(false)
+
+  // Fetch questions when component mounts
+  useEffect(() => {
+    async function loadQuestions() {
+      try {
+        setLoading(true)
+        const fetchedQuestions = await getExamQuestions(wallet, attempts)
+        setQuestions(fetchedQuestions)
+      } catch (error) {
+        console.error("Error loading questions:", error)
+        // Fallback to static questions if needed
+        const { default: staticQuestions } = await import("../_UI/questions")
+        setQuestions(staticQuestions)
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    loadQuestions()
+  }, [wallet, attempts])
 
   const finishExam = useCallback(() => {
     setExamFinished(true)
@@ -46,6 +77,8 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
 
   const handleAnswer = useCallback(
     (index: number) => {
+      if (!questions.length) return
+      
       setSelectedAnswer(index)
       setUserAnswers((prev) => [...prev, index])
       if (index === questions[currentQuestion % questions.length].correctAnswer) {
@@ -57,7 +90,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
 
       setTimeout(handleNextQuestion, 1000)
     },
-    [currentQuestion, handleNextQuestion],
+    [currentQuestion, handleNextQuestion, questions]
   )
 
   const retakeExam = useCallback(() => {
@@ -73,10 +106,14 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
   }, [])
 
   useEffect(() => {
-    playSound("exam-start")
-  }, [])
+    if (!loading) {
+      playSound("exam-start")
+    }
+  }, [loading])
 
   useEffect(() => {
+    if (loading) return
+    
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
@@ -88,7 +125,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [handleNextQuestion])
+  }, [handleNextQuestion, loading])
 
   const stopExam = useCallback(() => {
     setShowConfirmModal(true)
@@ -104,11 +141,28 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
     setShowConfirmModal(false)
     setShowSummaryModal(false)
     onEnd({ questions, userAnswers, score, attempts })
-  }, [onEnd, userAnswers, score, attempts])
+  }, [onEnd, userAnswers, score, attempts, questions])
 
   const closeMilestoneAlert = useCallback(() => {
     setShowMilestoneAlert(false)
   }, [])
+
+  if (loading) {
+    return (
+      <div className="flex flex-col items-center justify-center h-64 bg-blue-800 p-6 rounded-lg shadow-lg">
+        <Loader2 className="w-12 h-12 animate-spin text-white mb-4" />
+        <p className="text-xl font-medium text-white">Loading exam questions...</p>
+      </div>
+    )
+  }
+
+  if (!questions.length) {
+    return (
+      <div className="bg-blue-800 p-6 rounded-lg shadow-lg">
+        <p className="text-xl text-center">Error loading questions. Please try again.</p>
+      </div>
+    )
+  }
 
   return (
     <div className="relative bg-blue-800 p-6 rounded-lg shadow-lg">
@@ -127,13 +181,13 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts }) => {
       <div className="mb-6">
         <h3 className="text-xl mb-4">{questions[currentQuestion % questions.length].question}</h3>
         <div className="space-y-4">
-          {questions[currentQuestion % questions.length].options.map((option, index) => (
+          {questions[currentQuestion % questions.length].options.map((option: string, index: number) => (
             <motion.button
               key={index}
               initial={{ opacity: 0, y: -20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              //@ts-expect-error
+              //@ts-ignore
               onClick={() => handleAnswer(index)}
               disabled={selectedAnswer !== null}
               className={`w-full text-left p-3 rounded-lg transition-colors ${

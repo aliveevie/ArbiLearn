@@ -375,3 +375,67 @@ export async function createLearnthonResultsTable() {
     throw error;
   }
 }
+
+export async function createQuestionsTable() {
+  try {
+    await sql`
+      CREATE TABLE IF NOT EXISTS exam_questions (
+        question_id SERIAL PRIMARY KEY,
+        question_text TEXT NOT NULL,
+        options JSONB NOT NULL,
+        correct_answer INTEGER NOT NULL,
+        category VARCHAR(100) NOT NULL,
+        difficulty VARCHAR(50) DEFAULT 'medium',
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+      )
+    `;
+    console.log("Exam questions table created successfully");
+  } catch (error) {
+    console.error("Error creating exam questions table:", error);
+    throw error;
+  }
+}
+
+export async function populateQuestionsTable() {
+  try {
+    // Check if questions already exist
+    const count = await sql`SELECT COUNT(*) FROM exam_questions`;
+    if (count[0].count > 0) {
+      console.log("Questions already exist in the database");
+      return;
+    }
+    
+    // Import questions from the static file
+    const { questions } = await import("@/app/sections/leanerthon/_UI/questions");
+    
+    // Insert questions in batches
+    for (const q of questions) {
+      await sql`
+        INSERT INTO exam_questions 
+          (question_text, options, correct_answer, category, difficulty)
+        VALUES 
+          (${q.question}, ${JSON.stringify(q.options)}, ${q.correctAnswer}, 
+           ${determineCategory(q.question)}, ${determineDifficulty(q.question)})
+      `;
+    }
+    
+    console.log("Questions populated successfully");
+  } catch (error) {
+    console.error("Error populating questions:", error);
+    throw error;
+  }
+}
+
+function determineCategory(question: string): string {
+  if (question.toLowerCase().includes("metis")) return "metis";
+  if (question.toLowerCase().includes("thirdweb")) return "thirdweb";
+  if (question.toLowerCase().includes("thrive")) return "thrive";
+  return "web3";
+}
+
+function determineDifficulty(question: string): string {
+  if (question.length > 120) return "hard";
+  if (question.length > 80) return "medium";
+  return "easy";
+}
