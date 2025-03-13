@@ -23,7 +23,7 @@ type ExamResult = {
 }
 
 export async function leaderboardData(): Promise<LeaderboardEntry[]> {
-  await createLeaderBoadTable()
+  // await createLeaderBoadTable()
   try {
     const result = await sql`
       SELECT username, points, attempts, wallet_address
@@ -81,7 +81,7 @@ export async function logExamResults(data: ExamResult) {
   
   // Create the tables if they don't exist
   await createLearnthonResultsTable();
-  await createLeaderBoadTable();
+  await ;
   
   // Get existing user data, if any
   const existingUser = await getUserExamData(data.walletAddress);
