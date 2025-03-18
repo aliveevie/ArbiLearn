@@ -7,7 +7,7 @@ import { createVerificationsTable } from '@/lib/db-tables';
 const MAX_FILE_SIZE = 200 * 1024; // 200KB in bytes
 
 export async function verifyForm(formData: FormData) {
-  await createVerificationsTable();
+ // await createVerificationsTable();
   try {
     // Get form data
     const resource = formData.get('resource') as string;
@@ -49,26 +49,30 @@ export async function verifyForm(formData: FormData) {
           user_id,
           resource_name,
           resource_type,
+          resource_size,
           resource_path,
           is_link,
           completion_type,
           details,
           evidence_url,
-          wallet_address
+          wallet_address,
+          file_data
         ) VALUES (
           ${userId},
           ${resource},
-          ${'url'},
+          'link',
+          0,
           ${fileUrl},
           ${isLink},
           ${completionType},
           ${details},
           ${fileUrl},
-          ${walletAddress}
+          ${walletAddress},
+          null
         )
       `;
-    } else {
-      // For file uploads, include the file data directly in the INSERT
+    } else if (evidenceType === 'file' && evidence) {
+      // Convert the file to an array buffer for database storage
       const buffer = await evidence.arrayBuffer();
       const fileBuffer = Buffer.from(buffer);
       
