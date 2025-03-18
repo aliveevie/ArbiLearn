@@ -117,6 +117,87 @@ const AdminDashboard = () => {
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
 
+  const renderEvidenceData = (item: any) => {
+    if (!item.evidence_url && !item.file_data) return <div className="text-gray-500 italic">No evidence data available</div>;
+    
+    if (item.is_link && item.evidence_url) {
+      return (
+        <a href={item.evidence_url} target="_blank" rel="noopener noreferrer" className="text-blue-500 hover:underline">
+          View Evidence Link
+        </a>
+      );
+    }
+    
+    if (item.file_data) {
+      try {
+        // Handle binary data from PostgreSQL bytea
+        // Convert the binary data to base64
+        let base64Data;
+        
+        if (typeof item.file_data === 'object' && item.file_data !== null) {
+          // PostgreSQL bytea comes as a Buffer or similar object
+          base64Data = Buffer.from(item.file_data).toString('base64');
+        } else if (typeof item.file_data === 'string') {
+          // If it's already a string, just ensure it's base64
+          base64Data = Buffer.from(item.file_data, 'binary').toString('base64');
+        } else {
+          return <div className="text-gray-500">Unsupported file data format</div>;
+        }
+        
+        // Determine the MIME type based on file signature or resource_type
+        let mimeType = 'application/octet-stream'; // Default mime type
+        
+        if (item.resource_type && item.resource_type.includes('/')) {
+          // If resource_type contains a MIME type, use it
+          mimeType = item.resource_type;
+        } else if (base64Data.length > 0) {
+          // Try to detect image type from data
+          const prefix = base64Data.substring(0, 10).toLowerCase();
+          if (prefix.includes('png')) mimeType = 'image/png';
+          else if (prefix.includes('jpeg') || prefix.includes('jfif')) mimeType = 'image/jpeg';
+          else if (prefix.includes('gif')) mimeType = 'image/gif';
+          else if (prefix.includes('webp')) mimeType = 'image/webp';
+          else if (prefix.includes('pdf')) mimeType = 'application/pdf';
+        }
+        
+        if (mimeType.startsWith('image/')) {
+          // If it's an image, display it
+          return (
+            <img 
+              src={`data:${mimeType};base64,${base64Data}`} 
+              alt="Evidence" 
+              className="max-w-xs max-h-60 object-contain"
+            />
+          );
+        } else {
+          // For other file types, provide a download button
+          return (
+            <button
+              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              onClick={() => {
+                const blob = new Blob([Buffer.from(base64Data, 'base64')], { type: mimeType });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = item.resource_name || 'evidence-file';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+              }}
+            >
+              Download Evidence File
+            </button>
+          );
+        }
+      } catch (error) {
+        console.error("Error rendering file data:", error);
+        return <div className="text-red-500">Error displaying file data</div>;
+      }
+    }
+    
+    return <div className="text-gray-500 italic">No evidence data available</div>;
+  };
 
   useEffect(() => {
     fetchData()
@@ -445,6 +526,9 @@ const AdminDashboard = () => {
               {activeView ? `${activeView.charAt(0).toUpperCase()}${activeView.slice(1)} Details` : 'Details'}
             </h2>
             {renderModalContent(selectedItem)}
+            <div>
+              <strong>Evidence:</strong> {renderEvidenceData(selectedItem)}
+            </div>
           </div>
         </div>
       )}
