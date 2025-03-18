@@ -54,12 +54,40 @@ const dataFormatters: { [key: string]: DataFormatter } = {
   courseVerifications: {
     resource_name: { label: 'Resource Name' },
     resource_type: { label: 'Resource Type' },
-    resource_size: { label: 'Resource Size' },
+    resource_size: { 
+      label: 'Resource Size',
+      format: (value) => `${Math.round(value / 1024)} KB`
+    },
     completion_type: { label: 'Completion Type' },
     details: { label: 'Details' },
     evidence_url: { 
       label: 'Evidence',
-      format: (value) => <img src={value} alt="Evidence" className={styles.evidenceImage} style={{maxWidth: '200px'}} />
+      format: (value) => {
+        if (value && value.startsWith('http')) {
+          return (
+            <a href={value} target="_blank" rel="noopener noreferrer">
+              <img 
+                src={value} 
+                alt="Evidence" 
+                className={styles.evidenceImage} 
+                style={{maxWidth: '200px', maxHeight: '150px'}} 
+                onError={(e) => {
+                  e.currentTarget.src = '/placeholder-image.png';
+                  e.currentTarget.alt = 'Link (Click to view)';
+                }}
+              />
+            </a>
+          );
+        } else {
+          return (
+            <a href={`/api/evidence?id=${value.replace('db://', '')}`} target="_blank" rel="noopener noreferrer">
+              <div className={styles.filePreview}>
+                View File Evidence
+              </div>
+            </a>
+          );
+        }
+      }
     },
     wallet_address: { label: 'Wallet Address' },
     status: { 
@@ -324,7 +352,17 @@ const AdminDashboard = () => {
                   {headers.map((header) => (
                     <td key={header}>
                       {activeView === 'courseVerifications' && header === 'evidence_url' ? (
-                        <img src={item[header]} alt="Evidence" style={{maxWidth: '50px'}} />
+                        <a href={item[header]} target="_blank" rel="noopener noreferrer">
+                          <img 
+                            src={item[header]} 
+                            alt="Evidence" 
+                            style={{maxWidth: '50px', maxHeight: '50px'}} 
+                            onError={(e) => {
+                              e.currentTarget.src = '/placeholder-image.png';
+                              e.currentTarget.alt = 'File';
+                            }}
+                          />
+                        </a>
                       ) : (
                         item[header]?.toString() || ""
                       )}

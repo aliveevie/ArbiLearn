@@ -35,7 +35,9 @@ export async function createTestTable() {
 }
 
 export async function createVerificationsTable() {
-  // Create the table
+  // Create the table with file data storage
+  await sql`DROP TABLE IF EXISTS course_verification CASCADE`;
+  console.log("Course verification table dropped successfully");
   await sql`
     CREATE TABLE IF NOT EXISTS course_verification (
       user_id VARCHAR(255) PRIMARY KEY,
@@ -44,10 +46,12 @@ export async function createVerificationsTable() {
       resource_name VARCHAR(255) NOT NULL,
       resource_type VARCHAR(100) NOT NULL,
       resource_size BIGINT NOT NULL,
-      resource_path TEXT NOT NULL,
+      resource_path TEXT,
+      file_data BYTEA,  -- Binary data to store files directly
+      is_link BOOLEAN DEFAULT FALSE, -- Flag to indicate if it's a link or file
       completion_type VARCHAR(50) NOT NULL,
       details TEXT NOT NULL,
-      evidence_url TEXT NOT NULL,
+      evidence_url TEXT,
       wallet_address VARCHAR(255) NOT NULL,
       status VARCHAR(50) DEFAULT 'pending',
       reviewed_at TIMESTAMP WITH TIME ZONE,
@@ -438,4 +442,39 @@ function determineDifficulty(question: string): string {
   if (question.length > 120) return "hard";
   if (question.length > 80) return "medium";
   return "easy";
+}
+
+export async function recreateVerificationsTable() {
+  try {
+    // Drop the existing table
+    await sql`DROP TABLE IF EXISTS course_verification CASCADE`;
+    
+    // Create the table with file data storage
+    await sql`
+      CREATE TABLE IF NOT EXISTS course_verification (
+        user_id VARCHAR(255) PRIMARY KEY,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        resource_name VARCHAR(255) NOT NULL,
+        resource_type VARCHAR(100) NOT NULL,
+        resource_size BIGINT NOT NULL,
+        resource_path TEXT,
+        file_data BYTEA,  -- Binary data to store files directly
+        is_link BOOLEAN DEFAULT FALSE, -- Flag to indicate if it's a link or file
+        completion_type VARCHAR(50) NOT NULL,
+        details TEXT NOT NULL,
+        evidence_url TEXT,
+        wallet_address VARCHAR(255) NOT NULL,
+        status VARCHAR(50) DEFAULT 'pending',
+        reviewed_at TIMESTAMP WITH TIME ZONE,
+        reviewed_by VARCHAR(255),
+        CONSTRAINT verifications_status_check 
+          CHECK (status IN ('pending', 'approved', 'rejected'))
+      )
+    `;
+    console.log("Verifications table recreated successfully");
+  } catch (error) {
+    console.error("Error recreating verifications table:", error);
+    throw error;
+  }
 }
