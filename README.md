@@ -46,3 +46,6 @@ ArbiLearn leverages multiple blockchain networks and Layer 2 solutions to provid
 - **Scalable infrastructure**: Supporting a growing community of learners across multiple ecosystems
 
 Through ArbiLearn, we're not just teaching about Web3—we're providing the tools, knowledge, and incentives to actively participate in the decentralized future.
+
+## License
+[MIT](LICENSE)
