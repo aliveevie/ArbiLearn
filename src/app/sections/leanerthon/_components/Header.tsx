@@ -1,4 +1,5 @@
 import { User, Star } from "lucide-react"
+import styles from "../styles/Exam.module.css"
 
 interface HeaderProps {
   username: string
@@ -7,14 +8,14 @@ interface HeaderProps {
 
 const Header = ({ username, points }: HeaderProps) => {
   return (
-    <div className="mb-8 flex flex-col sm:flex-row justify-between items-center bg-blue-800 p-4 rounded-lg shadow-lg">
-      <div className="flex items-center mb-4 sm:mb-0">
+    <div className={styles.header}>
+      <div className={styles.headerUser}>
         <User className="mr-2 h-6 w-6" />
-        <h1 className="text-xl font-bold">{username}</h1>
+        <h1 className={styles.headerUsername}>{username}</h1>
       </div>
-      <div className="flex items-center">
+      <div className={styles.headerPoints}>
         <Star className="mr-2 h-6 w-6 text-yellow-400" />
-        <span className="text-xl font-bold">{points} Points</span>
+        <span className={styles.headerPointsText}>{points} Points</span>
       </div>
     </div>
   )

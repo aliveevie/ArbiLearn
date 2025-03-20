@@ -9,6 +9,7 @@ import StartExam from "./_components/StartExam"
 import ExamSummary from "./_components/ExamSummary"
 import { Button } from "@/components/ui/button"
 import { leaderboardData, getUserExamData } from "./_server/queries"
+import styles from "./styles/Exam.module.css"
 
 const initialLeaderboard = [
   { username: "Winner123", points: 0, wallet_address: "0x0" },
@@ -105,17 +106,17 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
   const newPosition = leaderboard.findIndex((player) => player.wallet_address === safeWalletAddress) + 1
 
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className={styles.gamingDashboard}>
       {showProfileModal ? (
         <Dialog open={showProfileModal} onOpenChange={setShowProfileModal}>
-          <div className="p-6">
-            <h2 className="text-lg font-bold mb-4">Profile Required</h2>
-            <p className="mb-4">Please update your profile or apply via the Learnerthon form to continue.</p>
+          <div className={styles.profileModal}>
+            <h2 className={styles.profileModalTitle}>Profile Required</h2>
+            <p className={styles.profileModalText}>Please update your profile or apply via the Learnerthon form to continue.</p>
             <a 
               href="https://forms.gle/7LodFsd6Y6gyDtZ89" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-500 hover:underline"
+              className={styles.profileModalLink}
             >
               Apply for Learnerthon
             </a>
@@ -126,32 +127,36 @@ const LearnethonProfile = ({ wallet, onClose, profile }: { wallet: string | unde
         </Dialog>
       ) : (
         <>
-          <Header username={username} points={userPoints} />
-          {!isExamStarted && !isExamCompleted && (
-            <>
-              <Leaderboard leaderboard={leaderboard} />
-              <StartExamButton onStart={startExam} attempts={attempts} maxAttempts={MAX_ATTEMPTS} />
-              <Button onClick={onClose} className="mt-4">
-                Close
-              </Button>
-            </>
-          )}
-          {isExamStarted && <StartExam onEnd={endExam} attempts={attempts} wallet={safeWalletAddress} />}
-          {isExamCompleted && examResults && (
-            <ExamSummary
-              score={examResults.score}
-              questionsAnswered={examResults.userAnswers?.length || 0}
-              questionPoints={examResults.score * 10}
-              attemptPoints={attempts * 5}
-              totalPoints={examResults.score * 10 + attempts * 5}
-              newPosition={newPosition}
-              attemptsLeft={attemptsLeft}
-              onBack={backToDashboard}
-              onRetake={retakeExam}
-              username={username}
-              walletAddress={safeWalletAddress}
-            />
-          )}
+          <div className={styles.dashboardContent}>
+            <Header username={username} points={userPoints} />
+            {!isExamStarted && !isExamCompleted && (
+              <>
+                <Leaderboard leaderboard={leaderboard} />
+                <div className={styles.dashboardActions}>
+                  <StartExamButton onStart={startExam} attempts={attempts} maxAttempts={MAX_ATTEMPTS} />
+                  <Button onClick={onClose} className={styles.closeButton}>
+                    Close
+                  </Button>
+                </div>
+              </>
+            )}
+            {isExamStarted && <StartExam onEnd={endExam} attempts={attempts} wallet={safeWalletAddress} />}
+            {isExamCompleted && examResults && (
+              <ExamSummary
+                score={examResults.score}
+                questionsAnswered={examResults.userAnswers?.length || 0}
+                questionPoints={examResults.score * 10}
+                attemptPoints={attempts * 5}
+                totalPoints={examResults.score * 10 + attempts * 5}
+                newPosition={newPosition}
+                attemptsLeft={attemptsLeft}
+                onBack={backToDashboard}
+                onRetake={retakeExam}
+                username={username}
+                walletAddress={safeWalletAddress}
+              />
+            )}
+          </div>
         </>
       )}
     </div>

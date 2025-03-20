@@ -11,6 +11,7 @@ import MilestoneAlert from "../_UI/MilestoneAlert"
 import Balloons from "../_UI/Ballons"
 import { getExamQuestions } from "../_server/queries"
 import { Loader2 } from "lucide-react"
+import styles from "../styles/Exam.module.css"
 
 interface StartExamProps {
   onEnd: (results: any) => void
@@ -31,7 +32,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts, wallet }) => {
   const [currentQuestion, setCurrentQuestion] = useState(0)
   const [score, setScore] = useState(0)
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null)
-  const [timeLeft, setTimeLeft] = useState(30)
+  const [timeLeft, setTimeLeft] = useState(20)
   const [userAnswers, setUserAnswers] = useState<number[]>([])
   const [showConfirmModal, setShowConfirmModal] = useState(false)
   const [showSummaryModal, setShowSummaryModal] = useState(false)
@@ -67,7 +68,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts, wallet }) => {
   const handleNextQuestion = useCallback(() => {
     setCurrentQuestion((prev) => prev + 1)
     setSelectedAnswer(null)
-    setTimeLeft(30)
+    setTimeLeft(20)
 
     // Check if we've reached a multiple of 10 questions
     if ((currentQuestion + 1) % 10 === 0 && currentQuestion !== 0) {
@@ -97,7 +98,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts, wallet }) => {
     setCurrentQuestion(0)
     setScore(0)
     setSelectedAnswer(null)
-    setTimeLeft(30)
+    setTimeLeft(20)
     setUserAnswers([])
     setExamFinished(false)
     setShowSummaryModal(false)
@@ -118,7 +119,7 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts, wallet }) => {
       setTimeLeft((prevTime) => {
         if (prevTime <= 1) {
           handleNextQuestion()
-          return 30
+          return 20
         }
         return prevTime - 1
       })
@@ -149,65 +150,71 @@ const StartExam: React.FC<StartExamProps> = ({ onEnd, attempts, wallet }) => {
 
   if (loading) {
     return (
-      <div className="flex flex-col items-center justify-center h-64 bg-blue-800 p-6 rounded-lg shadow-lg">
-        <Loader2 className="w-12 h-12 animate-spin text-white mb-4" />
-        <p className="text-xl font-medium text-white">Loading exam questions...</p>
+      <div className={styles.loadingContainer}>
+        <Loader2 className={styles.loadingSpinner} />
+        <p className={styles.loadingText}>Loading exam questions...</p>
       </div>
     )
   }
 
   if (!questions.length) {
     return (
-      <div className="bg-blue-800 p-6 rounded-lg shadow-lg">
-        <p className="text-xl text-center">Error loading questions. Please try again.</p>
+      <div className={styles.errorContainer}>
+        <p className={styles.errorText}>Error loading questions. Please try again.</p>
       </div>
     )
   }
 
   return (
-    <div className="relative bg-blue-800 p-6 rounded-lg shadow-lg">
-      <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Exam in Progress 🚀</h2>
-        <div className="flex items-center space-x-4">
-          <div className="flex items-center">
-            <Clock className="mr-2" />
-            <span className="text-xl">{timeLeft}s</span>
+    <div className={styles.examContainer}>
+      <div className={styles.examHeader}>
+        <h2 className={styles.examTitle}>Exam in Progress 🚀</h2>
+        <div className={styles.examControls}>
+          <div className={styles.timerContainer}>
+            <Clock className={styles.timerIcon} />
+            <span className={styles.timerText}>{timeLeft}s</span>
           </div>
-          <button onClick={stopExam} className="text-red-500 hover:text-red-600">
-            <StopCircle className="w-6 h-6" />
+          <button onClick={stopExam} className={styles.stopButton}>
+            <StopCircle className={styles.stopIcon} />
           </button>
         </div>
       </div>
-      <div className="mb-6">
-        <h3 className="text-xl mb-4">{questions[currentQuestion % questions.length].question}</h3>
-        <div className="space-y-4">
-          {questions[currentQuestion % questions.length].options.map((option: string, index: number) => (
-            <motion.button
-              key={index}
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              //@ts-ignore
-              onClick={() => handleAnswer(index)}
-              disabled={selectedAnswer !== null}
-              className={`w-full text-left p-3 rounded-lg transition-colors ${
-                selectedAnswer === null
-                  ? "bg-blue-700 hover:bg-blue-600"
-                  : selectedAnswer === index
-                    ? index === questions[currentQuestion % questions.length].correctAnswer
-                      ? "bg-green-500"
-                      : "bg-red-500"
-                    : "bg-blue-700 opacity-50"
-              }`}
-            >
-              {option}
-            </motion.button>
-          ))}
+      <div className={styles.questionContainer}>
+        <h3 className={styles.questionText}>{questions[currentQuestion % questions.length].question}</h3>
+        <div className={styles.optionsContainer}>
+          {questions[currentQuestion % questions.length].options.map((option: string, index: number) => {
+            let optionClass = styles.optionButton;
+            
+            if (selectedAnswer !== null) {
+              if (selectedAnswer === index) {
+                optionClass = index === questions[currentQuestion % questions.length].correctAnswer 
+                  ? styles.correctOption 
+                  : styles.incorrectOption;
+              } else {
+                optionClass = styles.disabledOption;
+              }
+            }
+            
+            return (
+              <motion.button
+                key={index}
+                initial={{ opacity: 0, y: -20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                onClick={() => handleAnswer(index)}
+                disabled={selectedAnswer !== null}
+                className={optionClass}
+                as="button"
+              >
+                {option}
+              </motion.button>
+            );
+          })}
         </div>
       </div>
-      <div className="text-center">
-        <p className="text-xl mt-2">Score: {score} 🏆</p>
-        <p className="text-lg mt-2">Keep going! Answer more questions to earn more points! 💪</p>
+      <div className={styles.scoreContainer}>
+        <p className={styles.scoreText}>Score: {score} 🏆</p>
+        <p className={styles.encouragementText}>Keep going! Answer more questions to earn more points! 💪</p>
       </div>
 
       <AnimatePresence>

@@ -4,6 +4,7 @@ import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
 import { logExamResults } from "../_server/queries"
 import React from "react"
+import styles from "../styles/Exam.module.css"
 
 interface ExamSummaryProps {
   score: number
@@ -52,17 +53,18 @@ const ExamSummary = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.5 }}
-      style={{ backgroundColor: '#1e40af', padding: '1.5rem', borderRadius: '0.5rem', boxShadow: 'large' }}
+      className={styles.examSummary}
+      as="div"
     >
-      <h2 className="text-2xl font-bold mb-4">Exam Summary</h2>
-      <div className="space-y-4 mb-6">
-        <p className="text-xl">Score: {score} 🎯</p>
-        <p className="text-xl">Questions Answered: {questionsAnswered} 📝</p>
-        <p className="text-xl">Question Points: {questionPoints} 🌟</p>
-        <p className="text-xl">Attempt Points: {attemptPoints} 🔄</p>
-        <p className="text-xl">Total Points: {totalPoints} 🏆</p>
+      <h2 className={styles.examSummaryTitle}>Exam Summary</h2>
+      <div className={styles.examSummaryContent}>
+        <p className={styles.examSummaryText}>Score: {score} 🎯</p>
+        <p className={styles.examSummaryText}>Questions Answered: {questionsAnswered} 📝</p>
+        <p className={styles.examSummaryText}>Question Points: {questionPoints} 🌟</p>
+        <p className={styles.examSummaryText}>Attempt Points: {attemptPoints} 🔄</p>
+        <p className={styles.examSummaryText}>Total Points: {totalPoints} 🏆</p>
       </div>
-      <div className="flex justify-between">
+      <div className={styles.examSummaryActions}>
         <Button onClick={onBack}>Back to Dashboard</Button>
         {attemptsLeft > 0 && <Button onClick={onRetake}>Retake Exam ({attemptsLeft} attempts left)</Button>}
       </div>
