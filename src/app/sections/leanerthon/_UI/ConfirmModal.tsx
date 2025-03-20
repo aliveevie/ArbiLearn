@@ -16,13 +16,15 @@ const ConfirmModal: React.FC<ConfirmModalProps> = ({ message, onConfirm, onCance
     <motion.div 
       initial={{ opacity: 0 }} 
       animate={{ opacity: 1 }} 
-      exit={{ opacity: 0 }} 
+      exit={{ opacity: 0 }}
+      //@ts-ignore
       className={styles.modalOverlay}
     >
       <motion.div 
         initial={{ scale: 0.9 }} 
         animate={{ scale: 1 }} 
         exit={{ scale: 0.9 }} 
+        //@ts-ignore
         className={styles.modalContent}
       >
         <p className={styles.modalText}>{message}</p>
