@@ -478,3 +478,33 @@ export async function recreateVerificationsTable() {
     throw error;
   }
 }
+
+export async function createUserPointsDetailsTable() {
+  try {
+ 
+    await sql`DROP TABLE IF EXISTS user_points_details CASCADE`;
+
+    await sql`
+      CREATE TABLE IF NOT EXISTS user_points_details (
+        points_detail_id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        wallet_address VARCHAR(255) NOT NULL,
+        course_completion INTEGER DEFAULT 0,
+        nft_mint INTEGER DEFAULT 0,
+        token_purchase INTEGER DEFAULT 0,
+        referral INTEGER DEFAULT 0,
+        community_activity INTEGER DEFAULT 0,
+        profile_completion INTEGER DEFAULT 0,
+        signup_bonus INTEGER DEFAULT 0,
+        created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        updated_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES wallets(user_id),
+        UNIQUE(wallet_address)
+      )
+    `;
+    console.log("User points details table created successfully");
+  } catch (error) {
+    console.error("Error creating user points details table:", error);
+    throw error;
+  }
+}

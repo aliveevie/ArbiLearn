@@ -1,5 +1,6 @@
 import React from 'react';
 import '../../../styles/PointsModal.css';
+import { updateUserPoints } from '@/server-comps/savePoints';
 
 interface PointItem {
   value: number;
