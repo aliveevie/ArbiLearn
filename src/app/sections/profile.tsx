@@ -36,8 +36,7 @@ import {
 import { getWalletAddress, } from '@/server-comps/wallet'
 import { processReferral } from '@/server-comps/userActions'
 import { getUserEmail } from 'thirdweb/wallets/in-app'
-// import { getOldWallets } from '@/server-comps/getOldWallets'
-import { updateUserPoints } from '@/server-comps/savePoints'
+import { addUserSignupBonus } from '@/server-comps/savePoints'
 
 interface UserAction {
   id: number
@@ -60,9 +59,6 @@ export default function ProfileSection() {
   const [nftTransactionHash, setNftTransactionHash] = useState<string>('')
   const [email, setEmail] = useState<string>('')
   const [profile, setProfile] = useState<any>({})
-
-  getGoogleFormData()
-  updateUserPoints()
   const { data: ownedNfts, refetch: refetchNfts } = useReadContract(getOwnedNFTs, {
     contract: editionDropContract,
     address: smartAccount?.address!,
@@ -72,6 +68,8 @@ export default function ProfileSection() {
   const handleProfileUpdate = (updatedProfile: { success: boolean, message: string }) => {
     setProfile(updatedProfile);
   }
+
+  addUserSignupBonus(smartAccount?.address!)
 
   useEffect(() => {
     async function fetchUserDetails() {

@@ -482,8 +482,6 @@ export async function recreateVerificationsTable() {
 export async function createUserPointsDetailsTable() {
   try {
  
-    await sql`DROP TABLE IF EXISTS user_points_details CASCADE`;
-
     await sql`
       CREATE TABLE IF NOT EXISTS user_points_details (
         points_detail_id SERIAL PRIMARY KEY,
