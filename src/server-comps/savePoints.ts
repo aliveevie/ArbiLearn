@@ -59,21 +59,23 @@ export async function addUserSignupBonus(walletAddress: string) {
     console.log('🚀 Starting signup bonus process for wallet:', walletAddress);
     
     try {
-   
+        // First ensure the table exists
+       
+
         // Check if user already has points
-   //     console.log('🔍 Checking if user already has points...');
+        console.log('🔍 Checking if user already has points...');
         const existingPoints = await sql`
             SELECT * FROM user_points_details 
             WHERE wallet_address = ${walletAddress}
         `;
-    //    console.log('📊 Existing points check result:', {
-    //        found: existingPoints.length > 0,
-    //        recordsFound: existingPoints.length
-    //    });
+        console.log('📊 Existing points check result:', {
+            found: existingPoints.length > 0,
+            recordsFound: existingPoints.length
+        });
 
         // If user already has points, return early
         if (existingPoints.length > 0) {
-        //    console.log('⚠️ User already has points, aborting bonus addition');
+            console.log('⚠️ User already has points, aborting bonus addition');
             return {
                 success: false,
                 message: "User already has points registered"
@@ -81,9 +83,9 @@ export async function addUserSignupBonus(walletAddress: string) {
         }
 
         // Get user_id for the wallet
-     //   console.log('🔑 Fetching user_id for wallet...');
+        console.log('🔑 Fetching user_id for wallet...');
         const walletIdResult = await getWalletID(walletAddress);
-     //   console.log('👤 Wallet ID result:', JSON.stringify(walletIdResult, null, 2));
+        console.log('👤 Wallet ID result:', JSON.stringify(walletIdResult, null, 2));
         
         if (!walletIdResult.success) {
             console.error('❌ Failed to get user_id for wallet:', walletAddress);
@@ -94,7 +96,7 @@ export async function addUserSignupBonus(walletAddress: string) {
         }
 
         // Insert initial points record with signup bonus
-     //   console.log('💰 Attempting to insert signup bonus points...');
+        console.log('💰 Attempting to insert signup bonus points...');
         await sql`
             INSERT INTO user_points_details (
                 user_id,
@@ -106,7 +108,7 @@ export async function addUserSignupBonus(walletAddress: string) {
                 50
             )
         `;
-     //   console.log('✅ Successfully inserted signup bonus points');
+        console.log('✅ Successfully inserted signup bonus points');
 
         const result = {
             success: true,
@@ -117,7 +119,7 @@ export async function addUserSignupBonus(walletAddress: string) {
                 userId: walletIdResult.user_id
             }
         };
-    //    console.log('🎉 Operation completed successfully:', JSON.stringify(result, null, 2));
+        console.log('🎉 Operation completed successfully:', JSON.stringify(result, null, 2));
         return result;
 
     } catch (error) {
@@ -183,6 +185,78 @@ export async function getUserPoints(walletAddress: string) {
         return {
             success: false,
             error: "Failed to fetch user points",
+            details: error instanceof Error ? error.message : String(error)
+        };
+    }
+}
+
+export async function updateProfileCompletionPoints(walletAddress: string) {
+    console.log('🎯 Starting profile completion points update for wallet:', walletAddress);
+    
+    try {
+        // Get user_id for the wallet
+        console.log('🔍 Fetching user_id for wallet...');
+        const walletIdResult = await getWalletID(walletAddress);
+        
+        if (!walletIdResult.success) {
+            console.error('❌ Failed to get user_id for wallet:', walletAddress);
+            return {
+                success: false,
+                error: `Failed to get user_id for wallet: ${walletAddress}`
+            };
+        }
+
+        // Check if user already has points record
+        console.log('📊 Checking existing points record...');
+        const existingPoints = await sql`
+            SELECT * FROM user_points_details 
+            WHERE wallet_address = ${walletAddress}
+        `;
+
+        if (existingPoints.length === 0) {
+            // If no record exists, create new record with profile completion points
+            console.log('📝 Creating new points record with profile completion...');
+            await sql`
+                INSERT INTO user_points_details (
+                    user_id,
+                    wallet_address,
+                    profile_completion
+                ) VALUES (
+                    ${walletIdResult.user_id},
+                    ${walletAddress},
+                    100
+                )
+            `;
+        } else {
+            // If record exists, update profile completion points
+            console.log('🔄 Updating existing points record...');
+            await sql`
+                UPDATE user_points_details 
+                SET 
+                    profile_completion = 100,
+                    updated_at = CURRENT_TIMESTAMP
+                WHERE wallet_address = ${walletAddress}
+            `;
+        }
+
+        const result = {
+            success: true,
+            message: "Profile completion points updated successfully",
+            data: {
+                walletAddress,
+                profileCompletionPoints: 100
+            }
+        };
+
+        console.log('✅ Profile completion points updated:', JSON.stringify(result, null, 2));
+        return result;
+
+    } catch (error) {
+        console.error('❌ Error updating profile completion points:', error);
+        console.error('📜 Stack trace:', error instanceof Error ? error.stack : 'No stack trace available');
+        return {
+            success: false,
+            error: "Failed to update profile completion points",
             details: error instanceof Error ? error.message : String(error)
         };
     }

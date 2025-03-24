@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache"
 import { createProfileTable, createReferralTable, updateReferralPoints, createPointsTable,updateReferralTable } from "@/lib/db-tables"
 import { sql } from "./neon";
 import { getWalletID } from "./getWalletId";
+import { updateProfileCompletionPoints } from './savePoints';
 const baseUrl = process.env.NEXT_PUBLIC_URL || 'http://localhost:3000'
 
 
@@ -30,6 +31,17 @@ export async function submitProfile(profileData: any) {
       SELECT profile_id FROM profiles 
       WHERE user_id = ${userId}
     `;
+
+    // Check if user already has profile completion points
+    const existingPoints = await sql`
+      SELECT profile_completion 
+      FROM user_points_details 
+      WHERE wallet_address = ${profileData.wallet}
+    `;
+
+    const isNewProfile = existingProfile.length === 0;
+    const hasNoProfilePoints = existingPoints.length === 0 || 
+                             (existingPoints[0].profile_completion ?? 0) === 0;
 
     if (existingProfile.length > 0) {
       // Update existing profile
@@ -70,11 +82,23 @@ export async function submitProfile(profileData: any) {
       console.log("Profile created successfully");
     }
 
-    // Revalidate the path to update the UI
-   // revalidatePath("/earn-points");
+    // Only update points if this is either a new profile or user hasn't received points yet
+    if (hasNoProfilePoints) {
+      console.log("📝 Updating profile completion points...");
+      const pointsResult = await updateProfileCompletionPoints(profileData.wallet);
+      if (!pointsResult.success) {
+        console.error("⚠️ Failed to update profile points:");
+      } else {
+        console.log("✅ Profile points updated successfully");
+      }
+    } else {
+      console.log("ℹ️ Profile points already awarded - skipping points update");
+    }
+
     return { 
       success: true, 
-      message: existingProfile.length > 0 ? "Profile updated" : "Profile created" 
+      message: isNewProfile ? "Profile created with points" : "Profile updated",
+      pointsAwarded: hasNoProfilePoints ? 100 : 0
     };
 
   } catch (error) {
