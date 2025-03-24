@@ -516,13 +516,8 @@ export default function ProfileSection() {
           address={smartAccount?.address}
           show={showPointsModal}
           onClose={() => setShowPointsModal(false)}
-          points={{
-            courseCompletion: 0,
-            nftMint: 0,
-            tokenPurchase: 0,
-            referral: 0,
-            communityActivity: 0
-          }}
+          
+
         />
       )}
     </div>
