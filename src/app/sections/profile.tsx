@@ -36,7 +36,7 @@ import {
 import { getWalletAddress, } from '@/server-comps/wallet'
 import { processReferral } from '@/server-comps/userActions'
 import { getUserEmail } from 'thirdweb/wallets/in-app'
-import { addUserSignupBonus } from '@/server-comps/savePoints'
+import { addUserSignupBonus, getUserPoints } from '@/server-comps/savePoints'
 
 interface UserAction {
   id: number
@@ -65,6 +65,9 @@ export default function ProfileSection() {
     queryOptions: { enabled: !!smartAccount },
   });
 
+  const [points, setPoints] = useState<number>(0);
+  const [loading, setLoading] = useState(true);
+
   const handleProfileUpdate = (updatedProfile: { success: boolean, message: string }) => {
     setProfile(updatedProfile);
   }
@@ -86,6 +89,35 @@ export default function ProfileSection() {
     if (address) {
       fetchUserDetails();
     }
+  }, [address]);
+
+  useEffect(() => {
+    const fetchPoints = async () => {
+      if (!address) return;
+      
+      try {
+        setLoading(true);
+        const response = await getUserPoints(address);
+        if (response.success && response.data) {
+          const totalPoints = 
+            (response.data.courseCompletion || 0) +
+            (response.data.nftMint || 0) +
+            (response.data.tokenPurchase || 0) +
+            (response.data.referral || 0) +
+            (response.data.communityActivity || 0) +
+            (response.data.profileCompletion || 0) +
+            (response.data.signupBonus || 0);
+            
+          setPoints(totalPoints);
+        }
+      } catch (error) {
+        console.error('Error fetching points:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchPoints();
   }, [address]);
 
   const isMember = ownedNfts && ownedNfts.length > 0;
@@ -412,7 +444,7 @@ export default function ProfileSection() {
                 title="Click to view points details"
               >
                 <div className="stat-value">
-                  50
+                  {loading ? '...' : points}
                 </div>
                 <div className="stat-label">Points Earned</div>
               </div>
@@ -516,8 +548,6 @@ export default function ProfileSection() {
           address={smartAccount?.address}
           show={showPointsModal}
           onClose={() => setShowPointsModal(false)}
-          
-
         />
       )}
     </div>
